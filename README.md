@@ -10,7 +10,7 @@ StackOverflow answers FTW :-D
 1. ### Virtual environment:
     *$ python3 -m venv ./venv*
    
-    *$ venv/bin/active*
+    *$ venv/bin/activate*
 
 3. ### Dependencies installation
     *$ pip install -r requirements.txt*
