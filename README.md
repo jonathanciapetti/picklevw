@@ -16,7 +16,7 @@ $ venv/bin/active
 ### Install the dependencies
 $ pip install -r requirements.txt
 
-### Change the permissions for bash script launcher:
+### Change the permissions for the bash script launcher:
 $ chmod +x ./pickleview.sh
 
 ### Run:
