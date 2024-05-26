@@ -1,5 +1,5 @@
 # picklevw
-A very simple and crude reader + GUI for pickle files
+A very simple and crude reader with GUI for pickle files
 
 It's just a mega code snippet, I still have huge work to be done - not just polishing - on this project, but at least it works.
 
