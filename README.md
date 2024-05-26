@@ -5,7 +5,7 @@ It's just a mega code snippet, I still have huge work to be done - not just poli
 
 There are no tests, nothing: it's my first attempt to work on desktop applications for Ubuntu.
 
-### - Virtual environment:
+- ### - Virtual environment:
 $ python3 -m venv ./venv
 
 $ venv/bin/active
