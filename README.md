@@ -5,18 +5,15 @@ It's just a mega code snippet, I still have huge work to be done - not just poli
 
 There are no tests, nothing: it's my first attempt to work on desktop applications for Ubuntu.
 
-### Install it:
-$ git clone https://github.com/jonathanciapetti/picklevw.git
-
 ### Virtual environment:
 $ python3 -m venv ./venv
 
 $ venv/bin/active
 
-### Install the dependencies
+### Dependencies installation
 $ pip install -r requirements.txt
 
-### Change the permissions for the bash script launcher:
+### Launcher permission:
 $ chmod +x ./pickleview.sh
 
 ### Run:
