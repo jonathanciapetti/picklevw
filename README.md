@@ -9,13 +9,14 @@ StackOverflow answers FTW :-D
 
 1. ### Virtual environment:
     *$ python3 -m venv ./venv*
+   
     *$ venv/bin/active*
 
-2. ### Dependencies installation
+3. ### Dependencies installation
     *$ pip install -r requirements.txt*
 
-3. ### Launcher permission:
+4. ### Launcher permission:
     *$ chmod +x ./pickleview.sh*
 
-4. ### Run:
+5. ### Run:
     *$ ./pickleview.sh*
