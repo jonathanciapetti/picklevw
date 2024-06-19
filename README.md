@@ -1,4 +1,4 @@
-## 🥒 picklevw
+## picklevw 🥒
 
 **picklevw** is a simple desktop application built with Python, designed to read and display pickle files using Pandas and Tkinter.
 
