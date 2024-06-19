@@ -26,36 +26,35 @@ git clone https://github.com/yourusername/picklevw.git
 cd picklevw
 pip install -r requirements.txt
 ```
-Running the App
+#### Running the App
+
 To start the application, run:
 
 ```bash
 python3 picklevw.py
 ```
 
-📸 Screenshots
+#### 📸 Screenshots
 
-📖 Usage
+#### 📖 Usage
 Open a Pickle File:
 Click on the "Open File" button.
 Select the pickle file you want to read.
 
-
-Click on the "Refresh" button to reload the file and update the data view.
-🛠️ Built With
+#### 🛠️ Built With
 Python 3.x
 tkinter
 pandas
 prettyprint
 
-🤝 Contributing
+#### 🤝 Contributing
 Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
 
 
-📜 License
+#### 📜 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-📫 Contact
+#### 📫 Contact
 [GitHub](https://github.com/jonathanciapetti)
 Email: [jonathan.ciapetti@normabytes.com](mailto:jonathan.ciapetti@normabytes.com)
 
