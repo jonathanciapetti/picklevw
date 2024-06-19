@@ -1,9 +1,4 @@
-# picklevw
-markdown
-Copy code
-# Welcome to picklevw!
-
-## 🐍 picklevw: A Python Desktop App for Reading Pickle Files
+## 🥒 picklevw: A Python Desktop App for Reading Pickle Files
 
 **picklevw** is a simple desktop application built with Python, designed to read and display pickle files using Pandas and Tkinter.
 
