@@ -30,7 +30,7 @@ Running the App
 To start the application, run:
 
 ```bash
-$ python3 app.py
+$ python3 picklevw.py
 ```
 
 📸 Screenshots
