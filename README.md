@@ -1,5 +1,7 @@
 ## picklevw 🥒
 
+![logo](./logo/picklevw_logo.png)
+
 **picklevw** is a simple desktop application built with Python, designed to read and display pickle files using Pandas and Tkinter.
 
 ### ✨ Features
