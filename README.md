@@ -41,11 +41,12 @@ Open a Pickle File:
 Click on the "Open File" button.
 Select the pickle file you want to read.
 
-#### 🛠️ Built With
-Python 3.x
+#### 🛠️ Dependencies
+```
 tkinter
 pandas
 prettyprint
+```
 
 #### 🤝 Contributing
 Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
