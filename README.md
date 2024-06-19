@@ -22,15 +22,15 @@ Follow these steps to get picklevw up and running on your machine.
 Clone the repository and install the required dependencies:
 
 ```bash
-$ git clone https://github.com/yourusername/picklevw.git
-$ cd picklevw
-$ pip install -r requirements.txt
+git clone https://github.com/yourusername/picklevw.git
+cd picklevw
+pip install -r requirements.txt
 ```
 Running the App
 To start the application, run:
 
 ```bash
-$ python3 picklevw.py
+python3 picklevw.py
 ```
 
 📸 Screenshots
