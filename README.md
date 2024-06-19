@@ -1,6 +1,5 @@
-## picklevw 🥒
-
 <p align="center">
+## picklevw
   <img src="./logo/picklevw_logo.png" />
 </p>
 
