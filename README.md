@@ -1,4 +1,4 @@
-## 🥒 picklevw: A Python Desktop App for Reading Pickle Files
+## 🥒 picklevw
 
 **picklevw** is a simple desktop application built with Python, designed to read and display pickle files using Pandas and Tkinter.
 
@@ -22,9 +22,9 @@ Follow these steps to get picklevw up and running on your machine.
 Clone the repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/yourusername/picklevw.git
-cd picklevw
-pip install -r requirements.txt
+$ git clone https://github.com/yourusername/picklevw.git
+$ cd picklevw
+$ pip install -r requirements.txt
 ```
 Running the App
 To start the application, run:
