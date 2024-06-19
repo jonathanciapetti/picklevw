@@ -11,12 +11,6 @@
 
 Follow these steps to get picklevw up and running on your machine.
 
-#### Prerequisites
-
-- Python 3.x
-- Pandas
-- Tkinter (usually included with Python installations)
-
 #### Installation
 
 Clone the repository and install the required dependencies:
@@ -42,11 +36,9 @@ Click on the "Open File" button.
 Select the pickle file you want to read.
 
 #### 🛠️ Dependencies
-```
-tkinter
-pandas
-prettyprint
-```
+- pandas
+- tkinter (usually included with Python installations)
+- prettyprinter
 
 #### 🤝 Contributing
 Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
