@@ -36,7 +36,7 @@ def process_data(filename):
     try:
         while not output_queue.empty():
             message = output_queue.get_nowait()
-        message['status'] = 'computing'
+        message['status'] = 'loading'
         output_queue.put(message)
         with open(filename, "rb") as file:
             # https://stackoverflow.com/questions/3703276/how-to-tell-if-a-file-is-gzip-compressed

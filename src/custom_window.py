@@ -153,8 +153,8 @@ class CustomWindow(tk.Tk):
             # self.widgets['btn_load'].text = "aaa"
             example_widget.text.delete("1.0", tk.END)
             example_widget.text.insert(tk.END, message['output'] + "\n")
-            if message['status'] == 'computing':
-                self.widgets['lbl_header']['text'] = 'COMPUTING ...'
+            if message['status'] == 'loading':
+                self.widgets['lbl_header']['text'] = 'LOADING ...'
                 self.widgets['lbl_header']['bg'] = '#0000FF'
                 self.widgets['lbl_header']['fg'] = '#FFFFFF'
             else:
