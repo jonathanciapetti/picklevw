@@ -1,9 +1,13 @@
 ## picklevw
 
-![Static Badge](https://img.shields.io/badge/build-passed-green)
+[//]: # (![Static Badge]&#40;https://img.shields.io/badge/build-passed-green&#41;)
 
 <p align="center">
-  <img src="./logo/picklevw_logo.png" />
+    <img src="./logo/picklevw_logo.png" />
+    
+    <a href="https://circleci.com/gh/badges/picklevw/tree/main">
+        <img src="https://img.shields.io/circleci/project/github/badges/picklevw/main" alt="build status">
+    </a>
 </p>
 
 <!-- ![logo](./logo/picklevw_logo.png) -->
