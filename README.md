@@ -4,7 +4,9 @@
 
 <p align="center">
     <img src="./logo/picklevw_logo.png" />
-    
+</p>
+
+<p align="center">
 <!--
     <a href="https://circleci.com/gh/badges/picklevw/tree/main">
         <img src="https://img.shields.io/circleci/project/github/badges/picklevw/main" alt="build status">
@@ -12,7 +14,6 @@
 -->
     <a href="https://circleci.com/gh/badges/shields/tree/master">
         <img src="https://img.shields.io/circleci/project/github/badges/shields/master" alt="build status"></a>
-
 </p>
 
 <!-- ![logo](./logo/picklevw_logo.png) -->
