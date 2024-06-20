@@ -3,8 +3,6 @@ foobar
 
 """
 import tkinter as tk
-from tkinter.constants import RAISED
-
 from pandas import set_option
 
 
@@ -22,6 +20,7 @@ class LoadButton(tk.Button):
     """
     bbb
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.config(bg='darkgreen', fg='white')
@@ -31,14 +30,14 @@ class ThemeButton(tk.Button):
     """
     bbb
     """
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
+    ...
 
 
 class Element:
     """
     ccc
     """
+
     def __init__(self, widget: tk.Widget, master, i, j, padx, pady):
         """
 
@@ -74,6 +73,7 @@ class TextLineNumbers(tk.Canvas):
     """
     ddd
     """
+
     def __init__(self, *args, **kwargs):
         """
 
@@ -103,10 +103,9 @@ class TextLineNumbers(tk.Canvas):
             dline = self.textwidget.dlineinfo(i)
             if dline is None:
                 break
-            y = dline[1]
+            y_positicn = dline[1]
             linenum = str(i).split(".", maxsplit=1)
-            self.create_text(2, y, anchor="nw", text=linenum[0])
-            # i = self.textwidget.index("%s+1line" % i)
+            self.create_text(2, y_positicn, anchor="nw", text=linenum[0])
             i = self.textwidget.index(f"{i}+1line")
 
 
@@ -114,6 +113,7 @@ class CustomText(tk.Text):
     """
     ddd
     """
+
     def __init__(self, *args, **kwargs):
         """
 
@@ -145,7 +145,8 @@ class CustomText(tk.Text):
 
         # generate an event if something was added or deleted,
         # or the cursor position changed
-        if (args[0] in ("insert", "replace", "delete") or
+        if (
+                args[0] in ("insert", "replace", "delete") or
                 args[0:3] == ("mark", "set", "insert") or
                 args[0:2] == ("xview", "moveto") or
                 args[0:2] == ("xview", "scroll") or
@@ -162,6 +163,7 @@ class Example(tk.Frame):
     """
     eee
     """
+
     def __init__(self, name, *args, **kwargs):
         """
 

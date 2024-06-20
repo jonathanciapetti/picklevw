@@ -2,8 +2,8 @@
 foobar
 """
 
-from .imports import tk
-from .custom_widgets import Example, LoadButton, ThemeButton
+import tkinter as tk
+from src.custom_widgets import Example, LoadButton, ThemeButton
 
 
 class CustomWindow(tk.Tk):
@@ -14,7 +14,7 @@ class CustomWindow(tk.Tk):
     BIG_FONT = "Helvetica 14"
     BIG_FONT_BOLD = "Helvetica 14 bold"
     LBL_PREFIX = "File: "
-    FILENAME = ""
+    filename = ""
 
     def __init__(self) -> None:
         """
@@ -33,15 +33,15 @@ class CustomWindow(tk.Tk):
         :return:
         :rtype:
         """
-        self.grid_columnconfigure(0, weight=0)
-        self.grid_columnconfigure(1, weight=1)
-        self.grid_columnconfigure(2, weight=0)
+        self.grid_columnconfigure(index=0, weight=0)
+        self.grid_columnconfigure(index=1, weight=1)
+        self.grid_columnconfigure(index=2, weight=0)
 
-        self.frames["btn_load_frame"].grid_columnconfigure(0, weight=0)
-        self.frames["lbl_header_frame"].grid_columnconfigure(1, weight=1)
-        self.frames["lbl_search_frame"].grid_columnconfigure(2, weight=0)
-        self.frames["searchbox_frame"].grid_columnconfigure(3, weight=0)
-        self.frames["example_frame"].grid_columnconfigure(0, weight=1)
+        self.frames["btn_load_frame"].grid_columnconfigure(index=0, weight=0)
+        self.frames["lbl_header_frame"].grid_columnconfigure(index=1, weight=1)
+        self.frames["lbl_search_frame"].grid_columnconfigure(index=2, weight=0)
+        self.frames["searchbox_frame"].grid_columnconfigure(index=3, weight=0)
+        self.frames["example_frame"].grid_columnconfigure(index=0, weight=1)
 
     def setup_rows(self) -> None:
         """
@@ -49,12 +49,12 @@ class CustomWindow(tk.Tk):
         :return:
         :rtype:
         """
-        self.grid_rowconfigure(0, weight=0)
-        self.grid_rowconfigure(1, weight=1)
-        self.grid_rowconfigure(2, weight=0)
+        self.grid_rowconfigure(index=0, weight=0)
+        self.grid_rowconfigure(index=1, weight=1)
+        self.grid_rowconfigure(index=2, weight=0)
 
-        self.frames["example_frame"].grid_rowconfigure(1, weight=1)
-        self.frames["lbl_footer_frame"].grid_rowconfigure(2, weight=1)
+        self.frames["example_frame"].grid_rowconfigure(index=1, weight=1)
+        self.frames["lbl_footer_frame"].grid_rowconfigure(index=2, weight=1)
 
     def setup_frames(self) -> None:
         """
@@ -87,7 +87,7 @@ class CustomWindow(tk.Tk):
         # lbl_header -------------------------------------------------------------------------------
         self.widgets["lbl_header"] = tk.Label(
             master=self.frames["lbl_header_frame"],
-            text= self.FILENAME,  # self.update_lbl_header(),
+            text=self.filename,
             font=self.MEDIUM_FONT,
             anchor="w")
         self.widgets["lbl_header"].grid(row=0, column=0, sticky='nwe', )
@@ -129,7 +129,7 @@ class CustomWindow(tk.Tk):
         )
         self.widgets["btn_load"].grid(row=0, column=0)
 
-        # btn_theme -----------------------------upda----------------------------------------------------
+        # btn_theme --------------------------------------------------------------------------------
         self.widgets["btn_theme"] = ThemeButton(
             master=self.frames["btn_load_frame"],
             text="Switch to dark mode",
@@ -137,20 +137,10 @@ class CustomWindow(tk.Tk):
         )
         self.widgets["btn_theme"].grid(row=0, column=1)
 
-
     def update_text_widget_from_queue(self, example_widget, queue):
         """Updates the text widget with messages from the queue."""
-        # message = ''
         while not queue.empty():
             message = queue.get_nowait()
-            # print(message)
-            # if len(message['output']) == 0:
-            #     self.widgets['lbl_header']['text'] = 'COMPUTING'
-            #     print("ABCDE")
-            #     break
-            # print(message)
-            # self.FILENAME = "message['filename']"
-            # self.widgets['btn_load'].text = "aaa"
             example_widget.text.delete("1.0", tk.END)
             example_widget.text.insert(tk.END, message['output'] + "\n")
             if message['status'] == 'loading':
@@ -176,12 +166,10 @@ class CustomWindow(tk.Tk):
             self.clipboard_clear()
             self.clipboard_append(content)
             return "break"
-        elif event.state == 4 and event.keysym == 'v':
+        if event.state == 4 and event.keysym == 'v':
             self.widgets['example'].text.insert('end', self.selection_get(selection='CLIPBOARD'))
             return "break"
-        elif event.state == 4 and event.keysym == 'a':
+        if event.state == 4 and event.keysym == 'a':
             # select text
             self.widgets['example'].text.event_generate('<<SelectAll>>')
-            return 'break'
-        else:
-            return "break"
+        return "break"

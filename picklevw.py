@@ -3,8 +3,6 @@ foobar
 """
 from __future__ import annotations
 
-import multiprocessing
-
 from src.custom_widgets import set_options
 from src.custom_window import CustomWindow
 from src.mediator import Mediator

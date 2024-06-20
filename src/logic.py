@@ -11,7 +11,7 @@ import psutil
 from prettyprinter import pformat
 from pandas import read_pickle
 
-from src.imports import fd
+from tkinter import filedialog as fd
 
 pids_queue = multiprocessing.Queue()
 output_queue = multiprocessing.Queue()
