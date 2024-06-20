@@ -3,7 +3,7 @@ foobar
 """
 
 import tkinter as tk
-from src.custom_widgets import Example, LoadButton, ThemeButton
+from src.widgets import Example, LoadButton, ThemeButton
 
 
 class CustomWindow(tk.Tk):

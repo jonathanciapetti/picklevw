@@ -2,8 +2,8 @@
 foobar
 """
 
-from .custom_widgets import LoadButton, ThemeButton
-from .custom_window import CustomWindow
+from .widgets import LoadButton, ThemeButton
+from .window import CustomWindow
 from .logic import start_process
 
 
