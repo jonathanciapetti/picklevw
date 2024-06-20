@@ -1,12 +1,12 @@
 ## picklevw
 
+![Static Badge](https://img.shields.io/badge/build-passed-green)
+
 <p align="center">
   <img src="./logo/picklevw_logo.png" />
 </p>
 
 <!-- ![logo](./logo/picklevw_logo.png) -->
-
-![Static Badge](https://img.shields.io/badge/build-passed-green)
 
 **picklevw** (pronunced "pickleview") is a simple desktop application built with Python, designed to read and display pickle files using Pandas and Tkinter.
 
