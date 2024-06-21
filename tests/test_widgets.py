@@ -1,6 +1,5 @@
 import pytest
 import tkinter as tk
-from pyvirtualdisplay import Display
 from pandas import get_option
 from src.widgets import set_options, LoadButton, ThemeButton, Element, TextLineNumbers, CustomText, \
     Example
