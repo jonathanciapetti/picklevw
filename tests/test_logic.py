@@ -1,17 +1,22 @@
-import pytest
-from unittest.mock import patch, mock_open, MagicMock
+from unittest.mock import patch, mock_open
 import pickle
-from pandas import DataFrame
-from src.logic import process_data, start_process, terminate_all_processes, pids_queue, output_queue
+
+import pytest
+
+from src.logic import process_data, pids_queue, output_queue
 
 
 @pytest.fixture
 def clear_queues():
+    """
+
+    :return:
+    """
     while not pids_queue.empty():
         pids_queue.get_nowait()
     while not output_queue.empty():
         output_queue.get_nowait()
-    yield
+    yield  # Why?
     while not pids_queue.empty():
         pids_queue.get_nowait()
     while not output_queue.empty():
@@ -19,6 +24,11 @@ def clear_queues():
 
 
 def test_process_data_no_filename(clear_queues):
+    """
+
+    :param clear_queues:
+    :return:
+    """
     process_data('')
     assert output_queue.qsize() == 0
 
@@ -49,6 +59,12 @@ def test_process_data_no_filename(clear_queues):
 
 @patch('builtins.open', new_callable=mock_open)
 def test_process_data_file_not_found(mock_file, clear_queues):
+    """
+    Cos'è ??????
+    :param mock_file:
+    :param clear_queues:
+    :return:
+    """
     mock_file.side_effect = FileNotFoundError
     process_data('notfound.pkl')
     assert output_queue.qsize() == 1
@@ -57,6 +73,13 @@ def test_process_data_file_not_found(mock_file, clear_queues):
 @patch('builtins.open', new_callable=mock_open, read_data=b'notgzip')
 @patch('pandas.read_pickle')
 def test_process_data_unicode_error(mock_read_pickle, mock_file, clear_queues):
+    """
+
+    :param mock_read_pickle:
+    :param mock_file:
+    :param clear_queues:
+    :return:
+    """
     mock_read_pickle.side_effect = UnicodeDecodeError("codec", b"", 0, 1, "reason")
     process_data('unicode_error.pkl')
     assert output_queue.qsize() == 1
@@ -65,10 +88,16 @@ def test_process_data_unicode_error(mock_read_pickle, mock_file, clear_queues):
 @patch('builtins.open', new_callable=mock_open, read_data=b'notgzip')
 @patch('pandas.read_pickle')
 def test_process_data_unpickling_error(mock_read_pickle, mock_file, clear_queues):
+    """
+
+    :param mock_read_pickle:
+    :param mock_file:
+    :param clear_queues:
+    :return:
+    """
     mock_read_pickle.side_effect = pickle.UnpicklingError
     process_data('unpickling_error.pkl')
     assert output_queue.qsize() == 1
-
 
 # @patch('psutil.Process')
 # @patch('tkinter.filedialog.askopenfilename', return_value='test.pkl')
