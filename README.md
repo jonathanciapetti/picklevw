@@ -22,7 +22,7 @@
 
 - **User-friendly Interface:** Simple and intuitive GUI built with Tkinter.
 - **Fast Data Loading:** Efficiently reads pickle files using Pandas.
-- **GUI and data processing independent life cycles** No GUI freeze thanks to multiprocessing and everything communicating through its queues.
+- **No GUI freeze** GUI and data processing have independent life cycles thanks to multiprocessing and its queues.
 
 ### 🚀 Getting Started
 
