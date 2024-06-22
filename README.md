@@ -5,19 +5,14 @@
 <p align="center">
     <img src="./logo/picklevw_logo.png" />
 </p>
-
 <p align="center">
     <a href="https://circleci.com/gh/badges/picklevw/tree/main">
-        <img src="https://img.shields.io/circleci/project/github/badges/picklevw/main" alt="build status">
-    </a>
+        <img src="https://img.shields.io/circleci/project/github/badges/picklevw/main" alt="build status"></a>
     <a href="https://circleci.com/gh/badges/daily-tests">
         <img src="https://img.shields.io/circleci/project/github/badges/daily-tests?label=service%20tests"
-            alt="service-test status">
-    </a>
+            alt="service-test status"></a>
     <a href="https://coveralls.io/github/badges/picklevw">
-        <img src="https://img.shields.io/coveralls/github/badges/picklevw"
-            alt="coverage">
-    </a>
+        <img src="https://img.shields.io/coveralls/github/badges/picklevw" alt="coverage"></a>
 </p>
 
 
