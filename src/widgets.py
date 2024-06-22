@@ -1,6 +1,5 @@
 """
 foobar
-
 """
 import tkinter as tk
 from pandas import set_option
@@ -17,8 +16,7 @@ def set_options() -> None:
 
 
 class LoadButton(tk.Button):
-    """
-    bbb
+    """ bbb
     """
 
     def __init__(self, *args, **kwargs):
@@ -27,40 +25,22 @@ class LoadButton(tk.Button):
 
 
 class ThemeButton(tk.Button):
-    """
-    bbb
+    """ bbb
     """
     ...
 
 
 class Element:
-    """
-    ccc
+    """ ccc
     """
 
     def __init__(self, widget: tk.Widget, master, i, j, padx, pady):
-        """
-
-        :param widget:
-        :type widget:
-        :param master:
-        :type master:
-        :param i:
-        :type i:
-        :param j:
-        :type j:
-        :param padx:
-        :type padx:
-        :param pady:
-        :type pady:
-        """
         self._widget = widget
         self._widget.master = master
         self._widget.grid(row=i, column=j, padx=padx, pady=pady)
 
     def grid(self):
-        """
-
+        """ abcde
         :return:
         :rtype:
         """
@@ -70,24 +50,15 @@ class Element:
 # https://stackoverflow.com/questions/16369470/tkinter-adding-line-number-to-text-widget
 # https://stackoverflow.com/questions/9691205/how-to-highlight-the-current-line-of-a-text-widget
 class PicklevwTkinterCanvas(tk.Canvas):
-    """
-    ddd
+    """ ddd
     """
 
     def __init__(self, *args, **kwargs):
-        """
-
-        :param args:
-        :type args:
-        :param kwargs:
-        :type kwargs:
-        """
         tk.Canvas.__init__(self, *args, **kwargs)
         self.textwidget = None
 
     def attach(self, text_widget):
-        """
-
+        """ abcde
         :param text_widget:
         :type text_widget:
         :return:
@@ -110,18 +81,10 @@ class PicklevwTkinterCanvas(tk.Canvas):
 
 
 class PicklevwTkinterText(tk.Text):
-    """
-    ddd
+    """ ddd
     """
 
     def __init__(self, *args, **kwargs):
-        """
-
-        :param args:
-        :type args:
-        :param kwargs:
-        :type kwargs:
-        """
         tk.Text.__init__(self, *args, **kwargs, undo=True, maxundo=1)
 
         # create a proxy for the underlying widget
@@ -131,8 +94,7 @@ class PicklevwTkinterText(tk.Text):
         self.configure(background='white', foreground='black')
 
     def _proxy(self, *args):
-        """
-
+        """ abcde
         :param args:
         :type args:
         :return:
@@ -164,15 +126,6 @@ class PicklevwTkinterFrame(tk.Frame):
     """
 
     def __init__(self, name, *args, **kwargs):
-        """
-
-        :param name:
-        :type name:
-        :param args:
-        :type args:
-        :param kwargs:
-        :type kwargs:
-        """
         tk.Frame.__init__(self, *args, **kwargs)
         self.receive = None
         self.text = PicklevwTkinterText(self)
@@ -188,8 +141,7 @@ class PicklevwTkinterFrame(tk.Frame):
         self.name = name
 
     def _on_change(self, event):
-        """
-
+        """ abcde
         :param event:
         :type event:
         :return:
