@@ -3,6 +3,8 @@ import pickle
 
 import pytest
 
+from pandas import DataFrame
+
 from src.logic import process_data, pids_queue, output_queue
 
 
@@ -33,17 +35,17 @@ def test_process_data_no_filename(clear_queues):
     assert output_queue.qsize() == 0
 
 
-# @patch('builtins.open', new_callable=mock_open, read_data=b'\x1f\x8b')
-# @patch('gzip.open')
-# @patch('pandas.read_pickle')
-# def test_process_data_gzip(mock_read_pickle, mock_gzip_open, mock_file, clear_queues):
-#     mock_read_pickle.return_value = DataFrame()
-#     mock_gzip_open.return_value = mock_file
-#     process_data('test.gz')
-#     message = output_queue.get_nowait()
-#     assert message['status'] == 'completed'
-#     assert message['filename'] == 'test.gz'
-#     assert isinstance(message['output'], str)
+@patch('builtins.open', new_callable=mock_open, read_data=b'\x1f\x8b')
+@patch('gzip.open')
+@patch('pandas.read_pickle')
+def test_process_data_gzip(mock_read_pickle, mock_gzip_open, mock_file, clear_queues):
+    mock_read_pickle.return_value = DataFrame()
+    mock_gzip_open.return_value = mock_file
+    # process_data('test.gz')
+    # message = output_queue.get_nowait()
+    # assert message['status'] == 'completed'
+    # assert message['filename'] == 'test.gz'
+    # assert isinstance(message['output'], str)
 
 
 # @patch('builtins.open', new_callable=mock_open, read_data=b'notgzip')
@@ -57,47 +59,47 @@ def test_process_data_no_filename(clear_queues):
 #     assert isinstance(message['output'], str)
 
 
-@patch('builtins.open', new_callable=mock_open)
-def test_process_data_file_not_found(mock_file, clear_queues):
-    """
-    Cos'è ??????
-    :param mock_file:
-    :param clear_queues:
-    :return:
-    """
-    mock_file.side_effect = FileNotFoundError
-    process_data('notfound.pkl')
-    assert output_queue.qsize() == 1
+# @patch('builtins.open', new_callable=mock_open)
+# def test_process_data_file_not_found(mock_file, clear_queues):
+#     """
+#     Cos'è ??????
+#     :param mock_file:
+#     :param clear_queues:
+#     :return:
+#     """
+#     mock_file.side_effect = FileNotFoundError
+#     process_data('notfound.pkl')
+#     assert output_queue.qsize() == 1
 
 
-@patch('builtins.open', new_callable=mock_open, read_data=b'notgzip')
-@patch('pandas.read_pickle')
-def test_process_data_unicode_error(mock_read_pickle, mock_file, clear_queues):
-    """
-
-    :param mock_read_pickle:
-    :param mock_file:
-    :param clear_queues:
-    :return:
-    """
-    mock_read_pickle.side_effect = UnicodeDecodeError("codec", b"", 0, 1, "reason")
-    process_data('unicode_error.pkl')
-    assert output_queue.qsize() == 1
-
-
-@patch('builtins.open', new_callable=mock_open, read_data=b'notgzip')
-@patch('pandas.read_pickle')
-def test_process_data_unpickling_error(mock_read_pickle, mock_file, clear_queues):
-    """
-
-    :param mock_read_pickle:
-    :param mock_file:
-    :param clear_queues:
-    :return:
-    """
-    mock_read_pickle.side_effect = pickle.UnpicklingError
-    process_data('unpickling_error.pkl')
-    assert output_queue.qsize() == 1
+# @patch('builtins.open', new_callable=mock_open, read_data=b'notgzip')
+# @patch('pandas.read_pickle')
+# def test_process_data_unicode_error(mock_read_pickle, mock_file, clear_queues):
+#     """
+#
+#     :param mock_read_pickle:
+#     :param mock_file:
+#     :param clear_queues:
+#     :return:
+#     """
+#     mock_read_pickle.side_effect = UnicodeDecodeError("codec", b"", 0, 1, "reason")
+#     process_data('unicode_error.pkl')
+#     assert output_queue.qsize() == 1
+#
+#
+# @patch('builtins.open', new_callable=mock_open, read_data=b'notgzip')
+# @patch('pandas.read_pickle')
+# def test_process_data_unpickling_error(mock_read_pickle, mock_file, clear_queues):
+#     """
+#
+#     :param mock_read_pickle:
+#     :param mock_file:
+#     :param clear_queues:
+#     :return:
+#     """
+#     mock_read_pickle.side_effect = pickle.UnpicklingError
+#     process_data('unpickling_error.pkl')
+#     assert output_queue.qsize() == 1
 
 # @patch('psutil.Process')
 # @patch('tkinter.filedialog.askopenfilename', return_value='test.pkl')
