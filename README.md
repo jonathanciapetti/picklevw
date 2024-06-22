@@ -1,5 +1,3 @@
-## picklevw
-
 [//]: # (![Static Badge]&#40;https://img.shields.io/badge/build-passed-green&#41;)
 
 <p align="center">
