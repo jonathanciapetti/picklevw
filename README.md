@@ -54,9 +54,9 @@ Click on the "Open File" button.
 Select the pickle file you want to read.
 
 #### 🛠️ Dependencies
-- pandas
-- tkinter (usually included with Python installations)
-- prettyprinter
+- *pandas* >= 1.5
+- *tkinter* (usually included with Python installations)
+- *prettyprinter*
 
 #### 🤝 Contributing
 Contributions are <ins>**welcome**</ins>! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
