@@ -3,11 +3,9 @@ This module implements a custom Tkinter window for displaying
 and managing widgets in a GUI application.
 """
 
-
 import tkinter as tk
 
 from src.widgets import PicklevwTkinterFrame, LoadButton, ThemeButton
-
 
 
 class CustomWindow(tk.Tk):
@@ -23,9 +21,7 @@ class CustomWindow(tk.Tk):
                    "jonathan.ciapetti@normabytes.com")
 
     def __init__(self) -> None:
-        """ bbb
-        """
-        super().__init__(className='picklevw')
+        super().__init__(className='picklevw')  # This sets the title of the window.
         self.frames = {}
         self.widgets = {}
         self._pickle_str = ""
