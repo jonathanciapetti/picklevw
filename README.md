@@ -48,13 +48,6 @@ To start the application, run:
 python3 picklevw.py
 ```
 
-#### 📸 Screenshots
-
-#### 📖 Usage
-Open a Pickle File:
-Click on the "Open File" button.
-Select the pickle file you want to read.
-
 #### 🛠️ Dependencies
 - *pandas* >= 1.5
 - *tkinter* (usually included with Python installations)
