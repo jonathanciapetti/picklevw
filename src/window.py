@@ -1,18 +1,26 @@
 """
-foobar
+This module implements a custom Tkinter window for displaying
+and managing widgets in a GUI application.
 """
+
 
 import tkinter as tk
 
-from src.widgets import Example, LoadButton, ThemeButton
+from src.widgets import PicklevwTkinterFrame, LoadButton, ThemeButton
+
 
 
 class CustomWindow(tk.Tk):
-    """ aaa
+    """ A custom Tkinter window for displaying and managing widgets in a GUI application.
     """
-    MEDIUM_FONT, BIG_FONT, BIG_FONT_BOLD = "Helvetica 12", "Helvetica 14", "Helvetica 14 bold"
+
+    MEDIUM_FONT, BIG_FONT, BIG_FONT_BOLD = ("Helvetica 12", "Helvetica 14", "Helvetica 14 bold")
     LBL_PREFIX = "File: "
     filename = ""
+
+    FOOTER_TEXT = ("MIT Licensed. 2024 Jonathan Ciapetti - "
+                   "https://github.com/jonathanciapetti/picklevw - "
+                   "jonathan.ciapetti@normabytes.com")
 
     def __init__(self) -> None:
         """ bbb
@@ -23,11 +31,14 @@ class CustomWindow(tk.Tk):
         self._pickle_str = ""
 
     def update_lbl_header(self, filename=''):
+        """ Updates the label header with the provided filename.
+        :return:
+        :rtype:
+        """
         return f'{self.LBL_PREFIX} {filename}'
 
     def setup_cols(self) -> None:
-        """
-
+        """ Configures the grid columns for the main window and its frames.
         :return:
         :rtype:
         """
@@ -42,8 +53,7 @@ class CustomWindow(tk.Tk):
         self.frames["example_frame"].grid_columnconfigure(index=0, weight=1)
 
     def setup_rows(self) -> None:
-        """
-
+        """ Configures the grid rows for the main window and its frames.
         :return:
         :rtype:
         """
@@ -55,8 +65,7 @@ class CustomWindow(tk.Tk):
         self.frames["lbl_footer_frame"].grid_rowconfigure(index=2, weight=1)
 
     def setup_frames(self) -> None:
-        """
-
+        """ Initializes and places the frames within the main window.
         :return:
         :rtype:
         """
@@ -75,8 +84,7 @@ class CustomWindow(tk.Tk):
         self.frames["lbl_footer_frame"].grid(row=2, column=0, columnspan=4)
 
     def setup_widgets(self):
-        """
-
+        """ Initializes and places the widgets within the frames.
         :return:
         :rtype:
         """
@@ -105,14 +113,16 @@ class CustomWindow(tk.Tk):
         self.widgets["searchbox"].grid(row=0, column=3, columnspan=2)
 
         # example ----------------------------------------------------------------------------------
-        self.widgets["example"] = Example(master=self.frames["example_frame"], name="output_box")
-        self.widgets["example"].grid(row=1, column=0, sticky="nswe", columnspan=4, )
+        self.widgets["example"] = PicklevwTkinterFrame(
+            master=self.frames["example_frame"],
+            name="output_box"
+        )
+        self.widgets["example"].grid(row=1, column=0, sticky="nswe", columnspan=4)
 
         # lbl_footer -------------------------------------------------------------------------------
         self.widgets["lbl_footer"] = tk.Label(
             master=self.frames["lbl_footer_frame"],
-            text="MIT Licensed. 2024 Jonathan Ciapetti - "
-                 "https://github.com/jonathanciapetti/picklevw - jonathan.ciapetti@normabytes.com",
+            text=self.FOOTER_TEXT,
             font=self.MEDIUM_FONT,
             anchor="center")
         self.widgets["lbl_footer"].grid(row=2, column=0, columnspan=4)
@@ -134,7 +144,10 @@ class CustomWindow(tk.Tk):
         self.widgets["btn_theme"].grid(row=0, column=1)
 
     def update_text_widget_from_queue(self, example_widget, queue):
-        """Updates the text widget with messages from the queue."""
+        """ Updates the text widget with messages from the queue.
+        :return:
+        :rtype:
+        """
         while not queue.empty():
             message = queue.get_nowait()
             example_widget.text.delete("1.0", tk.END)
@@ -159,6 +172,10 @@ class CustomWindow(tk.Tk):
         )
 
     def ctrl_events(self, event):
+        """ Handles control events for copy, paste, and select-all actions.
+        :return:
+        :rtype:
+        """
         if event.state == 4 and event.keysym == 'c':
             content = self.widgets["example"].text.selection_get()
             self.clipboard_clear()
