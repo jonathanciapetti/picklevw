@@ -3,6 +3,7 @@ foobar
 """
 
 import tkinter as tk
+
 from src.widgets import Example, LoadButton, ThemeButton
 
 
@@ -116,7 +117,7 @@ class CustomWindow(tk.Tk):
         self.widgets["lbl_footer"] = tk.Label(
             master=self.frames["lbl_footer_frame"],
             text="MIT Licensed. 2024 Jonathan Ciapetti - "
-                 "jonathanciapetti.it - jonathan.ciapetti@normabytes.com",
+                 "https://github.com/jonathanciapetti/picklevw - jonathan.ciapetti@normabytes.com",
             font=self.MEDIUM_FONT,
             anchor="center")
         self.widgets["lbl_footer"].grid(row=2, column=0, columnspan=4)
@@ -143,6 +144,8 @@ class CustomWindow(tk.Tk):
             message = queue.get_nowait()
             example_widget.text.delete("1.0", tk.END)
             example_widget.text.insert(tk.END, message['output'] + "\n")
+            if 'messagebox' in message.keys():
+                tk.messagebox.showinfo(title="Error", message=message['messagebox'])
             if message['status'] == 'loading':
                 self.widgets['lbl_header']['text'] = 'LOADING ...'
                 self.widgets['lbl_header']['bg'] = '#0000FF'
@@ -159,6 +162,16 @@ class CustomWindow(tk.Tk):
                 queue
             )
         )
+
+    # def update_messagebox_from_queue(self, queue):
+    #     """Updates the text widget with messages from the queue."""
+    #     print('Ok, ok ...')
+    #     while not queue.empty():
+    #         message = queue.get_nowait()
+    #         print("uela")
+    #         if message['messagebox']:
+    #             print("heyla")
+    #             tk.messagebox.Message("showinfo", "Information", parent=self)
 
     def ctrl_events(self, event):
         if event.state == 4 and event.keysym == 'c':

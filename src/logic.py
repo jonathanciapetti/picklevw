@@ -5,7 +5,6 @@ ABC
 import multiprocessing
 from multiprocessing import Process
 import gzip
-import pickle
 
 import psutil
 from prettyprinter import pformat
@@ -23,6 +22,12 @@ queue_input = {
 output_queue.put(queue_input)
 
 
+def read_queue(msg: dict, queue: multiprocessing.Queue) -> dict:
+    while not queue.empty():
+        msg = queue.get_nowait()
+    return msg
+
+
 def process_data(filename):
     """
 
@@ -34,28 +39,28 @@ def process_data(filename):
     if not filename:
         return
     try:
-        while not output_queue.empty():
-            message = output_queue.get_nowait()
+        message = read_queue(message, output_queue)
         message['status'] = 'loading'
         output_queue.put(message)
         with open(filename, "rb") as file:
             # https://stackoverflow.com/questions/3703276/how-to-tell-if-a-file-is-gzip-compressed
             # https://stackoverflow.com/questions/56125182/unpicklingerror-invalid-load-key-x1f
+            # Gzip check:
             if file.read(2) == b'\x1f\x8b':
                 file = gzip.open(filename, 'rb')
             message['filename'] = filename
             message['output'] = pformat(read_pickle(file), indent=4, compact=False)
 
-    except FileNotFoundError as err:
-        print(f"(FileNotFoundError) {err}")
-    except UnicodeDecodeError as err:
-        # tk.messagebox.showerror(message="Not a text pickle file.")
-        print(f"(UnicodeDecodeError) {err}")
-    except pickle.UnpicklingError as err:
-        # tk.messagebox.showerror(message=f"Not a valid pickle file: {err}")
-        print(f"(pickle.UnpicklingError) {err}")
-    # except Exception as ex:
-    #     print(f"(Exception) {ex}")
+    # except FileNotFoundError as file_not_found_err:
+    #     messagebox.showerror(message=f"File not found: {file_not_found_err}")
+    # except UnicodeDecodeError as unicode_decode_err:
+    #     messagebox.showerror(message=f"Not a text pickle file: {unicode_decode_err}")
+    # except pickle.UnpicklingError as unpickling_err:
+    #     messagebox.showerror(message=f"Not a valid pickle file: {unpickling_err}")
+    except Exception as ex:
+        message['messagebox'] = str(ex)
+        message['status'] = 'failed'
+        output_queue.put(message)
     else:
         message['status'] = 'completed'
         output_queue.put(message)
