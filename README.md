@@ -64,8 +64,7 @@ Contributions are welcome! If you have any ideas, suggestions, or bug reports, p
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 #### 📫 Contact
-Repo: [https://github.com/jonathanciapetti/picklevw](https://github.com/jonathanciapetti/picklevw)
-
-Email: [jonathan.ciapetti@normabytes.com](mailto:jonathan.ciapetti@normabytes.com)
+- repo: [https://github.com/jonathanciapetti/picklevw](https://github.com/jonathanciapetti/picklevw)
+- email: [jonathan.ciapetti@normabytes.com](mailto:jonathan.ciapetti@normabytes.com)
 
 Thank you for checking out picklevw! We hope you find it useful. Feel free to reach out if you have any questions or feedback.
