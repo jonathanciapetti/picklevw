@@ -8,25 +8,22 @@ from src.widgets import Example, LoadButton, ThemeButton
 
 
 class CustomWindow(tk.Tk):
+    """ aaa
     """
-    aaa
-    """
-    MEDIUM_FONT = "Helvetica 12"
-    BIG_FONT = "Helvetica 14"
-    BIG_FONT_BOLD = "Helvetica 14 bold"
+    MEDIUM_FONT, BIG_FONT, BIG_FONT_BOLD = "Helvetica 12", "Helvetica 14", "Helvetica 14 bold"
     LBL_PREFIX = "File: "
     filename = ""
 
     def __init__(self) -> None:
-        """
-
+        """ bbb
         """
         super().__init__(className='picklevw')
         self.frames = {}
         self.widgets = {}
         self._pickle_str = ""
 
-    def update_lbl_header(self, filename=''): return f'{self.LBL_PREFIX} {filename}'
+    def update_lbl_header(self, filename=''):
+        return f'{self.LBL_PREFIX} {filename}'
 
     def setup_cols(self) -> None:
         """
@@ -63,13 +60,11 @@ class CustomWindow(tk.Tk):
         :return:
         :rtype:
         """
-        self.frames["lbl_header_frame"] = tk.Frame(self)
-        self.frames["btn_load_frame"] = tk.Frame(self)
-        self.frames["btn_theme_frame"] = tk.Frame(self)
-        self.frames["lbl_search_frame"] = tk.Frame(self)
-        self.frames["searchbox_frame"] = tk.Frame(self)
-        self.frames["lbl_footer_frame"] = tk.Frame(self)
-        self.frames["example_frame"] = tk.Frame(self)
+        for elem_name in (
+                "lbl_header_frame", "btn_load_frame", "btn_theme_frame", "lbl_search_frame",
+                "searchbox_frame", "lbl_footer_frame", "example_frame",
+        ):
+            self.frames[elem_name] = tk.Frame(self)
 
         self.frames["btn_load_frame"].grid(row=0, column=0)
         self.frames["lbl_header_frame"].grid(row=0, column=1)
@@ -162,16 +157,6 @@ class CustomWindow(tk.Tk):
                 queue
             )
         )
-
-    # def update_messagebox_from_queue(self, queue):
-    #     """Updates the text widget with messages from the queue."""
-    #     print('Ok, ok ...')
-    #     while not queue.empty():
-    #         message = queue.get_nowait()
-    #         print("uela")
-    #         if message['messagebox']:
-    #             print("heyla")
-    #             tk.messagebox.Message("showinfo", "Information", parent=self)
 
     def ctrl_events(self, event):
         if event.state == 4 and event.keysym == 'c':
