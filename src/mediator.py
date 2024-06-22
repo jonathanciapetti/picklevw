@@ -2,18 +2,21 @@
 foobar
 """
 
-from .widgets import LoadButton, ThemeButton
-from .window import CustomWindow
-from .logic import start_process
+from src.widgets import LoadButton, ThemeButton
+from src.window import CustomWindow
+from src.logic import start_process
 
 
 class Mediator:
-    """
-    xyzt
+    """ xyzt
     """
 
     def __init__(self, elements: list, window: CustomWindow):
+        """ aaa
 
+        :param elements:
+        :param window:
+        """
         self.elements = elements
         self.button_receivers = []
         self.window_ = window
