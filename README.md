@@ -63,7 +63,7 @@ Contributions are welcome! If you have any ideas, suggestions, or bug reports, p
 #### 📜 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-#### 📫 Contact
+#### 📫 Contacts
 - repo: [https://github.com/jonathanciapetti/picklevw](https://github.com/jonathanciapetti/picklevw)
 - email: [jonathan.ciapetti@normabytes.com](mailto:jonathan.ciapetti@normabytes.com)
 
