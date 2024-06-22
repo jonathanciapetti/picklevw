@@ -23,7 +23,7 @@ It's basically a GUI wrapping *pandas.read_pickle()*.
 
 - **User-friendly Interface:** Simple and intuitive GUI built with Tkinter.
 - **Fast Data Loading:** Efficiently reads pickle files using Pandas.
-- **No freezing GUI:** GUI and data handling live in different processes.
+- **No freezing GUI:** GUI and data live in different processes.
 
 ### 🚀 Getting Started
 
