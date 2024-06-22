@@ -11,6 +11,7 @@
         <img src="https://img.shields.io/circleci/project/github/badges/picklevw/main" alt="build status">
     </a>
 
+<|--
     <a href="https://circleci.com/gh/badges/daily-tests">
         <img src="https://img.shields.io/circleci/project/github/badges/daily-tests?label=service%20tests"
             alt="service-test status">
@@ -20,6 +21,7 @@
         <img src="https://img.shields.io/coveralls/github/badges/picklevw"
             alt="coverage">
     </a>
+-->
 
 </p>
 
