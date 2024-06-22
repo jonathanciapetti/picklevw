@@ -25,6 +25,8 @@ It's basically a GUI wrapping `pandas.read_pickle()`.
 - Fast Data Loading: efficiently reads pickle files using Pandas.
 - No freezing GUI: GUI and data live in different processes.
 
+---
+
 ### 🚀 Getting Started
 
 Follow these steps to get picklevw up and running on your machine.
@@ -61,6 +63,9 @@ Select the pickle file you want to read.
 #### ⌛ TODOs
 - GUI testing [...]
 - [...]
+
+---
+
 #### 🤝 Contributing
 Contributions are <ins>**welcome**</ins>! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
 
