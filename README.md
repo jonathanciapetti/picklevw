@@ -59,14 +59,14 @@ python3 picklevw.py
 
 ---
 
-#### 🤝 Contributing
+### 🤝 Contributing
 Contributions are <ins>**welcome**</ins>! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
 
 
-#### 📜 License
+### 📜 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-#### 📫 Contacts
+### 📫 Contacts
 - Repo: [https://github.com/jonathanciapetti/picklevw](https://github.com/jonathanciapetti/picklevw)
 - Email: [jonathan.ciapetti@normabytes.com](mailto:jonathan.ciapetti@normabytes.com)
 
