@@ -69,7 +69,7 @@ class Element:
 
 # https://stackoverflow.com/questions/16369470/tkinter-adding-line-number-to-text-widget
 # https://stackoverflow.com/questions/9691205/how-to-highlight-the-current-line-of-a-text-widget
-class TextLineNumbers(tk.Canvas):
+class PicklevwTkinterCanvas(tk.Canvas):
     """
     ddd
     """
@@ -109,7 +109,7 @@ class TextLineNumbers(tk.Canvas):
             i = self.textwidget.index(f"{i}+1line")
 
 
-class CustomText(tk.Text):
+class PicklevwTkinterText(tk.Text):
     """
     ddd
     """
@@ -128,8 +128,7 @@ class CustomText(tk.Text):
         self._orig = self._w + "_orig"
         self.tk.call("rename", self._w, self._orig)
         self.tk.createcommand(self._w, self._proxy)
-        self.configure(background='white')
-        self.configure(foreground='black')
+        self.configure(background='white', foreground='black')
 
     def _proxy(self, *args):
         """
@@ -159,7 +158,7 @@ class CustomText(tk.Text):
         return result
 
 
-class Example(tk.Frame):
+class PicklevwTkinterFrame(tk.Frame):
     """
     eee
     """
@@ -176,10 +175,10 @@ class Example(tk.Frame):
         """
         tk.Frame.__init__(self, *args, **kwargs)
         self.receive = None
-        self.text = CustomText(self)
+        self.text = PicklevwTkinterText(self)
         self.vsb = tk.Scrollbar(self, orient="vertical", command=self.text.yview)
         self.text.configure(yscrollcommand=self.vsb.set)
-        self.linenumbers = TextLineNumbers(self, width=30)
+        self.linenumbers = PicklevwTkinterCanvas(self, width=30)
         self.linenumbers.attach(self.text)
         self.vsb.pack(side="right", fill="y")
         self.linenumbers.pack(side="left", fill="y")
