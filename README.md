@@ -4,9 +4,11 @@
     <img src="./logo/picklevw_logo_and_name.png" />
 </p>
 <p align="center">
-    ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
-
-    ![semver](https://img.shields.io/badge/semver-0.0.0-blue)
+    ![workflow]
+    (https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
+    
+    ![semver]
+    (https://img.shields.io/badge/semver-0.0.0-blue)
 </p>
 
 
