@@ -29,8 +29,6 @@ It's basically a GUI wrapping `pandas.read_pickle()`.
 
 ### 🚀 Getting Started
 
-Follow these steps to get picklevw up and running on your machine.
-
 #### Installation
 
 Clone the repository and install the required dependencies:
