@@ -16,12 +16,13 @@
 
 <!-- ![logo](./logo/picklevw_logo.png) -->
 
-**picklevw** (pronunced *pickleview*) is a small desktop application built with Python, designed to read and display pickle files using Pandas and Tkinter, with both working together thanks to multiprocessing.
+**picklevw** (pronunced *pickleview*) is a small desktop application built with Python, designed to read and display pickle files using Pandas and Tkinter.
 
 ### ✨ Features
 
 - **User-friendly Interface:** Simple and intuitive GUI built with Tkinter.
 - **Fast Data Loading:** Efficiently reads pickle files using Pandas.
+- **GUI and data processing independent life cycles** No GUI freeze thanks to multiprocessing and everything communicating through its queues.
 
 ### 🚀 Getting Started
 
