@@ -9,7 +9,7 @@ from pandas import set_option
 
 
 def set_options() -> None:
-    """Sets pandas display options to show all rows and columns."""
+    """ Sets pandas display options to show all rows and columns. """
     set_option('display.max_rows', None)
     set_option('display.max_columns', None)
 
@@ -28,7 +28,7 @@ class ThemeButton(tk.Button):
 
 
 class Element:
-    """Wrapper for a tkinter widget to manage its grid placement."""
+    """ Wrapper for a tkinter widget to manage its grid placement. """
 
     def __init__(self, widget: tk.Widget, master, i, j, padx, pady):
         self._widget = widget
@@ -36,19 +36,19 @@ class Element:
         self._widget.grid(row=i, column=j, padx=padx, pady=pady)
 
     def grid(self) -> None:
-        """Returns the grid placement of the widget."""
+        """ Returns the grid placement of the widget."""
         return self._widget.grid()
 
 
 class PicklevwTkinterCanvas(tk.Canvas):
-    """Custom canvas to display line numbers for a text widget."""
+    """ Custom canvas to display line numbers for a text widget. """
 
     def __init__(self, *args, **kwargs):
         tk.Canvas.__init__(self, *args, **kwargs)
         self.textwidget = None
 
     def attach(self, text_widget) -> None:
-        """Attaches a text widget to the canvas for displaying line numbers.
+        """ Attaches a text widget to the canvas for displaying line numbers.
 
         :param text_widget: The text widget to attach.
         """
@@ -70,7 +70,7 @@ class PicklevwTkinterCanvas(tk.Canvas):
 
 
 class PicklevwTkinterText(tk.Text):
-    """Custom text widget with undo functionality and event proxy."""
+    """ Custom text widget with undo functionality and event proxy. """
 
     def __init__(self, *args, **kwargs):
         tk.Text.__init__(self, *args, **kwargs, undo=True, maxundo=1)
@@ -82,7 +82,7 @@ class PicklevwTkinterText(tk.Text):
         self.configure(background='white', foreground='black')
 
     def _proxy(self, *args) -> Any:
-        """Proxy method to intercept and handle widget commands.
+        """ Proxy method to intercept and handle widget commands.
 
         :param args: Arguments for the widget command.
         :return: Result of the widget command.
@@ -106,7 +106,7 @@ class PicklevwTkinterText(tk.Text):
 
 
 class PicklevwTkinterFrame(tk.Frame):
-    """Custom frame containing a text widget with line numbers and a vertical scrollbar."""
+    """ Custom frame containing a text widget with line numbers and a vertical scrollbar. """
 
     def __init__(self, name, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
@@ -124,7 +124,7 @@ class PicklevwTkinterFrame(tk.Frame):
         self.name = name
 
     def _on_change(self, event) -> None:
-        """Handles the change event to redraw line numbers.
+        """ Handles the change event to redraw line numbers.
 
         :param event: The event object.
         """
