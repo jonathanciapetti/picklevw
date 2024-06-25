@@ -104,13 +104,18 @@ class PicklevwTkFrame(tk.Frame):
         self.linenumbers = PicklevwTkCanvas(self, width=30)
         self.linenumbers.attach(self.text)
 
+        # These bindings cannot be managed by the Mediator,
+        # because they are defined at the object initialization:
+        self.text.bind("<<Change>>", self._on_change)
+        self.text.bind("<Configure>", self._on_change)
+
         self.vsb.pack(side="right", fill="y")
         self.linenumbers.pack(side="left", fill="y")
         self.text.pack(side="right", fill="both", expand=True)
 
         self.name = name
 
-    def on_change(self, event) -> None:
+    def _on_change(self, event) -> None:
         """ Handles the change event to redraw line numbers.
 
         :param event: The event object.
