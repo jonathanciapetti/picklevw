@@ -100,16 +100,17 @@ class PicklevwTkFrame(tk.Frame):
         self.text = PicklevwTkText(self)
         self.vsb = tk.Scrollbar(self, orient="vertical", command=self.text.yview)
         self.text.configure(yscrollcommand=self.vsb.set)
+
         self.linenumbers = PicklevwTkCanvas(self, width=30)
         self.linenumbers.attach(self.text)
+
         self.vsb.pack(side="right", fill="y")
         self.linenumbers.pack(side="left", fill="y")
         self.text.pack(side="right", fill="both", expand=True)
-        self.text.bind("<<Change>>", self._on_change)
-        self.text.bind("<Configure>", self._on_change)
+
         self.name = name
 
-    def _on_change(self, event) -> None:
+    def on_change(self, event) -> None:
         """ Handles the change event to redraw line numbers.
 
         :param event: The event object.
