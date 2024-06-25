@@ -14,7 +14,7 @@ def set_options() -> None:
     set_option('display.max_columns', None)
 
 
-class LoadButton(tk.Button):
+class PicklevwTkLoadButton(tk.Button):
     """Custom button with a specific color scheme for loading functionality."""
 
     def __init__(self, *args, **kwargs):
@@ -22,22 +22,9 @@ class LoadButton(tk.Button):
         self.config(bg='darkgreen', fg='white')
 
 
-class ThemeButton(tk.Button):
+class PicklevwTkThemeButton(tk.Button):
     """ Button for the light/dark theme switch. """
     ...
-
-
-class Element:
-    """ Wrapper for a tkinter widget to manage its grid placement. """
-
-    def __init__(self, widget: tk.Widget, master, i, j, padx, pady):
-        self._widget = widget
-        self._widget.master = master
-        self._widget.grid(row=i, column=j, padx=padx, pady=pady)
-
-    def grid(self) -> None:
-        """ Returns the grid placement of the widget."""
-        return self._widget.grid()
 
 
 class PicklevwTkCanvas(tk.Canvas):
@@ -94,9 +81,9 @@ class PicklevwTkText(tk.Text):
                 args[0] in ("insert", "replace", "delete") or
                 args[0:3] == ("mark", "set", "insert") or
                 args[0:2] in (
-                    ("xview", "moveto"), ("xview", "scroll"),
-                    ("yview", "moveto"), ("yview", "scroll")
-                )
+                ("xview", "moveto"), ("xview", "scroll"),
+                ("yview", "moveto"), ("yview", "scroll")
+        )
         ):
             self.event_generate("<<Change>>", when="tail")
 
