@@ -6,8 +6,7 @@ from pandas import set_option
 
 
 def set_options() -> None:
-    """
-
+    """ ...
     :return:
     :rtype:
     """
@@ -16,8 +15,7 @@ def set_options() -> None:
 
 
 class LoadButton(tk.Button):
-    """ bbb
-    """
+    """ ... """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -30,8 +28,7 @@ class ThemeButton(tk.Button):
 
 
 class Element:
-    """ ccc
-    """
+    """ ... """
 
     def __init__(self, widget: tk.Widget, master, i, j, padx, pady):
         self._widget = widget
@@ -39,7 +36,7 @@ class Element:
         self._widget.grid(row=i, column=j, padx=padx, pady=pady)
 
     def grid(self):
-        """ abcde
+        """ ...
         :return:
         :rtype:
         """
@@ -47,15 +44,14 @@ class Element:
 
 
 class PicklevwTkinterCanvas(tk.Canvas):
-    """ ddd
-    """
+    """ ... """
 
     def __init__(self, *args, **kwargs):
         tk.Canvas.__init__(self, *args, **kwargs)
         self.textwidget = None
 
     def attach(self, text_widget):
-        """ abcde
+        """ ...
         :param text_widget:
         :type text_widget:
         :return:
@@ -64,7 +60,7 @@ class PicklevwTkinterCanvas(tk.Canvas):
         self.textwidget = text_widget
 
     def redraw(self, *args):
-        '''redraw line numbers'''
+        ''' Redraw line numbers after each text update. '''
         self.delete("all")
         i = self.textwidget.index("@0,0")
         while True:
@@ -78,8 +74,7 @@ class PicklevwTkinterCanvas(tk.Canvas):
 
 
 class PicklevwTkinterText(tk.Text):
-    """ ddd
-    """
+    """ ... """
 
     def __init__(self, *args, **kwargs):
         tk.Text.__init__(self, *args, **kwargs, undo=True, maxundo=1)
@@ -118,9 +113,7 @@ class PicklevwTkinterText(tk.Text):
 
 
 class PicklevwTkinterFrame(tk.Frame):
-    """
-    eee
-    """
+    """ ... """
 
     def __init__(self, name, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
