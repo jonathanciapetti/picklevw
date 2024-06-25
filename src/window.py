@@ -5,7 +5,7 @@ and managing widgets in a GUI application.
 
 import tkinter as tk
 
-from src.widgets import PicklevwTkinterFrame, LoadButton, ThemeButton
+from src.widgets import PicklevwTkFrame, LoadButton, ThemeButton
 
 
 class CustomWindow(tk.Tk):
@@ -109,7 +109,7 @@ class CustomWindow(tk.Tk):
         self.widgets["searchbox"].grid(row=0, column=3, columnspan=2)
 
         # example ----------------------------------------------------------------------------------
-        self.widgets["example"] = PicklevwTkinterFrame(
+        self.widgets["example"] = PicklevwTkFrame(
             master=self.frames["example_frame"],
             name="output_box"
         )

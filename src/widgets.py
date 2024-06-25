@@ -40,7 +40,7 @@ class Element:
         return self._widget.grid()
 
 
-class PicklevwTkinterCanvas(tk.Canvas):
+class PicklevwTkCanvas(tk.Canvas):
     """ Custom canvas to display line numbers for a text widget. """
 
     def __init__(self, *args, **kwargs):
@@ -69,7 +69,7 @@ class PicklevwTkinterCanvas(tk.Canvas):
             i = self.textwidget.index(f"{i}+1line")
 
 
-class PicklevwTkinterText(tk.Text):
+class PicklevwTkText(tk.Text):
     """ Custom text widget with an event proxy. TODO: undo functionality. """
 
     def __init__(self, *args, **kwargs):
@@ -103,16 +103,16 @@ class PicklevwTkinterText(tk.Text):
         return result
 
 
-class PicklevwTkinterFrame(tk.Frame):
+class PicklevwTkFrame(tk.Frame):
     """ Custom frame containing a text widget with line numbers and a vertical scrollbar. """
 
     def __init__(self, name, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
         self.receive = None
-        self.text = PicklevwTkinterText(self)
+        self.text = PicklevwTkText(self)
         self.vsb = tk.Scrollbar(self, orient="vertical", command=self.text.yview)
         self.text.configure(yscrollcommand=self.vsb.set)
-        self.linenumbers = PicklevwTkinterCanvas(self, width=30)
+        self.linenumbers = PicklevwTkCanvas(self, width=30)
         self.linenumbers.attach(self.text)
         self.vsb.pack(side="right", fill="y")
         self.linenumbers.pack(side="left", fill="y")
