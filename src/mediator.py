@@ -3,7 +3,7 @@ This module defines the implementation of the Mediator pattern (from the Gang of
 It is just an attempt, so it must be assumed as flawed.
 """
 
-from src.widgets import LoadButton, ThemeButton
+from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton
 from src.window import CustomWindow
 from src.logic import start_process
 
@@ -21,9 +21,9 @@ class Mediator:
 
         # Bind button press events to their respective handlers
         for elem in self.elements:
-            if isinstance(elem, LoadButton):
+            if isinstance(elem, PicklevwTkLoadButton):
                 elem.bind('<ButtonPress>', (lambda _: start_process()))
-            elif isinstance(elem, ThemeButton):
+            elif isinstance(elem, PicklevwTkThemeButton):
                 elem.bind('<ButtonPress>', (lambda _: self.switch_theme()))
 
     def switch_theme(self):
