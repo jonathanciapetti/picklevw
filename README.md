@@ -54,7 +54,7 @@ python3 picklevw.py
 - *prettyprinter*
 
 #### ⌛ TODOs
-- GUI testing: testing on xvfb using pyvirtualdisplay
+- GUI testing: testing on `xvfb` using `pyvirtualdisplay`
 - Testing of pickles' life cycle.
 
 ---
