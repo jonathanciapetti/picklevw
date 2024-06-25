@@ -47,8 +47,6 @@ class Element:
         return self._widget.grid()
 
 
-# https://stackoverflow.com/questions/16369470/tkinter-adding-line-number-to-text-widget
-# https://stackoverflow.com/questions/9691205/how-to-highlight-the-current-line-of-a-text-widget
 class PicklevwTkinterCanvas(tk.Canvas):
     """ ddd
     """
