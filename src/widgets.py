@@ -1,21 +1,21 @@
 """
-foobar
+This module defines custom tkinter widgets and their configurations
 """
+
 import tkinter as tk
+from typing import Any
+
 from pandas import set_option
 
 
 def set_options() -> None:
-    """ ...
-    :return:
-    :rtype:
-    """
+    """Sets pandas display options to show all rows and columns."""
     set_option('display.max_rows', None)
     set_option('display.max_columns', None)
 
 
 class LoadButton(tk.Button):
-    """ ... """
+    """Custom button with a specific color scheme for loading functionality."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -28,39 +28,35 @@ class ThemeButton(tk.Button):
 
 
 class Element:
-    """ ... """
+    """Wrapper for a tkinter widget to manage its grid placement."""
 
     def __init__(self, widget: tk.Widget, master, i, j, padx, pady):
         self._widget = widget
         self._widget.master = master
         self._widget.grid(row=i, column=j, padx=padx, pady=pady)
 
-    def grid(self):
-        """ ...
-        :return:
-        :rtype:
-        """
+    def grid(self) -> None:
+        """Returns the grid placement of the widget."""
         return self._widget.grid()
 
 
 class PicklevwTkinterCanvas(tk.Canvas):
-    """ ... """
+    """Custom canvas to display line numbers for a text widget."""
 
     def __init__(self, *args, **kwargs):
         tk.Canvas.__init__(self, *args, **kwargs)
         self.textwidget = None
 
-    def attach(self, text_widget):
-        """ ...
-        :param text_widget:
-        :type text_widget:
-        :return:
-        :rtype:
+    def attach(self, text_widget) -> None:
+        """Attaches a text widget to the canvas for displaying line numbers.
+
+        :param text_widget: The text widget to attach.
         """
         self.textwidget = text_widget
 
-    def redraw(self, *args):
-        ''' Redraw line numbers after each text update. '''
+    def redraw(self, *args) -> None:
+        """ Redraw line numbers after each text update. """
+
         self.delete("all")
         i = self.textwidget.index("@0,0")
         while True:
@@ -74,7 +70,7 @@ class PicklevwTkinterCanvas(tk.Canvas):
 
 
 class PicklevwTkinterText(tk.Text):
-    """ ... """
+    """Custom text widget with undo functionality and event proxy."""
 
     def __init__(self, *args, **kwargs):
         tk.Text.__init__(self, *args, **kwargs, undo=True, maxundo=1)
@@ -85,35 +81,32 @@ class PicklevwTkinterText(tk.Text):
         self.tk.createcommand(self._w, self._proxy)
         self.configure(background='white', foreground='black')
 
-    def _proxy(self, *args):
-        """ abcde
-        :param args:
-        :type args:
-        :return:
-        :rtype:
+    def _proxy(self, *args) -> Any:
+        """Proxy method to intercept and handle widget commands.
+
+        :param args: Arguments for the widget command.
+        :return: Result of the widget command.
         """
-        # let the actual widget perform the requested action
+        # Let the actual widget perform the requested action:
         cmd = (self._orig,) + args
         result = self.tk.call(cmd)
 
-        # generate an event if something was added or deleted,
-        # or the cursor position changed
+        # Generate an event if something was added or deleted, or the cursor position has changed:
         if (
                 args[0] in ("insert", "replace", "delete") or
                 args[0:3] == ("mark", "set", "insert") or
-                args[0:2] == ("xview", "moveto") or
-                args[0:2] == ("xview", "scroll") or
-                args[0:2] == ("yview", "moveto") or
-                args[0:2] == ("yview", "scroll")
+                args[0:2] in (
+                    ("xview", "moveto"), ("xview", "scroll"),
+                    ("yview", "moveto"), ("yview", "scroll")
+                )
         ):
             self.event_generate("<<Change>>", when="tail")
 
-        # return what the actual widget returned
         return result
 
 
 class PicklevwTkinterFrame(tk.Frame):
-    """ ... """
+    """Custom frame containing a text widget with line numbers and a vertical scrollbar."""
 
     def __init__(self, name, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
@@ -130,11 +123,9 @@ class PicklevwTkinterFrame(tk.Frame):
         self.text.bind("<Configure>", self._on_change)
         self.name = name
 
-    def _on_change(self, event):
-        """ abcde
-        :param event:
-        :type event:
-        :return:
-        :rtype:
+    def _on_change(self, event) -> None:
+        """Handles the change event to redraw line numbers.
+
+        :param event: The event object.
         """
         self.linenumbers.redraw()
