@@ -5,7 +5,7 @@ and managing widgets in a GUI application.
 
 import tkinter as tk
 
-from src.widgets import PicklevwTkFrame, LoadButton, ThemeButton
+from src.widgets import PicklevwTkFrame, PicklevwTkLoadButton, PicklevwTkThemeButton
 
 
 class CustomWindow(tk.Tk):
@@ -124,7 +124,7 @@ class CustomWindow(tk.Tk):
         self.widgets["lbl_footer"].grid(row=2, column=0, columnspan=4)
 
         # btn_load ---------------------------------------------------------------------------------
-        self.widgets["btn_load"] = LoadButton(
+        self.widgets["btn_load"] = PicklevwTkLoadButton(
             master=self.frames["btn_load_frame"],
             text="Load",
             font=self.MEDIUM_FONT
@@ -132,7 +132,7 @@ class CustomWindow(tk.Tk):
         self.widgets["btn_load"].grid(row=0, column=0)
 
         # btn_theme --------------------------------------------------------------------------------
-        self.widgets["btn_theme"] = ThemeButton(
+        self.widgets["btn_theme"] = PicklevwTkThemeButton(
             master=self.frames["btn_load_frame"],
             text="Switch to dark mode",
             font=self.MEDIUM_FONT
