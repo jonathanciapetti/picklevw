@@ -3,6 +3,7 @@ This module defines custom tkinter widgets and their configurations.
 """
 
 import tkinter as tk
+from _tkinter import TclError
 from typing import Any
 
 from pandas import set_option
@@ -32,7 +33,7 @@ class PicklevwTkCanvas(tk.Canvas):
     """ Custom canvas to display line numbers for a text widget. """
 
     def __init__(self, *args, **kwargs):
-        tk.Canvas.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.textwidget = None
 
     def attach(self, text_widget) -> None:
@@ -61,7 +62,7 @@ class PicklevwTkText(tk.Text):
     """ Custom text widget with an event proxy. TODO: undo functionality. """
 
     def __init__(self, *args, **kwargs):
-        tk.Text.__init__(self, *args, **kwargs, undo=True, maxundo=1)
+        super().__init__(*args, **kwargs, undo=True, maxundo=-1, autoseparators=True)
         self._orig = self._w + "_orig"
         self.tk.call("rename", self._w, self._orig)
         self.tk.createcommand(self._w, self._proxy)
@@ -75,7 +76,10 @@ class PicklevwTkText(tk.Text):
         """
         # Let the actual widget perform the requested action:
         cmd = (self._orig,) + args
-        result = self.tk.call(cmd)
+        try:
+            result = self.tk.call(cmd)
+        except TclError:
+            result = ''  # Hotfix for "_tkinter.TclError: nothing to undo". TODO: fix it properly.
 
         # Generate an event if something was added or deleted, or the cursor position has changed:
         if (
@@ -95,7 +99,7 @@ class PicklevwTkFrame(tk.Frame):
     """ Custom frame containing a text widget with line numbers and a vertical scrollbar. """
 
     def __init__(self, name, *args, **kwargs):
-        tk.Frame.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.receive = None
         self.text = PicklevwTkText(self)
         self.vsb = tk.Scrollbar(self, orient="vertical", command=self.text.yview)
@@ -114,6 +118,8 @@ class PicklevwTkFrame(tk.Frame):
         self.text.pack(side="right", fill="both", expand=True)
 
         self.name = name
+
+
 
     def _on_change(self, event) -> None:
         """ Handles the change event to redraw line numbers.
