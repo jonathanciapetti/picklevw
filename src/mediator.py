@@ -12,8 +12,8 @@ class Mediator:
     """Mediator class to manage interactions between buttons and the main window."""
 
     def __init__(self, elements: list, window: CustomWindow):
-        self.elements = elements  # List of button elements
-        self.button_receivers = []  # List to hold button receivers
+        self.elements = elements
+        self.button_receivers = []
         self.window_ = window
 
         # Bind key events in the window to a control event handler
