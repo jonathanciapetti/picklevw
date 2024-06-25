@@ -25,8 +25,7 @@ class LoadButton(tk.Button):
 
 
 class ThemeButton(tk.Button):
-    """ bbb
-    """
+    """ Button for the light/dark theme switch. """
     ...
 
 
