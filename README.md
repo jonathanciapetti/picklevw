@@ -4,7 +4,7 @@
     <img src="./logo/picklevw_logo_and_name.png" />
 </p>
 
-<div align="center" style="display: inline;">
+<div align="center" style="display: inline-block;">
 
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
 
