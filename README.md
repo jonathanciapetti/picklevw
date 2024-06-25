@@ -5,8 +5,10 @@
 </p>
 
 <div align="center" style="display: flex; justify-content: center;">
+
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
 ![semver](https://img.shields.io/badge/semver-0.0.0-blue)
+
 </div>
 
 
