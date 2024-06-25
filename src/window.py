@@ -26,18 +26,15 @@ class CustomWindow(tk.Tk):
         self.widgets = {}
         self._pickle_str = ""
 
-    def update_lbl_header(self, filename=''):
+    def update_lbl_header(self, filename='') -> str:
         """ Updates the label header with the provided filename.
-        :return:
-        :rtype:
+        :return: label header with the provided filename
+        :rtype: str
         """
         return f'{self.LBL_PREFIX} {filename}'
 
     def setup_cols(self) -> None:
-        """ Configures the grid columns for the main window and its frames.
-        :return:
-        :rtype:
-        """
+        """ Configures the grid columns for the main window and its frames. """
         self.grid_columnconfigure(index=0, weight=0)
         self.grid_columnconfigure(index=1, weight=1)
         self.grid_columnconfigure(index=2, weight=0)
@@ -49,10 +46,7 @@ class CustomWindow(tk.Tk):
         self.frames["example_frame"].grid_columnconfigure(index=0, weight=1)
 
     def setup_rows(self) -> None:
-        """ Configures the grid rows for the main window and its frames.
-        :return:
-        :rtype:
-        """
+        """ Configures the grid rows for the main window and its frames. """
         self.grid_rowconfigure(index=0, weight=0)
         self.grid_rowconfigure(index=1, weight=1)
         self.grid_rowconfigure(index=2, weight=0)
@@ -61,10 +55,7 @@ class CustomWindow(tk.Tk):
         self.frames["lbl_footer_frame"].grid_rowconfigure(index=2, weight=1)
 
     def setup_frames(self) -> None:
-        """ Initializes and places the frames within the main window.
-        :return:
-        :rtype:
-        """
+        """ Initializes and places the frames within the main window. """
         for elem_name in (
                 "lbl_header_frame", "btn_load_frame", "btn_theme_frame", "lbl_search_frame",
                 "searchbox_frame", "lbl_footer_frame", "example_frame",
@@ -80,10 +71,7 @@ class CustomWindow(tk.Tk):
         self.frames["lbl_footer_frame"].grid(row=2, column=0, columnspan=4)
 
     def setup_widgets(self) -> None:
-        """ Initializes and places the widgets within the frames.
-        :return:
-        :rtype:
-        """
+        """ Initializes and places the widgets within the frames. """
         # lbl_header -------------------------------------------------------------------------------
         self.widgets["lbl_header"] = tk.Label(
             master=self.frames["lbl_header_frame"],
@@ -138,10 +126,7 @@ class CustomWindow(tk.Tk):
         self.widgets["btn_theme"].grid(row=0, column=1)
 
     def loop_start_text_widget(self, example_widget, queue) -> None:
-        """ Updates the text widget with messages from the queue.
-        :return:
-        :rtype:
-        """
+        """ Updates the text widget with messages from the queue. """
         while not queue.empty():
             message = queue.get_nowait()
             example_widget.text.delete("1.0", tk.END)
@@ -168,19 +153,17 @@ class CustomWindow(tk.Tk):
     def ctrl_events(self, event) -> str:
         """ Handles control events for copy, paste, and select-all actions.
         :return:
-        :rtype:
+        :rtype: str
         """
         if event.state == 4 and event.keysym == 'c':
             content = self.widgets["picklevw_tk_frame"].text.selection_get()
             self.clipboard_clear()
             self.clipboard_append(content)
-            return "break"
         if event.state == 4 and event.keysym == 'v':
             self.widgets["picklevw_tk_frame"].text.insert(
                 'end',
                 self.selection_get(selection="CLIPBOARD")
             )
-            return "break"
         if event.state == 4 and event.keysym == 'a':
             # select text
             self.widgets["picklevw_tk_frame"].text.event_generate("<<SelectAll>>")
