@@ -39,10 +39,10 @@ cw.setup_cols()
 
 # Mediator
 med = Mediator([cw.widgets["btn_load"], cw.widgets["btn_theme"]], cw)
-med.button_receivers = [cw.widgets["example"], ]
+med.button_receivers = [cw.widgets["picklevw_tk_frame"], ]
 
 # Update the text widget
-cw.loop_start_text_widget(cw.widgets["example"], output_queue)
+cw.loop_start_text_widget(cw.widgets["picklevw_tk_frame"], output_queue)
 
 # Set the window protocol to call exit_function when the window is requested to close
 cw.protocol('WM_DELETE_WINDOW', exit_function)

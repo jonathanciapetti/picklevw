@@ -28,15 +28,15 @@ class Mediator:
     def switch_theme(self):
         """ Switches the theme of the text widget between light and dark mode. """
 
-        current_bg = self.window_.widgets["example"].text["background"]
+        current_bg = self.window_.widgets["picklevw_tk_frame"].text["background"]
         if current_bg == "white":
-            self.window_.widgets["example"].text.configure(
+            self.window_.widgets["picklevw_tk_frame"].text.configure(
                 background="black",
                 foreground="white",
             )
             self.window_.widgets["btn_theme"]["text"] = "Switch to light mode"
         else:
-            self.window_.widgets["example"].text.configure(
+            self.window_.widgets["picklevw_tk_frame"].text.configure(
                 background="white",
                 foreground="black",
             )
