@@ -1,6 +1,5 @@
 """
-This module defines the implementation of the Mediator pattern (from the Gang of 4 book).
-It is just an attempt, so it must be assumed as flawed.
+Humble implementation of the Mediator pattern (from the Gang of 4 book).
 """
 
 from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton, PicklevwTkFrame
