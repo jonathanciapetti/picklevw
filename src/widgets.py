@@ -19,12 +19,13 @@ class PicklevwTkLoadButton(tk.Button):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.config(bg='darkgreen', fg='white')
+        self.config(bg='darkgreen', fg='white', text="Load")
 
 
 class PicklevwTkThemeButton(tk.Button):
-    """ Button for the light/dark theme switch. """
-    ...
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.config(text="Switch to dark mode")
 
 
 class PicklevwTkCanvas(tk.Canvas):
