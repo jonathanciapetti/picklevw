@@ -3,14 +3,14 @@ Humble implementation of the Mediator pattern.
 """
 
 from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton, PicklevwTkFrame
-from src.window import CustomWindow
+from src.window import PicklevwTkWindow
 from src.logic import start_process
 
 
 class Mediator:
     """ Mediator class to manage interactions between buttons and the main window. """
 
-    def __init__(self, elements: list, window: CustomWindow):
+    def __init__(self, elements: list, window: PicklevwTkWindow):
         self.elements = elements
         self.button_receivers = []
         self.window_ = window

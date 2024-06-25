@@ -8,7 +8,7 @@ from __future__ import annotations
 import ctypes
 
 from src.widgets import set_options
-from src.window import CustomWindow
+from src.window import PicklevwTkWindow
 from src.mediator import Mediator
 from src.logic import output_queue, terminate_all_processes
 
@@ -29,7 +29,7 @@ def exit_function():
 set_options()
 
 # Instance of CustomWindow
-cw = CustomWindow()
+cw = PicklevwTkWindow()
 
 # Setup
 cw.setup_frames()
