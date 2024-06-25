@@ -9,7 +9,7 @@ from src.logic import start_process
 
 
 class Mediator:
-    """Mediator class to manage interactions between buttons and the main window."""
+    """ Mediator class to manage interactions between buttons and the main window. """
 
     def __init__(self, elements: list, window: CustomWindow):
         self.elements = elements
@@ -27,7 +27,7 @@ class Mediator:
                 elem.bind('<ButtonPress>', (lambda _: self.switch_theme()))
 
     def switch_theme(self):
-        """Switches the theme of the text widget between light and dark mode."""
+        """ Switches the theme of the text widget between light and dark mode. """
 
         current_bg = self.window_.widgets["example"].text["background"]
         if current_bg == "white":
