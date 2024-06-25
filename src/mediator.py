@@ -27,7 +27,7 @@ class Mediator:
                 elem.bind('<ButtonPress>', (lambda _: self.switch_theme()))
 
     def switch_theme(self):
-        """Switches the theme of the text widget between light and dark modes."""
+        """Switches the theme of the text widget between light and dark mode."""
 
         current_bg = self.window_.widgets["example"].text["background"]
         if current_bg == "white":
