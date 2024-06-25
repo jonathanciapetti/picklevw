@@ -33,7 +33,7 @@ It's basically a GUI wrapping `pandas.read_pickle()`.
 
 #### Installation
 
-Clone the repository and install the required dependencies:
+Clone the repository and install the required dependencies (possibly on a virtual environment):
 
 ```bash
 git clone https://github.com/yourusername/picklevw.git
