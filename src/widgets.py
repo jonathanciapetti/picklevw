@@ -1,5 +1,5 @@
 """
-This module defines custom tkinter widgets and their configurations
+This module defines custom tkinter widgets and their configurations.
 """
 
 import tkinter as tk
@@ -70,12 +70,10 @@ class PicklevwTkinterCanvas(tk.Canvas):
 
 
 class PicklevwTkinterText(tk.Text):
-    """ Custom text widget with undo functionality and event proxy. """
+    """ Custom text widget with an event proxy. TODO: undo functionality. """
 
     def __init__(self, *args, **kwargs):
         tk.Text.__init__(self, *args, **kwargs, undo=True, maxundo=1)
-
-        # create a proxy for the underlying widget
         self._orig = self._w + "_orig"
         self.tk.call("rename", self._w, self._orig)
         self.tk.createcommand(self._w, self._proxy)
