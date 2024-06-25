@@ -79,7 +79,7 @@ class CustomWindow(tk.Tk):
         self.frames["example_frame"].grid(row=1, column=0, sticky="nswe", columnspan=4)
         self.frames["lbl_footer_frame"].grid(row=2, column=0, columnspan=4)
 
-    def setup_widgets(self):
+    def setup_widgets(self) -> None:
         """ Initializes and places the widgets within the frames.
         :return:
         :rtype:
@@ -137,7 +137,7 @@ class CustomWindow(tk.Tk):
         )
         self.widgets["btn_theme"].grid(row=0, column=1)
 
-    def loop_start_text_widget(self, example_widget, queue):
+    def loop_start_text_widget(self, example_widget, queue) -> None:
         """ Updates the text widget with messages from the queue.
         :return:
         :rtype:
@@ -165,7 +165,7 @@ class CustomWindow(tk.Tk):
             )
         )
 
-    def ctrl_events(self, event):
+    def ctrl_events(self, event) -> str:
         """ Handles control events for copy, paste, and select-all actions.
         :return:
         :rtype:
