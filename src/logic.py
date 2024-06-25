@@ -87,6 +87,5 @@ def terminate_all_processes() -> None:
     """ Terminates all running processes recorded in the pids_queue. """
     while not pids_queue.empty():
         old_pid = pids_queue.get_nowait()
-        # print(f'Terminating process with PID {old_pid}')
         proc = psutil.Process(old_pid)
         proc.terminate()  # or proc.kill() for extreme cases (it sends a SIGKILL)

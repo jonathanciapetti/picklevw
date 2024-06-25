@@ -25,7 +25,7 @@ class Mediator:
             elif isinstance(elem, PicklevwTkThemeButton):
                 elem.bind('<ButtonPress>', (lambda _: self.switch_theme()))
 
-    def switch_theme(self):
+    def switch_theme(self) -> None:
         """ Switches the theme of the text widget between light and dark mode. """
 
         current_bg = self.window_.widgets["picklevw_tk_frame"].text["background"]
