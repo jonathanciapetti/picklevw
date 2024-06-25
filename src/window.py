@@ -126,7 +126,6 @@ class CustomWindow(tk.Tk):
         # btn_load ---------------------------------------------------------------------------------
         self.widgets["btn_load"] = PicklevwTkLoadButton(
             master=self.frames["btn_load_frame"],
-            text="Load",
             font=self.MEDIUM_FONT
         )
         self.widgets["btn_load"].grid(row=0, column=0)
@@ -134,7 +133,6 @@ class CustomWindow(tk.Tk):
         # btn_theme --------------------------------------------------------------------------------
         self.widgets["btn_theme"] = PicklevwTkThemeButton(
             master=self.frames["btn_load_frame"],
-            text="Switch to dark mode",
             font=self.MEDIUM_FONT
         )
         self.widgets["btn_theme"].grid(row=0, column=1)
