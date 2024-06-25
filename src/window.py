@@ -8,7 +8,7 @@ import tkinter as tk
 from src.widgets import PicklevwTkFrame, PicklevwTkLoadButton, PicklevwTkThemeButton
 
 
-class CustomWindow(tk.Tk):
+class PicklevwTkWindow(tk.Tk):
     """ A custom Tkinter window for displaying and managing widgets in a GUI application.
     """
 
@@ -155,16 +155,23 @@ class CustomWindow(tk.Tk):
         :return:
         :rtype: str
         """
-        if event.state == 4 and event.keysym == 'c':
-            content = self.widgets["picklevw_tk_frame"].text.selection_get()
-            self.clipboard_clear()
-            self.clipboard_append(content)
-        if event.state == 4 and event.keysym == 'v':
-            self.widgets["picklevw_tk_frame"].text.insert(
-                'end',
-                self.selection_get(selection="CLIPBOARD")
-            )
-        if event.state == 4 and event.keysym == 'a':
-            # select text
-            self.widgets["picklevw_tk_frame"].text.event_generate("<<SelectAll>>")
+        if event.state == 4:
+
+            # Select text:
+            if event.keysym == 'a':
+                self.widgets["picklevw_tk_frame"].text.event_generate("<<SelectAll>>")
+
+            # Copy text
+            elif event.keysym == 'c':
+                content = self.widgets["picklevw_tk_frame"].text.selection_get()
+                self.clipboard_clear()
+                self.clipboard_append(content)
+
+            # Paste text (why, if this code is enabled, does double stuff get pasted?)
+            # if event.keysym == 'v':
+            #     self.widgets["picklevw_tk_frame"].text.insert(
+            #         'end',
+            #         self.selection_get(selection="CLIPBOARD")
+            #     )
+
         return "break"
