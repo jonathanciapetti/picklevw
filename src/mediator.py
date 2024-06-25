@@ -1,5 +1,5 @@
 """
-Humble implementation of the Mediator pattern (from the Gang of 4 book).
+Humble implementation of the Mediator pattern.
 """
 
 from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton, PicklevwTkFrame
