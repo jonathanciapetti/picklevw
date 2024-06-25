@@ -109,11 +109,11 @@ class CustomWindow(tk.Tk):
         self.widgets["searchbox"].grid(row=0, column=3, columnspan=2)
 
         # example ----------------------------------------------------------------------------------
-        self.widgets["example"] = PicklevwTkFrame(
+        self.widgets["picklevw_tk_frame"] = PicklevwTkFrame(
             master=self.frames["example_frame"],
             name="output_box"
         )
-        self.widgets["example"].grid(row=1, column=0, sticky="nswe", columnspan=4)
+        self.widgets["picklevw_tk_frame"].grid(row=1, column=0, sticky="nswe", columnspan=4)
 
         # lbl_footer -------------------------------------------------------------------------------
         self.widgets["lbl_footer"] = tk.Label(
@@ -160,7 +160,7 @@ class CustomWindow(tk.Tk):
         example_widget.text.after(
             100,
             lambda: self.loop_start_text_widget(
-                self.widgets["example"],
+                self.widgets["picklevw_tk_frame"],
                 queue
             )
         )
@@ -171,14 +171,17 @@ class CustomWindow(tk.Tk):
         :rtype:
         """
         if event.state == 4 and event.keysym == 'c':
-            content = self.widgets["example"].text.selection_get()
+            content = self.widgets["picklevw_tk_frame"].text.selection_get()
             self.clipboard_clear()
             self.clipboard_append(content)
             return "break"
         if event.state == 4 and event.keysym == 'v':
-            self.widgets['example'].text.insert('end', self.selection_get(selection='CLIPBOARD'))
+            self.widgets["picklevw_tk_frame"].text.insert(
+                'end',
+                self.selection_get(selection="CLIPBOARD")
+            )
             return "break"
         if event.state == 4 and event.keysym == 'a':
             # select text
-            self.widgets['example'].text.event_generate('<<SelectAll>>')
+            self.widgets["picklevw_tk_frame"].text.event_generate("<<SelectAll>>")
         return "break"
