@@ -76,10 +76,7 @@ def process_data(filename: str) -> None:
 def start_process() -> None:
     """Starts a separate process that runs the task function."""
     while not pids_queue.empty():
-        old_pid = pids_queue.get_nowait()
-        # print(f'Terminating process with PID {old_pid}')
-        proc = psutil.Process(old_pid)
-        proc.terminate()  # or proc.kill() for extreme cases (it sends a SIGKILL)
+        terminate_all_processes()
     filename = fd.askopenfilename()
     process = Process(target=process_data, args=(filename,))
     process.start()
@@ -90,6 +87,6 @@ def terminate_all_processes() -> None:
     """ Terminates all running processes recorded in the pids_queue. """
     while not pids_queue.empty():
         old_pid = pids_queue.get_nowait()
-        print(f'Terminating process with PID {old_pid}')
+        # print(f'Terminating process with PID {old_pid}')
         proc = psutil.Process(old_pid)
-        proc.terminate()
+        proc.terminate()  # or proc.kill() for extreme cases (it sends a SIGKILL)
