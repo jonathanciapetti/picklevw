@@ -4,13 +4,13 @@
     <img src="./logo/picklevw_logo_and_name.png" />
 </p>
 
-<p align="center" style="display: inline;">
+<div align="center" style="display: inline;">
 
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
 
 ![semver](https://img.shields.io/badge/semver-0.0.0-blue)
 
-</p>
+</div>
 
 
 <!-- ![logo](./logo/picklevw_logo.png) -->
