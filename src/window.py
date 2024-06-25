@@ -139,7 +139,7 @@ class CustomWindow(tk.Tk):
         )
         self.widgets["btn_theme"].grid(row=0, column=1)
 
-    def update_text_widget_from_queue(self, example_widget, queue):
+    def loop_start_text_widget(self, example_widget, queue):
         """ Updates the text widget with messages from the queue.
         :return:
         :rtype:
@@ -158,10 +158,10 @@ class CustomWindow(tk.Tk):
                 self.widgets['lbl_header']['bg'] = '#d9d9d9'
                 self.widgets['lbl_header']['fg'] = '#000000'
                 self.widgets['lbl_header']['text'] = self.update_lbl_header(message['filename'])
-            # self.widgets['btn_load'].destroy()
+        # Important !!! Recursion:
         example_widget.text.after(
             100,
-            lambda: self.update_text_widget_from_queue(
+            lambda: self.loop_start_text_widget(
                 self.widgets["example"],
                 queue
             )
