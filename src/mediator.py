@@ -10,12 +10,8 @@ from src.logic import start_process
 class Mediator:
     """ Mediator class to manage interactions between buttons and the main window. """
 
-    def __init__(self, elements: list, window: PicklevwTkWindow):
+    def __init__(self, elements: tuple):
         self.elements = elements
-        self.window_ = window
-
-        # Bind key events in the window to a control event handler
-        self.window_.bind("<Key>", lambda e: self.window_.ctrl_events(e))
 
         # Bind button press events to their respective handlers
         for elem in self.elements:
@@ -23,6 +19,8 @@ class Mediator:
                 elem.bind('<ButtonPress>', (lambda _: start_process()))
             elif isinstance(elem, PicklevwTkThemeButton):
                 elem.bind('<ButtonPress>', (lambda _: self.switch_theme()))
+            elif isinstance(elem, PicklevwTkWindow):
+                elem.bind('<Key>', (lambda e: self.window_.ctrl_events(e)))
 
     def switch_theme(self) -> None:
         """ Switches the theme of the text widget between light and dark mode. """
