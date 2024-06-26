@@ -12,7 +12,6 @@ class Mediator:
 
     def __init__(self, elements: list, window: PicklevwTkWindow):
         self.elements = elements
-        self.button_receivers = []
         self.window_ = window
 
         # Bind key events in the window to a control event handler
