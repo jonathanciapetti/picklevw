@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "picklevw"
-version = "0.0.1"
+version = "0.1.0"
 authors = [
     { name="Jonathan Ciapetti", email="jonathan.ciapetti@normabytes.com" },
 ]
@@ -18,5 +18,5 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/pypa/sampleproject"
-Issues = "https://github.com/pypa/sampleproject/issues"
+Homepage = "https://github.com/jonathanciapetti/picklevw"
+Issues = "https://github.com/jonathanciapetti/picklevw/issues"
