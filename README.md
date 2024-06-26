@@ -54,7 +54,6 @@ python3 picklevw.py
 - *prettyprinter*
 
 #### ⌛ TODOs
-- Basically ALL testing:
 - GUI testing: testing on `xvfb` using `pyvirtualdisplay`
 
 ---
