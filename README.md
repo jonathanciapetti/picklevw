@@ -56,7 +56,6 @@ python3 picklevw.py
 #### ⌛ TODOs
 - Basically ALL testing:
 - GUI testing: testing on `xvfb` using `pyvirtualdisplay`
-- Testing of pickles' life cycle.
 
 ---
 
