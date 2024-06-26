@@ -15,6 +15,12 @@ from src.logic import output_queue, terminate_all_processes
 # Initialize X11 threads for thread safety in GUI applications
 ctypes.CDLL('libX11.so.6').XInitThreads()
 
+# Set options for widgets
+set_options()
+
+# Instance of PicklevwTkWindow
+pw = PicklevwTkWindow()
+
 
 def exit_function():
     """
@@ -22,30 +28,23 @@ def exit_function():
     Called when the window is requested to close.
     """
     terminate_all_processes()
-    cw.destroy()
+    pw.destroy()
 
-
-# Set options for widgets
-set_options()
-
-# Instance of CustomWindow
-cw = PicklevwTkWindow()
 
 # Setup
-cw.setup_frames()
-cw.setup_widgets()
-cw.setup_rows()
-cw.setup_cols()
+pw.setup_frames()
+pw.setup_widgets()
+pw.setup_rows()
+pw.setup_cols()
 
 # Mediator
-med = Mediator([cw.widgets["btn_load"], cw.widgets["btn_theme"]], cw)
-med.button_receivers = [cw.widgets["picklevw_tk_frame"], ]
+med = Mediator([pw.widgets["btn_load"], pw.widgets["btn_theme"]], pw)
 
 # Update the text widget
-cw.loop_start_text_widget(cw.widgets["picklevw_tk_frame"], output_queue)
+pw.loop_start_text_widget(pw.widgets["picklevw_tk_frame"], output_queue)
 
 # Set the window protocol to call exit_function when the window is requested to close
-cw.protocol('WM_DELETE_WINDOW', exit_function)
+pw.protocol('WM_DELETE_WINDOW', exit_function)
 
 # Start the main loop of the custom window
-cw.mainloop()
+pw.mainloop()
