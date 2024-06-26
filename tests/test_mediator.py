@@ -5,8 +5,6 @@ from src.window import PicklevwTkWindow
 from src.mediator import Mediator
 
 
-
-
 @pytest.fixture
 def mock_load_button():
     return Mock(spec=PicklevwTkLoadButton)
@@ -27,6 +25,7 @@ def mock_window(mock_theme_button):
     window.widgets["picklevw_tk_frame"].text = Mock()
     return window
 
+
 @pytest.fixture
 def mediator(mock_load_button, mock_theme_button, mock_window):
     elements = (mock_load_button, mock_theme_button, mock_window)
@@ -37,6 +36,3 @@ def test_mediator_initialization(mediator, mock_load_button, mock_theme_button, 
     mock_load_button.bind.assert_called_once()
     mock_theme_button.bind.assert_called_once()
     mock_window.bind.assert_called_once()
-
-
-
