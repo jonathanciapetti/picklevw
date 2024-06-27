@@ -5,7 +5,7 @@ and managing widgets in a GUI application.
 
 import tkinter as tk
 
-from src.widgets import PicklevwTkFrame, PicklevwTkLoadButton, PicklevwTkThemeButton
+from widgets import PicklevwTkFrame, PicklevwTkLoadButton, PicklevwTkThemeButton
 
 
 class PicklevwTkWindow(tk.Tk):

@@ -2,9 +2,9 @@
 Humble implementation of the Mediator pattern.
 """
 
-from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton, PicklevwTkFrame
-from src.window import PicklevwTkWindow
-from src.logic import start_process
+from widgets import PicklevwTkLoadButton, PicklevwTkThemeButton
+from window import PicklevwTkWindow
+from logic import start_process
 
 
 class Mediator:
