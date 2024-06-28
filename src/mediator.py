@@ -15,18 +15,16 @@ class Mediator:
 
         # Bind button press events to their respective handlers
         for elem in self.elements:
-
-            window = None
             if isinstance(elem, PicklevwTkWindow):
                 window = elem
                 elem.bind('<Key>', (lambda e: window.ctrl_events(e)))
-
             if isinstance(elem, PicklevwTkLoadButton):
                 elem.bind('<ButtonPress>', (lambda _: start_process()))
             elif isinstance(elem, PicklevwTkThemeButton):
                 elem.bind('<ButtonPress>', (lambda _: self.switch_theme(window)))
 
-    def switch_theme(self, window) -> None:
+    @staticmethod
+    def switch_theme(window) -> None:
         """ Switches the theme of the text widget between light and dark mode. """
 
         current_bg = window.widgets["picklevw_tk_frame"].text["background"]
