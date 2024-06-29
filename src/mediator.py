@@ -53,7 +53,6 @@ class Mediator:
                     foreground="black",
                 )
                 window.widgets["btn_theme"]["text"] = "Switch to dark mode"
-                raise AttributeError
         except KeyError as e:
             tk.messagebox.showerror(
                 title="Error",
