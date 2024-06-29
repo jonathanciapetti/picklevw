@@ -2,11 +2,12 @@
 Humble implementation of the Mediator pattern.
 """
 
-from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton, PicklevwTkFrame
+from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton
 from src.window import PicklevwTkWindow
 from src.logic import start_process
 
 import tkinter as tk
+
 
 class Mediator:
     """ Mediator class to manage interactions between buttons and the main window. """
@@ -25,9 +26,15 @@ class Mediator:
                 elif isinstance(elem, PicklevwTkThemeButton):
                     elem.bind('<ButtonPress>', (lambda _: self.switch_theme(window)))
             except AttributeError as e:
-                print(f"Error binding event for element {elem}: {e}")
+                tk.messagebox.showinfo(
+                    title="Error",
+                    message=f"Error binding event for element {elem}: {e}"
+                )
             except Exception as e:
-                print(f"Unexpected error: {e}")
+                tk.messagebox.showinfo(
+                    title="Error",
+                    message=f"Unexpected error: {e}"
+                )
 
     @staticmethod
     def switch_theme(window) -> None:
@@ -61,4 +68,3 @@ class Mediator:
                 title="Error",
                 message=f"Unexpected error switching theme: {e}"
             )
-
