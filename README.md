@@ -7,7 +7,7 @@
 <div align="center" style="display: flex; justify-content: center;">
 
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
-![version](https://img.shields.io/badge/version-0.1.0-blue)
+![version](https://img.shields.io/badge/version-0.2.0-blue)
 
 </div>
 
