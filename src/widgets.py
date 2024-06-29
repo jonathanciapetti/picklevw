@@ -23,12 +23,12 @@ class PicklevwTkLoadButton(tk.Button):
         try:
             self.config(bg='darkgreen', fg='white', text="Load")
         except TclError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error configuring PicklevwTkLoadButton: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error configuring PicklevwTkLoadButton: {e}"
             )
@@ -40,12 +40,12 @@ class PicklevwTkThemeButton(tk.Button):
         try:
             self.config(text="Switch to dark mode")
         except TclError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error configuring PicklevwTkThemeButton: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error configuring PicklevwTkThemeButton: {e}"
             )
@@ -79,12 +79,12 @@ class PicklevwTkCanvas(tk.Canvas):
                 self.create_text(2, y_positicn, anchor="nw", text=linenum[0])
                 i = self.textwidget.index(f"{i}+1line")
         except TclError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error redrawing PicklevwTkCanvas: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error redrawing PicklevwTkCanvas: {e}"
             )
@@ -101,13 +101,13 @@ class PicklevwTkText(tk.Text):
             self.tk.createcommand(self._w, self._proxy)
             self.configure(background='white', foreground='black')
         except TclError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error initializing PicklevwTkText: {e}"
             )
         except Exception as e:
             print(f"Unexpected error initializing PicklevwTkText: {e}")
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error initializing PicklevwTkText: {e}"
             )
@@ -122,13 +122,13 @@ class PicklevwTkText(tk.Text):
         try:
             result = self.tk.call(cmd)
         except TclError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error in PicklevwTkText proxy method: {e}"
             )
             result = ''  # Hotfix for "_tkinter.TclError: nothing to undo". TODO: fix it properly.
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error in PicklevwTkText proxy method: {e}"
             )
@@ -173,12 +173,12 @@ class PicklevwTkFrame(tk.Frame):
 
             self.name = name
         except TclError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error initializing PicklevwTkFrame: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error initializing PicklevwTkFrame: {e}"
             )
@@ -191,12 +191,12 @@ class PicklevwTkFrame(tk.Frame):
         try:
             self.linenumbers.redraw()
         except TclError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error in PicklevwTkFrame _on_change method: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error in PicklevwTkFrame _on_change method: {e}"
             )

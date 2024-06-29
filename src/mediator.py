@@ -26,12 +26,12 @@ class Mediator:
                 elif isinstance(elem, PicklevwTkThemeButton):
                     elem.bind('<ButtonPress>', (lambda _: self.switch_theme(window)))
             except AttributeError as e:
-                tk.messagebox.showinfo(
+                tk.messagebox.showerror(
                     title="Error",
                     message=f"Error binding event for element {elem}: {e}"
                 )
             except Exception as e:
-                tk.messagebox.showinfo(
+                tk.messagebox.showerror(
                     title="Error",
                     message=f"Unexpected error: {e}"
                 )
@@ -54,17 +54,17 @@ class Mediator:
                 )
                 window.widgets["btn_theme"]["text"] = "Switch to dark mode"
         except KeyError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error switching theme, key not found: {e}"
             )
         except AttributeError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error switching theme, attribute not found: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error switching theme: {e}"
             )
