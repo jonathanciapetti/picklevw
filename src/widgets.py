@@ -139,9 +139,9 @@ class PicklevwTkText(tk.Text):
                 args[0] in ("insert", "replace", "delete") or
                 args[0:3] == ("mark", "set", "insert") or
                 args[0:2] in (
-                ("xview", "moveto"), ("xview", "scroll"),
-                ("yview", "moveto"), ("yview", "scroll")
-        )
+                    ("xview", "moveto"), ("xview", "scroll"),
+                    ("yview", "moveto"), ("yview", "scroll")
+                )
         ):
             self.event_generate("<<Change>>", when="tail")
 
