@@ -47,12 +47,12 @@ class PicklevwTkWindow(tk.Tk):
             self.frames["searchbox_frame"].grid_columnconfigure(index=3, weight=0)
             self.frames["example_frame"].grid_columnconfigure(index=0, weight=1)
         except KeyError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error setting up columns: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error setting up columns: {e}"
             )
@@ -67,12 +67,12 @@ class PicklevwTkWindow(tk.Tk):
             self.frames["example_frame"].grid_rowconfigure(index=1, weight=1)
             self.frames["lbl_footer_frame"].grid_rowconfigure(index=2, weight=1)
         except KeyError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error setting up rows: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error setting up rows: {e}"
             )
@@ -94,12 +94,12 @@ class PicklevwTkWindow(tk.Tk):
             self.frames["example_frame"].grid(row=1, column=0, sticky="nswe", columnspan=4)
             self.frames["lbl_footer_frame"].grid(row=2, column=0, columnspan=4)
         except KeyError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error setting up frames: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error setting up frames: {e}"
             )
@@ -160,12 +160,12 @@ class PicklevwTkWindow(tk.Tk):
             )
             self.widgets["btn_theme"].grid(row=0, column=1)
         except KeyError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error setting up widgets: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error setting up widgets: {e}"
             )
@@ -178,7 +178,7 @@ class PicklevwTkWindow(tk.Tk):
                 example_widget.text.delete("1.0", tk.END)
                 example_widget.text.insert(tk.END, message['output'] + "\n")
                 if 'messagebox' in message.keys():
-                    messagebox.showinfo(title="Error", message=message['messagebox'])
+                    messagebox.showerror(title="Error", message=message['messagebox'])
                 if message['status'] == 'loading':
                     self.widgets['lbl_header']['text'] = 'LOADING ...'
                     self.widgets['lbl_header']['bg'] = '#0000FF'
@@ -188,12 +188,12 @@ class PicklevwTkWindow(tk.Tk):
                     self.widgets['lbl_header']['fg'] = '#000000'
                     self.widgets['lbl_header']['text'] = self.update_lbl_header(message['filename'])
         except KeyError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error updating text widget: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error updating text widget: {e}"
             )
@@ -231,12 +231,12 @@ class PicklevwTkWindow(tk.Tk):
                 #         self.selection_get(selection="CLIPBOARD")
                 #     )
         except KeyError as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Error handling control events: {e}"
             )
         except Exception as e:
-            tk.messagebox.showinfo(
+            tk.messagebox.showerror(
                 title="Error",
                 message=f"Unexpected error handling control events: {e}"
             )
