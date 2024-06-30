@@ -35,7 +35,7 @@ It's basically a GUI wrapping `pandas.read_pickle()`.
 
 Clone the repository and install the required dependencies (possibly on a virtual environment):
 
-```bash
+```console
 git clone https://github.com/yourusername/picklevw.git
 cd picklevw
 pip install -r requirements.txt
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 To start the application, run:
 
-```bash
+```console
 python3 picklevw.py
 ```
 
