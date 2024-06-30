@@ -62,7 +62,7 @@ python3 picklevw.py
 
 #### TODOs
 - GUI testing: testing on `xvfb` using `pyvirtualdisplay`
-
+- Print of whole long pickles, through paging.
 ---
 
 ### Contributing
