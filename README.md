@@ -21,7 +21,7 @@ It's basically a GUI wrapping `pandas.read_pickle()`.
 
 <br />
 
-### ✨ Features
+### Features
 
 - User-friendly: simple and intuitive GUI built with Tkinter.
 - Fast: efficiently reads pickle files using Pandas.
@@ -29,7 +29,7 @@ It's basically a GUI wrapping `pandas.read_pickle()`.
 
 ---
 
-### 🚀 Getting Started
+### Getting Started
 
 #### Installation
 
@@ -48,23 +48,23 @@ To start the application, run:
 python3 picklevw.py
 ```
 
-#### 🛠️ Dependencies
+#### Dependencies
 - *pandas* >= 1.5
 - *tkinter* (usually included with Python installations)
 - *prettyprinter*
 
-#### ⌛ TODOs
+#### TODOs
 - GUI testing: testing on `xvfb` using `pyvirtualdisplay`
 
 ---
 
-### 🤝 Contributing
+### Contributing
 Contributions are <ins>**welcome**</ins>! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
 
 
-### 📜 License
+### License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-### 📫 Contacts
+### Contacts
 - Repo: [https://github.com/jonathanciapetti/picklevw](https://github.com/jonathanciapetti/picklevw)
 - Email: [jonathan.ciapetti@normabytes.com](mailto:jonathan.ciapetti@normabytes.com)
