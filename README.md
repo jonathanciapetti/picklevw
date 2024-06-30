@@ -7,7 +7,7 @@
 <div align="center" style="display: flex; justify-content: center;">
 
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
-[![codecov](https://codecov.io/github/jonathanciapetti/picklevw/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
+[![codecov](https://codecov.io/github/jonathanciapetti/picklevw/branch/main/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
 ![version](https://img.shields.io/badge/version-0.2.0-blue)
 
 </div>
