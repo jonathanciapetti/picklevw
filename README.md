@@ -40,6 +40,13 @@ git clone https://github.com/yourusername/picklevw.git
 cd picklevw
 pip install -r requirements.txt
 ```
+
+| Platform | Status |
+| --------- |-------:|
+| Linux |     ok |
+| Windows |     no |
+| macOS |     no |
+
 #### Running the App
 
 To start the application, run:
