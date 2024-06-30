@@ -41,11 +41,11 @@ cd picklevw
 pip install -r requirements.txt
 ```
 
-| Platform | Status |
-| --------- |-------:|
-| Linux |     ok |
-| Windows |     no |
-| macOS |     no |
+| OS      | Compatible |
+|---------|-----------:|
+| Linux   |        yes |
+| Windows |         no |
+| macOS   |         no |
 
 #### Running the App
 
