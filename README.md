@@ -1,7 +1,7 @@
 [//]: # (![Static Badge]&#40;https://img.shields.io/badge/build-passed-green&#41;)
 
 <p align="center">
-    <img src="./logo/picklevw_logo_and_name.png" />
+    <img src="./logo/picklevw_logo_and_name.png" height="100px"/>
 </p>
 
 <div align="center" style="display: flex; justify-content: center;">
