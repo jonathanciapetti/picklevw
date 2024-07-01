@@ -7,7 +7,6 @@ import tkinter as tk
 from tkinter import messagebox
 
 from src.factory import WidgetFactory
-from src.widgets import PicklevwTkFrame, PicklevwTkLoadButton, PicklevwTkThemeButton
 
 
 class PicklevwTkWindow(tk.Tk):
