@@ -1,6 +1,6 @@
 import pytest
 from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton, PicklevwTkFrame
-from src.factory import WidgetFactory
+from src.widgets_factory import WidgetFactory
 
 
 def test_create_load_button():
