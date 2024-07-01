@@ -6,7 +6,7 @@ and managing widgets in a GUI application.
 import tkinter as tk
 from tkinter import messagebox
 
-from src.factory import WidgetFactory
+from src.widgets_factory import WidgetFactory
 
 
 class PicklevwTkWindow(tk.Tk):
