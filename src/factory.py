@@ -1,9 +1,13 @@
+from typing import TypeAlias
+
 from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton, PicklevwTkFrame
+
+WidgetType: TypeAlias = PicklevwTkLoadButton | PicklevwTkThemeButton | PicklevwTkFrame
 
 
 class WidgetFactory:
     @staticmethod
-    def create_widget(widget_type, *args, **kwargs):
+    def create_widget(widget_type: str, *args, **kwargs) -> WidgetType:
         if widget_type == "load_button":
             return PicklevwTkLoadButton(*args, **kwargs)
         elif widget_type == "theme_button":
