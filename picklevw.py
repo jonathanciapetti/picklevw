@@ -38,7 +38,7 @@ pw.setup_rows()
 pw.setup_cols()
 
 # Mediator
-med = Mediator((pw.widgets["btn_load"], pw.widgets["btn_theme"], pw))
+med = Mediator(pw.widgets["btn_load"], pw.widgets["btn_theme"], pw)
 
 # Update the text widget
 pw.loop_start_text_widget(pw.widgets["picklevw_tk_frame"], output_queue)
