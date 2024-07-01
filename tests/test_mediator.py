@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton, PicklevwTkFrame
 from src.window import PicklevwTkWindow
 from src.mediator import Mediator
@@ -36,3 +36,13 @@ def test_mediator_initialization(mediator, mock_load_button, mock_theme_button, 
     mock_load_button.bind.assert_called_once()
     mock_theme_button.bind.assert_called_once()
     mock_window.bind.assert_called_once()
+
+
+def test_mediator_initialization_unexpected_error(mock_load_button, mock_theme_button, mock_window):
+    mock_window.bind.side_effect = Exception("Unexpected error")
+    with patch('tkinter.messagebox.showerror') as mock_showerror:
+        Mediator((mock_window, mock_load_button, mock_theme_button))
+        mock_showerror.assert_called_once_with(
+            title="Error",
+            message="Unexpected error: Unexpected error"
+        )
