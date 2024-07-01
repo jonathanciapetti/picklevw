@@ -8,7 +8,7 @@
 
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
 [![codecov](https://codecov.io/github/jonathanciapetti/picklevw/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
-![version](https://img.shields.io/badge/version-0.2.0-blue)
+![version](https://img.shields.io/badge/version-0.2.1-blue)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 </div>
@@ -38,7 +38,7 @@ It's basically a GUI wrapping `pandas.read_pickle()`.
 Clone the repository and install the required dependencies (possibly on a virtual environment):
 
 ```console
-git clone https://github.com/yourusername/picklevw.git
+git clone https://github.com/jonathanciapetti/picklevw.git
 cd picklevw
 pip install -r requirements.txt
 ```
