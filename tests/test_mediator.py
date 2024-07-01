@@ -28,8 +28,7 @@ def mock_window(mock_theme_button):
 
 @pytest.fixture
 def mediator(mock_load_button, mock_theme_button, mock_window):
-    elements = (mock_load_button, mock_theme_button, mock_window)
-    return Mediator(elements)
+    return Mediator(mock_load_button, mock_theme_button, mock_window)
 
 
 def test_mediator_initialization(mediator, mock_load_button, mock_theme_button, mock_window):
@@ -41,7 +40,7 @@ def test_mediator_initialization(mediator, mock_load_button, mock_theme_button, 
 def test_mediator_initialization_unexpected_error(mock_load_button, mock_theme_button, mock_window):
     mock_window.bind.side_effect = Exception("Unexpected error")
     with patch('tkinter.messagebox.showerror') as mock_showerror:
-        Mediator((mock_window, mock_load_button, mock_theme_button))
+        Mediator(mock_window, mock_load_button, mock_theme_button)
         mock_showerror.assert_called_once_with(
             title="Error",
             message="Unexpected error: Unexpected error"
