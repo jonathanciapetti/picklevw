@@ -58,9 +58,10 @@ python3 picklevw.py
 ```
 
 #### Dependencies
-- *pandas* >= 1.5
-- *tkinter* (usually included with Python installations)
-- *prettyprinter*
+- Python >= 3.10
+- Pandas >= 1.5
+- Tkinter (usually included with Python installations)
+- Prettyprinter
 
 #### TODOs
 - GUI testing: testing on `xvfb` using `pyvirtualdisplay`
