@@ -32,7 +32,7 @@ class Mediator:
                 tk.messagebox.showerror(title="Error", message=f"Unexpected error: {e}")
 
     @staticmethod
-    def switch_theme(window) -> None:
+    def switch_theme(window: PicklevwTkWindow) -> None:
         """Switches the theme of the text widget between light and dark mode."""
         try:
             current_bg = window.widgets["picklevw_tk_frame"].text["background"]
