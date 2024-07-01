@@ -1,4 +1,4 @@
-from unittest.mock import patch,
+from unittest.mock import patch
 import tkinter as tk
 from src.widgets import (
     set_options,
