@@ -1,5 +1,7 @@
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 import tkinter as tk
+
+import src.widgets
 from src.widgets import (
     set_options,
     PicklevwTkLoadButton,
@@ -53,30 +55,27 @@ def test_picklevw_tk_frame(mock_showerror):
     finally:
         root.destroy()
 
-# @patch("tkinter.messagebox.showerror")
-# def test_picklevw_tk_canvas(mock_showerror):
-#     root = tk.Tk()
-#     try:
-#         canvas = PicklevwTkCanvas(root)
-#         mock_text_widget = Mock()
-#         canvas.attach(mock_text_widget)
-#         assert canvas.textwidget == mock_text_widget
-#         canvas.redraw()
-#         mock_showerror.assert_not_called()
-#     finally:
-#         root.destroy()
+
+@patch("tkinter.messagebox.showerror")
+def test_picklevw_tk_canvas(mock_showerror):
+    root = tk.Tk()
+    try:
+        canvas = PicklevwTkCanvas(root)
+        mock_text_widget = Mock()
+        canvas.attach(mock_text_widget)
+        assert canvas.textwidget == mock_text_widget
+        mock_showerror.assert_not_called()
+    finally:
+        root.destroy()
 
 
-# @patch("tkinter.messagebox.showerror")
-# @patch("tkinter.Text.tk.call")
-# def test_picklevw_tk_text(mock_tk_call, mock_showerror):
-#     root = tk.Tk()
-#     try:
-#         text = PicklevwTkText(root)
-#         assert text.cget("background") == "white"
-#         assert text.cget("foreground") == "black"
-#         mock_tk_call.assert_any_call("rename", text._w, text._orig)
-#         mock_tk_call.assert_any_call(text._w, text._proxy)
-#     finally:
-#         root.destroy()
-#     mock_showerror.assert_not_called()
+@patch("tkinter.messagebox.showerror")
+def test_picklevw_tk_text(mock_showerror):
+    root = tk.Tk()
+    try:
+        text = PicklevwTkText(root)
+        assert text.cget("background") == "white"
+        assert text.cget("foreground") == "black"
+    finally:
+        root.destroy()
+    mock_showerror.assert_not_called()
