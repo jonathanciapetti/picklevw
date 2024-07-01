@@ -10,11 +10,10 @@ import tkinter as tk
 
 
 class Mediator:
-    """ Mediator class to manage interactions between buttons and the main window. """
+    """ Mediator class that cares to bind events to handlers, for each widget. """
 
     def __init__(self, *args):
 
-        # Bind button press events to their respective handlers
         for elem in args:
             try:
                 if isinstance(elem, PicklevwTkWindow):
