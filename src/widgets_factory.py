@@ -9,8 +9,7 @@ WidgetType: TypeAlias = PicklevwTkLoadButton | PicklevwTkThemeButton | PicklevwT
 
 
 class WidgetFactory:
-    """ Factory class for creating widgets used in the Picklevw application.
-    """
+    """ Factory class for creating widgets inside PicklevwTkWindow. """
 
     @staticmethod
     def create_widget(widget_type: str, *args, **kwargs) -> WidgetType:
