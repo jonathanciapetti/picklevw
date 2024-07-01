@@ -1,7 +1,5 @@
-import pytest
 from unittest.mock import patch, Mock
 import tkinter as tk
-from src.factory import WidgetFactory
 from src.window import PicklevwTkWindow
 
 
