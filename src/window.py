@@ -6,6 +6,7 @@ and managing widgets in a GUI application.
 import tkinter as tk
 from tkinter import messagebox
 
+from src.factory import WidgetFactory
 from src.widgets import PicklevwTkFrame, PicklevwTkLoadButton, PicklevwTkThemeButton
 
 
@@ -132,7 +133,8 @@ class PicklevwTkWindow(tk.Tk):
             self.widgets["searchbox"].grid(row=0, column=3, columnspan=2)
 
             # example ------------------------------------------------------------------------------
-            self.widgets["picklevw_tk_frame"] = PicklevwTkFrame(
+            self.widgets["picklevw_tk_frame"] = WidgetFactory.create_widget(
+                'frame',
                 master=self.frames["example_frame"],
                 name="output_box"
             )
@@ -147,14 +149,16 @@ class PicklevwTkWindow(tk.Tk):
             self.widgets["lbl_footer"].grid(row=2, column=0, columnspan=4)
 
             # btn_load -----------------------------------------------------------------------------
-            self.widgets["btn_load"] = PicklevwTkLoadButton(
+            self.widgets["btn_load"] = WidgetFactory.create_widget(
+                'load_button',
                 master=self.frames["btn_load_frame"],
                 font=self.MEDIUM_FONT
             )
             self.widgets["btn_load"].grid(row=0, column=0)
 
             # btn_theme ----------------------------------------------------------------------------
-            self.widgets["btn_theme"] = PicklevwTkThemeButton(
+            self.widgets["btn_theme"] = WidgetFactory.create_widget(
+                'theme_button',
                 master=self.frames["btn_load_frame"],
                 font=self.MEDIUM_FONT
             )
