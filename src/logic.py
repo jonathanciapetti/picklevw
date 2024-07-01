@@ -15,7 +15,7 @@ output_queue = Queue()
 
 
 def process_data(filename: str) -> None:
-    """ Processes the given file, reads its contents, and updates the output queue.
+    """Processes the given file, reads its contents, and updates the output queue.
 
     :param filename: The name of the file to process.
     """
@@ -23,9 +23,9 @@ def process_data(filename: str) -> None:
         output_queue.get()
 
     message = {
-        'status': 'start',
-        'filename': '',
-        'output': '',
+        "status": "start",
+        "filename": "",
+        "output": "",
     }
     output_queue.put(message)
 
@@ -33,27 +33,27 @@ def process_data(filename: str) -> None:
         return
 
     try:
-        message['status'] = 'loading'
+        message["status"] = "loading"
         output_queue.put(message)
         with open(filename, "rb") as file:
-            if file.read(2) == b'\x1f\x8b':  # Gzip check
-                file = gzip.open(filename, 'rb')
-            message['filename'] = filename
-            message['output'] = pformat(read_pickle(file), indent=4, compact=False)
+            if file.read(2) == b"\x1f\x8b":  # Gzip check
+                file = gzip.open(filename, "rb")
+            message["filename"] = filename
+            message["output"] = pformat(read_pickle(file), indent=4, compact=False)
     except FileNotFoundError as file_not_found_err:
-        message['messagebox'] = f"File not found: {file_not_found_err}"
-        message['status'] = 'failed'
+        message["messagebox"] = f"File not found: {file_not_found_err}"
+        message["status"] = "failed"
     except UnicodeDecodeError as unicode_decode_err:
-        message['messagebox'] = f"Not a text pickle file: {unicode_decode_err}"
-        message['status'] = 'failed'
+        message["messagebox"] = f"Not a text pickle file: {unicode_decode_err}"
+        message["status"] = "failed"
     except UnpicklingError as unpickling_err:
-        message['messagebox'] = f"Not a valid pickle file: {unpickling_err}"
-        message['status'] = 'failed'
+        message["messagebox"] = f"Not a valid pickle file: {unpickling_err}"
+        message["status"] = "failed"
     except Exception as ex:
-        message['messagebox'] = str(ex)
-        message['status'] = 'failed'
+        message["messagebox"] = str(ex)
+        message["status"] = "failed"
     else:
-        message['status'] = 'completed'
+        message["status"] = "completed"
 
     output_queue.put(message)  # Final update to queue
 
@@ -68,7 +68,7 @@ def start_process() -> None:
 
 
 def terminate_all_processes() -> None:
-    """ Terminates all running processes recorded in the pids_queue. """
+    """Terminates all running processes recorded in the pids_queue."""
     while not pids_queue.empty():
         old_pid = pids_queue.get()
         try:

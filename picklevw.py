@@ -13,7 +13,7 @@ from src.mediator import Mediator
 from src.logic import output_queue, terminate_all_processes
 
 # Initialize X11 threads for thread safety in GUI applications
-ctypes.CDLL('libX11.so.6').XInitThreads()
+ctypes.CDLL("libX11.so.6").XInitThreads()
 
 # Set options for widgets
 set_options()
@@ -44,7 +44,7 @@ med = Mediator(pw.widgets["btn_load"], pw.widgets["btn_theme"], pw)
 pw.loop_start_text_widget(pw.widgets["picklevw_tk_frame"], output_queue)
 
 # Set the window protocol to call exit_function when the window is requested to close
-pw.protocol('WM_DELETE_WINDOW', exit_function)
+pw.protocol("WM_DELETE_WINDOW", exit_function)
 
 # Start the main loop of the custom window
 pw.mainloop()
