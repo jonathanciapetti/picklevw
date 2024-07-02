@@ -1,5 +1,5 @@
 """
-Module for creating and managing custom widgets in the Picklevw application.
+Module for creating and managing custom widgets.
 """
 
 from typing import TypeAlias
