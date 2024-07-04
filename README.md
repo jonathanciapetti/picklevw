@@ -1,10 +1,10 @@
-[//]: # (![Static Badge]&#40;https://img.shields.io/badge/build-passed-green&#41;)
-
+<!--
 <p align="center">
     <img src="./resources/logo/picklevw_logo_and_name.png" height="100px"/>
 </p>
-
-<div align="center" style="display: flex; justify-content: center;">
+-->
+# picklevw
+<div style="display: flex;">
 
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
 [![codecov](https://codecov.io/github/jonathanciapetti/picklevw/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
