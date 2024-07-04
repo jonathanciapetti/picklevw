@@ -3,7 +3,7 @@
     <img src="./resources/logo/picklevw_logo_and_name.png" height="100px"/>
 </p>
 -->
-# picklevw
+# picklevw 🥒
 <div style="display: flex;">
 
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
