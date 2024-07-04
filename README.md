@@ -1,9 +1,9 @@
-[//]: # (![Static Badge]&#40;https://img.shields.io/badge/build-passed-green&#41;)
-
+<!--
 <p align="center">
     <img src="./resources/logo/picklevw_logo_and_name.png" height="100px"/>
 </p>
-
+-->
+# picklevw
 <div align="center" style="display: flex; justify-content: center;">
 
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
