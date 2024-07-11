@@ -5,7 +5,7 @@ Module for creating and managing custom widgets.
 from typing import TypeAlias
 from src.widgets import PicklevwTkLoadButton, PicklevwTkThemeButton, PicklevwTkFrame
 
-WidgetType: TypeAlias = PicklevwTkLoadButton | PicklevwTkThemeButton | PicklevwTkFrame
+WidgetType = PicklevwTkLoadButton | PicklevwTkThemeButton | PicklevwTkFrame
 
 
 class WidgetFactory:
