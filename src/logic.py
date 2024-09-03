@@ -62,6 +62,8 @@ def start_process() -> None:
     """Starts a separate process that runs the task function."""
     terminate_all_processes()
     filename = fd.askopenfilename()
+    # We do not guard against recursive spawning with the __name__ == "__main__" guard,
+    # as this will run only on Linux, which uses fork():
     process = Process(target=process_data, args=(filename,))
     process.start()
     pids_queue.put(process.pid)
