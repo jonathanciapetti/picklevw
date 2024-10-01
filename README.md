@@ -38,9 +38,9 @@ It's basically a GUI wrapping `pandas.read_pickle()`.
 Clone the repository and install the required dependencies (possibly on a virtual environment):
 
 ```console
-git clone https://github.com/jonathanciapetti/picklevw.git
-cd picklevw
-pip install -r requirements.txt
+$ git clone https://github.com/jonathanciapetti/picklevw.git
+$ cd picklevw
+$ pip install -r requirements.txt
 ```
 
 | OS      | Compatible |
