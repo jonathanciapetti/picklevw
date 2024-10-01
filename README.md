@@ -54,7 +54,7 @@ $ pip install -r requirements.txt
 To start the application, run:
 
 ```console
-python3 picklevw.py
+$ python3 picklevw.py
 ```
 
 #### Dependencies
