@@ -26,7 +26,7 @@ st.logo(PICKLEVW_LOGO_FILEPATH, size="large")
 st.html(
     f"""
     <p style="font-size: 20px; display: inline; text-align: bottom;">
-        A simple <a href="{PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed.
+        A simple <a href="{PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed. v1.1.1
     </p>
     """
 )
@@ -58,7 +58,7 @@ if uploaded_file:
                     formatted = reprlib.repr(obj)
                 st.code(formatted, language="python")
 
-    except (UnpicklingError, json.JSONDecodeError) as e:
-        st.error(f"Invalid file content: {e}")
-    except Exception as e:
-        st.error(f"Unexpected error: {e}")
+    except (UnpicklingError, json.JSONDecodeError) as err:
+        st.error(f"Invalid file content: {str(err)}")
+    except Exception as ex:
+        st.error(str(ex))
