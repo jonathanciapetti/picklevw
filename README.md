@@ -17,8 +17,9 @@ using Pandas and Streamlit. It's basically a GUI wrapping `pandas.read_pickle()`
 
 <br />
 
----
 ### Getting Started
+
+---
 
 #### Installation
 
@@ -39,9 +40,10 @@ $ streamlit run src/picklevw.py
 ```
 <br />
 
----
 
 ### Contributing
+
+---
 
 Contributions are <ins>**welcome**</ins>! If you have any ideas, suggestions, or bug reports, please open an issue or
 submit a pull request.
