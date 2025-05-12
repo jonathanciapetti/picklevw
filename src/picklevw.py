@@ -41,7 +41,7 @@ with col_2:
 uploaded_file = st.file_uploader(
     # "Upload a Pickle (.pkl, .pickle) or Gzip-Pickle (.gz) File",
     "",
-    type=["pkl", "pickle", "gz"]
+    type=["pkl", "pickle", "gz"],
 )
 
 if uploaded_file:
@@ -50,7 +50,9 @@ if uploaded_file:
         st.info(f"The loaded Python object is of type `{type(obj).__name__}`")
 
         if isinstance(obj, pd.DataFrame):
-            st.write(f"Readable: **{len(obj)}** rows and **{len(obj.columns)}** columns")
+            st.write(
+                f"Readable: **{len(obj)}** rows and **{len(obj.columns)}** columns"
+            )
             st.dataframe(obj)
         else:
             if is_json_serializable(obj):
