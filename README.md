@@ -10,8 +10,6 @@
 
 </div>
 
-
-
 <br />
 
 **picklevw** (pronunced *pickleview*) is a simple Python web application, designed to read and display pickle files
@@ -19,6 +17,7 @@ using Pandas and Streamlit. It's basically a GUI wrapping `pandas.read_pickle()`
 
 <br />
 
+---
 ### Getting Started
 
 #### Installation
@@ -44,6 +43,9 @@ To start the application, run:
 ```console
 $ streamlit run src/picklevw.py
 ```
+<br />
+
+---
 
 ### Contributing
 
