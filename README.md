@@ -26,9 +26,11 @@ using Pandas and Streamlit. It's basically a GUI wrapping `pandas.read_pickle()`
 Clone the repository and install the required dependencies (possibly on a virtual environment):
 
 ```console
-$ git clone https://github.com/jonathanciapetti/picklevw.git
-$ cd picklevw
-$ pip install -r requirements.txt
+git clone https://github.com/jonathanciapetti/picklevw.git
+cd picklevw
+python3 -m venv ./venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
 #### Running the App
@@ -36,7 +38,7 @@ $ pip install -r requirements.txt
 To start the application, run:
 
 ```console
-$ streamlit run src/picklevw.py
+streamlit run src/picklevw.py
 ```
 
 Here's a screenshot of the app:
