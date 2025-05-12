@@ -38,6 +38,13 @@ To start the application, run:
 ```console
 $ streamlit run src/picklevw.py
 ```
+
+Here's a screenshot of the app:
+<p>
+    <img src="./media/screenshot.png" width="100%"/>
+</p>
+
+
 <br />
 
 
