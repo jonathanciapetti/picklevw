@@ -24,7 +24,7 @@ with col_1:
     st.html(
         """
         <p style="font-size: 20px; display: inline; text-align: bottom;">
-            A simple <a href="https://docs.python.org/3/library/pickle.html" target="_blank">Pickle</a> file viewer
+            A simple <a href="https://docs.python.org/3/library/pickle.html" target="_blank">Pickle</a> file viewer. MIT Licensed.
         </p>
         """
     )
