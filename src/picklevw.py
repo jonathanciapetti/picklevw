@@ -26,7 +26,7 @@ st.logo(PICKLEVW_LOGO_FILEPATH, size="large")
 st.html(
     f"""
     <p style="font-size: 20px; display: inline; text-align: bottom;">
-        A simple <a href="{PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed.
+        A simple <a href="{PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed. v1.1.1
     </p>
     """
 )
