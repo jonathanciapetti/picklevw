@@ -39,9 +39,9 @@ with col_2:
     )
 
 uploaded_file = st.file_uploader(
-    # "Upload a Pickle (.pkl, .pickle) or Gzip-Pickle (.gz) File",
-    "",
+    "Upload a Pickle (.pkl, .pickle) or Gzip-Pickle (.gz) File",
     type=["pkl", "pickle", "gz"],
+    label_visibility='hidden'
 )
 
 if uploaded_file:
