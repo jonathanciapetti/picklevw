@@ -58,7 +58,7 @@ if uploaded_file:
                     formatted = reprlib.repr(obj)
                 st.code(formatted, language="python")
 
-    except (UnpicklingError, json.JSONDecodeError) as e:
-        st.error(f"Invalid file content: {e}")
-    except Exception as e:
-        st.error(f"Unexpected error: {e}")
+    except (UnpicklingError, json.JSONDecodeError) as err:
+        st.error(f"Invalid file content: {str(err)}")
+    except Exception as ex:
+        st.error(str(ex))
