@@ -14,8 +14,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PICKLEVW_LOGO_FILEPATH = os.path.join(BASE_DIR, "..", "media", "picklevw.png")
 PICKLEVW_REPO_URL = "https://github.com/jonathanciapetti/picklevw"
 PICKLE_DOCS_URL = "https://docs.python.org/3/library/pickle.html"
-GITHUB_LOGO_URL_1 = "https://github.githubassets.com/assets/GitHub-Logo-ee398b662d42.png"
-GITHUB_LOGO_URL_2 = "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png"
 
 st.set_page_config(
     layout="wide",
