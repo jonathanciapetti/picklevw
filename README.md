@@ -5,7 +5,7 @@
 
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
 [![codecov](https://codecov.io/github/jonathanciapetti/picklevw/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
-![version](https://img.shields.io/badge/version-1.1.0-blue)
+![version](https://img.shields.io/badge/version-1.1.1-blue)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 </div>
@@ -48,16 +48,13 @@ Here's a screenshot of the app:
     <img src="./media/screenshot.png" width="100%"/>
 </p>
 
-
-<br />
+---
 
 ### Safetey checks
 
-`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickle. Fickling depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python version that provides it is 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports. 
+`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. Fickling depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python version that provides it is 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports. 
 
 ### Contributing
-
----
 
 Contributions are <ins>**welcome**</ins>! If you have any ideas, suggestions, or bug reports, please open an issue or
 submit a pull request.
