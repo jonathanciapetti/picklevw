@@ -23,25 +23,15 @@ st.set_page_config(
     page_icon="🥒",
 )
 
-col_1, col_2 = st.columns(2, vertical_alignment="bottom")
-with col_1:
-    st.image(PICKLEVW_LOGO_FILEPATH, width=200)
-    st.html(
-        f"""
-        <p style="font-size: 20px; display: inline; text-align: bottom;">
-            A simple <a href="{PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed.
-        </p>
-        """
-    )
-with col_2:
-    st.html(
-        f"""
-            <a style="float:right;" href="{PICKLEVW_REPO_URL}" target="_blank" style="text-decoration: none;">
-                <img src="{GITHUB_LOGO_URL_1}" alt="GitHub logo 1" height="20">
-                <img src="{GITHUB_LOGO_URL_2}" alt="GitHub logo 2" height="35">
-            </a>
-        """
-    )
+st.logo(PICKLEVW_LOGO_FILEPATH, size="large")
+
+st.html(
+    f"""
+    <p style="font-size: 20px; display: inline; text-align: bottom;">
+        A simple <a href="{PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed.
+    </p>
+    """
+)
 
 uploaded_file = st.file_uploader(
     "Upload a Pickle (.pkl, .pickle) or Gzip-Pickle (.gz) File",
