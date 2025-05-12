@@ -10,7 +10,12 @@ from prettyprinter import pformat
 from utils import load_pickle, is_json_serializable
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 PICKLEVW_LOGO_FILEPATH = os.path.join(BASE_DIR, "..", "media", "picklevw.png")
+PICKLEVW_REPO_URL = "https://github.com/jonathanciapetti/picklevw"
+PICKLE_DOCS_URL = "https://docs.python.org/3/library/pickle.html"
+GITHUB_LOGO_URL_1 = "https://github.githubassets.com/assets/GitHub-Logo-ee398b662d42.png"
+GITHUB_LOGO_URL_2 = "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png"
 
 st.set_page_config(
     layout="wide",
@@ -22,18 +27,18 @@ col_1, col_2 = st.columns(2, vertical_alignment="bottom")
 with col_1:
     st.image(PICKLEVW_LOGO_FILEPATH, width=200)
     st.html(
-        """
+        f"""
         <p style="font-size: 20px; display: inline; text-align: bottom;">
-            A simple <a href="https://docs.python.org/3/library/pickle.html" target="_blank">Pickle</a> file viewer. MIT Licensed.
+            A simple <a href="{PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed.
         </p>
         """
     )
 with col_2:
     st.html(
-        """
-            <a style="float:right;" href="https://github.com/jonathanciapetti/picklevw" target="_blank" style="text-decoration: none;">
-                <img src="https://github.githubassets.com/assets/GitHub-Logo-ee398b662d42.png" alt="Image 1" height="20">
-                <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="Image 2" height="35">
+        f"""
+            <a style="float:right;" href="{PICKLEVW_REPO_URL}" target="_blank" style="text-decoration: none;">
+                <img src="{GITHUB_LOGO_URL_1}" alt="GitHub logo 1" height="20">
+                <img src="{GITHUB_LOGO_URL_2}" alt="GitHub logo 2" height="35">
             </a>
         """
     )
