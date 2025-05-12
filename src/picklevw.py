@@ -1,3 +1,12 @@
+"""
+Streamlit web application for inspecting and visualizing Python pickle files.
+
+This application provides a user-friendly interface to upload and inspect `.pkl`, `.pickle`, or
+`.gz` (gzip-compressed pickle) files. It safely loads pickle data using the `fickling`-enhanced
+loader and renders the output either as a table (for pandas DataFrames) or as formatted code
+(for other Python objects). It includes support for JSON formatting and object pretty-printing.
+"""
+
 import os
 import json
 import reprlib
