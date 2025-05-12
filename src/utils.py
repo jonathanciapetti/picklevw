@@ -11,6 +11,8 @@ from fickling import always_check_safety
 from fickling.exception import UnsafeFileError
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
+from exceptions import ExceptionUnsafePickle
+
 always_check_safety()
 
 
@@ -70,6 +72,3 @@ def is_json_serializable(obj: Any) -> bool:
         return False
 
 
-class ExceptionUnsafePickle(Exception):
-    """ Exception raised when a pickle file is determined to be unsafe for loading. """
-    pass
