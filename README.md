@@ -17,6 +17,8 @@ using Pandas and Streamlit. It's basically a GUI wrapping `pandas.read_pickle()`
 
 Try it live on [picklevw.streamlit.app](https://picklevw.streamlit.app)
 
+If yo have found `picklevw` to be useful or promising, please give it a star ⭐
+
 <br />
 
 ### Getting Started
