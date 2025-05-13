@@ -45,8 +45,8 @@ def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Any:
     with gzip.open(file, "rb") if file_start == b"\x1f\x8b" else file as f:
         try:
             return read_pickle(f)
-        except UnsafeFileError:
-            raise ExceptionUnsafePickle("Potential threat detected in this file. Stopped loading.")
+        except UnsafeFileError as err:
+            raise ExceptionUnsafePickle(f"Potential threat detected in this file. Stopped loading.\n\n{err.info}")
         except Exception as ex:
             raise ex
 
