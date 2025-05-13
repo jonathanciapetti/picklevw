@@ -46,7 +46,7 @@ def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Any:
         try:
             return read_pickle(f)
         except UnsafeFileError as err:
-            raise ExceptionUnsafePickle(f"Potential threat detected in this file. Stopped loading.\n\n{err.info}")
+            raise ExceptionUnsafePickle(f"Potential **threat** detected in this file. Stopped loading.\n\nFickling analysis: {err.info}")
         except Exception as ex:
             raise ex
 
