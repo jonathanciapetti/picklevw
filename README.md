@@ -45,11 +45,17 @@ To start the application, run:
 streamlit run src/picklevw.py
 ```
 
-Here's a screenshot of the app:
+Here's a screenshot of the app displaying the unpickled content of a legit pickle:
 <p>
-    <img src="./media/screenshot.png" width="100%"/>
+    <img src="media/screenshot_1.png" width="100%" alt="legit pickle">
 </p>
 
+And here's a screenshot of the app signaling a suspicious pickle, like **ANY** Pandas DataFrame:
+<p>
+    <img src="media/screenshot_2.png" width="100%" alt="suspicious pickle">
+</p>
+
+<br />
 ---
 
 ### Safetey checks
