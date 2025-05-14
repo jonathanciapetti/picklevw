@@ -47,23 +47,22 @@ streamlit run src/picklevw.py
 
 Here's a screenshot of the app displaying the unpickled content of a legit pickle:
 <p>
-    <img src="media/screenshot_1.png" width="100%" alt="legit pickle">
+    <img src="./media/screenshot_1.png" width="100%" alt="legit pickle">
 </p>
 
 And here's a screenshot of the app signaling a suspicious pickle, like **ANY** Pandas DataFrame:
 <p>
-    <img src="media/screenshot_2.png" width="100%" alt="suspicious pickle">
+    <img src="./media/screenshot_2.png" width="100%" alt="suspicious pickle">
 </p>
 
 <br />
+---
 
 ### Safetey checks
 
-`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. Fickling depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python version that provides it is 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports. 
+`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. Fickling depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports.
 
 ### Contributing
-
----
 
 Contributions are <ins>**welcome**</ins>! If you have any ideas, suggestions, or bug reports, please open an issue or
 submit a pull request.
