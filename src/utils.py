@@ -4,9 +4,9 @@ Module for securely loading pickle files and checking JSON serializability.
 
 import gzip
 import json
+import pickle
 from typing import Any
 
-from pandas import read_pickle
 from fickling import always_check_safety
 from fickling.exception import UnsafeFileError
 from streamlit.runtime.uploaded_file_manager import UploadedFile
@@ -42,13 +42,11 @@ def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Any:
     """
     file_start = file.read(2)
     file.seek(0)
+    res = []
     with gzip.open(file, "rb") if file_start == b"\x1f\x8b" else file as f:
-        try:
-            return read_pickle(f)
-        except UnsafeFileError as err:
-            raise ExceptionUnsafePickle(f"Potential **threat** detected in this file. Stopped loading.\n\nFickling analysis: {err.info}")
-        except Exception as ex:
-            raise ex
+        for item in range(pickle.load(f)):
+            res.append(item)
+        return res[0] if len(res) == 1 else set(res)
 
 
 def is_json_serializable(obj: Any) -> bool:
@@ -70,5 +68,3 @@ def is_json_serializable(obj: Any) -> bool:
         return True
     except (TypeError, OverflowError):
         return False
-
-
