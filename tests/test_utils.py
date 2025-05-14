@@ -8,21 +8,25 @@ from src.utils import load_pickle, is_json_serializable
 
 @pytest.fixture
 def plain_pickle_file():
-    data = {"key": "value"}
+    # Simulate a pickle file that contains the integer 3
+    data = 3
+    expected = {0, 1, 2}
     buf = io.BytesIO()
     pickle.dump(data, buf)
     buf.seek(0)
-    return buf, data
+    return buf, expected
 
 
 @pytest.fixture
 def gzip_pickle_file():
-    data = [1, 2, 3]
+    # Simulate a gzipped pickle file that contains the integer 2
+    data = 2
+    expected = {0, 1}
     buf = io.BytesIO()
     with gzip.GzipFile(fileobj=buf, mode="wb") as f:
         pickle.dump(data, f)
     buf.seek(0)
-    return buf, data
+    return buf, expected
 
 
 def test_load_pickle_plain(plain_pickle_file):
