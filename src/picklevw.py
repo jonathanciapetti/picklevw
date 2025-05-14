@@ -13,7 +13,6 @@ import reprlib
 from pickle import UnpicklingError
 
 import streamlit as st
-import pandas as pd
 from prettyprinter import pformat
 
 from utils import load_pickle, is_json_serializable
@@ -49,23 +48,17 @@ uploaded_file = st.file_uploader(
 if uploaded_file:
     try:
         obj = load_pickle(uploaded_file)
+        # obj = {"A", 10}
         st.info(f"The loaded Python object is of type `{type(obj).__name__}`")
-
-        if isinstance(obj, pd.DataFrame):
-            st.write(
-                f"Readable: **{len(obj)}** rows and **{len(obj.columns)}** columns"
-            )
-            st.dataframe(obj)
+        if is_json_serializable(obj):
+            formatted = json.dumps(obj, indent=4)
+            st.code(formatted, language="json")
         else:
-            if is_json_serializable(obj):
-                formatted = json.dumps(obj, indent=4)
-                st.code(formatted, language="json")
-            else:
-                try:
-                    formatted = pformat(obj, indent=4, compact=False)
-                except Exception:
-                    formatted = reprlib.repr(obj)
-                st.code(formatted, language="python")
+            try:
+                formatted = pformat(obj, indent=4, compact=False)
+            except Exception:
+                formatted = reprlib.repr(obj)
+            st.code(formatted, language="python")
 
     except (UnpicklingError, json.JSONDecodeError) as err:
         st.error(f"Invalid file content: {str(err)}")
