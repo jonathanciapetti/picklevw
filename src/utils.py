@@ -5,7 +5,7 @@ Module for securely loading pickle files and checking JSON serializability.
 import gzip
 import json
 import pickle
-from typing import Any
+from typing import Any, Tuple
 
 from fickling import always_check_safety
 from fickling.exception import UnsafeFileError
@@ -16,7 +16,7 @@ from exceptions import ExceptionUnsafePickle
 always_check_safety()
 
 
-def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Any. bool:
+def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Tuple[Any, bool]:
     """
     Securely loads a pickle file, detecting and handling gzip compression, and checking for unsafe content.
 
