@@ -16,7 +16,7 @@ from exceptions import ExceptionUnsafePickle
 always_check_safety()
 
 
-def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Any:
+def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Any. bool:
     """
     Securely loads a pickle file, detecting and handling gzip compression, and checking for unsafe content.
 
@@ -43,11 +43,17 @@ def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Any:
     file_start = file.read(2)
     file.seek(0)
     res = []
-    with gzip.open(file, "rb") if file_start == b"\x1f\x8b" else file as f:
-        for item in range(pickle.load(f)):
-            res.append(item)
-        return res[0] if len(res) == 1 else set(res)
-
+    try:
+        with gzip.open(file, "rb") if file_start == b"\x1f\x8b" else file as f:
+            for item in range(pickle.load(f)):
+                res.append(item)
+            if len(res) > 1:
+                return set(res), True
+            return res[0], False
+    except UnsafeFileError as err:
+        raise ExceptionUnsafePickle(f"Potential **threat** detected in this file. Stopped loading.\n\nFickling analysis: {err.info}")
+    except Exception as ex:
+        raise ex
 
 def is_json_serializable(obj: Any) -> bool:
     """

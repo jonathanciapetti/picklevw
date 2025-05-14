@@ -9,6 +9,7 @@ loader and renders the output either as a table (for pandas DataFrames) or as fo
 
 import os
 import json
+import re
 import reprlib
 from pickle import UnpicklingError
 
@@ -47,9 +48,8 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file:
     try:
-        obj = load_pickle(uploaded_file)
-        # obj = {"A", 10}
-        st.info(f"The loaded Python object is of type `{type(obj).__name__}`")
+        obj, were_spared_objs = load_pickle(uploaded_file)
+        st.markdown(f"**Content**")
         if is_json_serializable(obj):
             formatted = json.dumps(obj, indent=4)
             st.code(formatted, language="json")
@@ -58,6 +58,8 @@ if uploaded_file:
                 formatted = pformat(obj, indent=4, compact=False)
             except Exception:
                 formatted = reprlib.repr(obj)
+            if were_spared_objs:
+                formatted =  re.sub(r"[{}]", '', formatted)
             st.code(formatted, language="python")
 
     except (UnpicklingError, json.JSONDecodeError) as err:
