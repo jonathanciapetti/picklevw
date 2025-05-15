@@ -5,7 +5,7 @@ Module for securely loading pickle files and checking JSON serializability.
 import gzip
 import json
 import pickle
-from typing import Any, Tuple
+from typing import Any, Tuple, Iterable
 
 from fickling import always_check_safety
 from fickling.exception import UnsafeFileError
@@ -42,16 +42,20 @@ def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Tuple[Any, bo
     """
     file_start = file.read(2)
     file.seek(0)
-    res = []
     try:
-        with gzip.open(file, "rb") if file_start == b"\x1f\x8b" else file as f:
-            for item in range(pickle.load(f)):
-                res.append(item)
-            if len(res) > 1:
-                return set(res), True
-            return res[0], False
-    except UnsafeFileError as err:
-        raise ExceptionUnsafePickle(f"Potential **threat** detected in this file. Stopped loading.\n\nFickling analysis: {err.info}")
+        file_stream = gzip.GzipFile(fileobj=file,  mode='rb') if file_start == b"\x1f\x8b" else file
+        res = []
+        try:
+            while True:
+                obj = pickle.load(file_stream)
+                res.append(obj)
+        except UnsafeFileError as err:
+            raise ExceptionUnsafePickle(f"Potential **threat** detected in this file. Stopped loading.\n\nFickling analysis: {err.info}")
+        except Exception:
+            pass
+        if len(res) > 1:
+            return ', '.join(map(str, res)), True
+        return res[0], False
     except Exception as ex:
         raise ex
 
