@@ -1,7 +1,9 @@
+
 from unittest.mock import MagicMock, patch
 import json
+import pandas as pd
 
-# Test class for PickleViewerApp
+
 @patch("streamlit.set_page_config")
 @patch("streamlit.logo")
 @patch("streamlit.html")
@@ -38,8 +40,6 @@ def test_display_content_json(mock_markdown, mock_dataframe, mock_code, mock_war
     from src.picklevw import PickleViewerApp
 
     app = PickleViewerApp()
-
-    # Serializable object
     obj = {"key": "value"}
     app.display_content(obj, False, False)
 
@@ -49,27 +49,49 @@ def test_display_content_json(mock_markdown, mock_dataframe, mock_code, mock_war
     mock_warning.assert_not_called()
 
 
-@patch("streamlit.error")
-# @patch("streamlit.warning")
-@patch("src.picklevw.PickleLoader")
-# def test_handle_file_success(mock_loader_class, mock_error, mock_warning):
-def test_handle_file_success(mock_loader_class, mock_error):
+@patch("streamlit.warning")
+@patch("streamlit.dataframe")
+@patch("streamlit.markdown")
+def test_display_content_dataframe(mock_markdown, mock_dataframe, mock_warning):
     from src.picklevw import PickleViewerApp
 
     app = PickleViewerApp()
+    df = pd.DataFrame({"col1": [1, 2]})
+    app.display_content(df, False, True)
+
+    mock_markdown.assert_called_once_with("**Content**")
+    mock_dataframe.assert_called_once_with(df)
+    mock_warning.assert_not_called()
+
+
+@patch("streamlit.warning")
+@patch("streamlit.markdown")
+def test_display_content_not_serializable(mock_markdown, mock_warning):
+    from src.picklevw import PickleViewerApp
+
+    class NonSerializable: pass
+
+    app = PickleViewerApp()
+    obj = NonSerializable()
+    app.display_content(obj, False, False)
+
+    mock_markdown.assert_called_once_with("**Content**")
+    mock_warning.assert_called_once_with("The object is not JSON serializable and is not a DataFrame.")
+
+
+@patch("streamlit.error")
+@patch("src.picklevw.PickleLoader")
+def test_handle_file_exception_unsafe_pickle(mock_loader_class, mock_error):
+    from src.picklevw import PickleViewerApp
+    from src.picklevw import ExceptionUnsafePickle
+
+    app = PickleViewerApp()
     mock_loader = MagicMock()
-    mock_loader.load.return_value = ({"a": 1}, False, False)
+    mock_loader.load.side_effect = ExceptionUnsafePickle("Unsafe pickle")
     mock_loader_class.return_value = mock_loader
 
-    app.display_content = MagicMock()
-
-    mock_file = MagicMock()
-    app.handle_file(mock_file)
-
-    app.display_content.assert_called_once()
-    mock_error.assert_not_called()
-
-    # mock_warning.assert_called_once_with("picklevw could not read the content of this file.")
+    app.handle_file(MagicMock())
+    mock_error.assert_called_once_with("Unsafe pickle")
 
 
 @patch("streamlit.warning")
@@ -82,7 +104,37 @@ def test_handle_file_exception(mock_loader_class, mock_warning):
     mock_loader.load.side_effect = Exception("test error")
     mock_loader_class.return_value = mock_loader
 
-    mock_file = MagicMock()
-    app.handle_file(mock_file)
-
+    app.handle_file(MagicMock())
     mock_warning.assert_called_once_with("picklevw could not read the content of this file.")
+
+
+@patch("streamlit.error")
+@patch("src.picklevw.PickleLoader")
+def test_handle_file_success(mock_loader_class, mock_error):
+    from src.picklevw import PickleViewerApp
+
+    app = PickleViewerApp()
+    mock_loader = MagicMock()
+    mock_loader.load.return_value = ({"a": 1}, False, False)
+    mock_loader_class.return_value = mock_loader
+
+    app.display_content = MagicMock()
+    app.handle_file(MagicMock())
+
+    app.display_content.assert_called_once()
+    mock_error.assert_not_called()
+
+
+@patch("src.picklevw.PickleViewerApp.setup_page")
+@patch("src.picklevw.PickleViewerApp.upload_file")
+@patch("src.picklevw.PickleViewerApp.handle_file")
+def test_run_with_file(mock_handle_file, mock_upload_file, mock_setup_page):
+    from src.picklevw import PickleViewerApp
+
+    app = PickleViewerApp()
+    mock_upload_file.return_value = MagicMock()
+    app.run()
+
+    mock_setup_page.assert_called_once()
+    mock_upload_file.assert_called_once()
+    mock_handle_file.assert_called_once()
