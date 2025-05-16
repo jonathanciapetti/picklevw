@@ -50,7 +50,9 @@ def test_display_content_json(mock_markdown, mock_dataframe, mock_code, mock_war
 
 
 @patch("streamlit.error")
+# @patch("streamlit.warning")
 @patch("src.picklevw.PickleLoader")
+# def test_handle_file_success(mock_loader_class, mock_error, mock_warning):
 def test_handle_file_success(mock_loader_class, mock_error):
     from src.picklevw import PickleViewerApp
 
@@ -67,10 +69,12 @@ def test_handle_file_success(mock_loader_class, mock_error):
     app.display_content.assert_called_once()
     mock_error.assert_not_called()
 
+    # mock_warning.assert_called_once_with("picklevw could not read the content of this file.")
 
-@patch("streamlit.error")
+
+@patch("streamlit.warning")
 @patch("src.picklevw.PickleLoader")
-def test_handle_file_exception(mock_loader_class, mock_error):
+def test_handle_file_exception(mock_loader_class, mock_warning):
     from src.picklevw import PickleViewerApp
 
     app = PickleViewerApp()
@@ -81,4 +85,4 @@ def test_handle_file_exception(mock_loader_class, mock_error):
     mock_file = MagicMock()
     app.handle_file(mock_file)
 
-    mock_error.assert_called_once_with("test error")
+    mock_warning.assert_called_once_with("picklevw could not read the content of this file.")
