@@ -13,7 +13,7 @@
 <br />
 
 **picklevw** (pronunced *pickleview*) is a simple Python web application, designed to read and display pickle files
-using Pandas and Streamlit. It's basically a GUI wrapping `pandas.read_pickle()`.
+using `pandas` and `streamlit`. It's basically a GUI wrapping `pandas.read_pickle()`.
 
 Try it live on [picklevw.streamlit.app](https://picklevw.streamlit.app)
 
@@ -50,18 +50,11 @@ Here's a screenshot of the app displaying the unpickled content of a legit pickl
     <img src="./media/screenshot_1.png" width="100%" alt="legit pickle">
 </p>
 
-And here's a screenshot of the app signaling a suspicious pickle, like **ANY** Pandas DataFrame:
-<p>
-    <img src="./media/screenshot_2.png" width="100%" alt="suspicious pickle">
-</p>
-
-<br />
-
 ---
 
 ### Safetey checks
 
-`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. Fickling depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports. 
+`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. `fickling` depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports. `fickling` considers files from `pandas` as potentially malicious, but since pickles with `DataFrame`s in them are commonly used, `picklevw` considers them safe to display.
 
 ### Contributing
 
