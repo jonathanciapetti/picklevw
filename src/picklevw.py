@@ -48,20 +48,15 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file:
     try:
-        obj, were_spared_objs = load_pickle(uploaded_file)
+        obj, were_spared_objs, is_dataframe = load_pickle(uploaded_file)
         st.markdown(f"**Content**")
+        if is_dataframe:
+            st.dataframe(obj)
         if is_json_serializable(obj):
             formatted = json.dumps(obj, indent=4)
-            st.code(formatted, language="json")
-        else:
-            try:
-                formatted = pformat(obj, indent=4, compact=False)
-            except Exception:
-                formatted = reprlib.repr(obj)
             if were_spared_objs:
-                formatted =  re.sub(r"[{}]", '', formatted)
-            st.code(formatted, language="python")
-
+                formatted = re.sub(r'^\"(.*)\"$', r'\1', formatted)
+            st.code(formatted, language="json")
     except (UnpicklingError, json.JSONDecodeError) as err:
         st.error(f"Invalid file content: {str(err)}")
     except Exception as ex:

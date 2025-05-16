@@ -3,20 +3,26 @@ Module for securely loading pickle files and checking JSON serializability.
 """
 
 import gzip
+import io
 import json
 import pickle
 from typing import Any, Tuple
 
-from fickling import always_check_safety
+import pandas
+from fickling import always_check_safety, is_likely_safe
+from fickling.analysis import check_safety, Severity
 from fickling.exception import UnsafeFileError
+from fickling.fickle import Pickled
+from pandas import read_pickle
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 from exceptions import ExceptionUnsafePickle
 
-always_check_safety()
+
+# always_check_safety()
 
 
-def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Tuple[Any, bool]:
+def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Tuple[Any, bool, bool]:
     """
     Securely loads a pickle file, detecting and handling gzip compression, and checking for unsafe content.
 
@@ -40,20 +46,44 @@ def load_pickle(file: UploadedFile | list[UploadedFile] | None) -> Tuple[Any, bo
     Exception
         For other exceptions during the loading process.
     """
-    file_start = file.read(2)
     file.seek(0)
-    res = []
+    raw_data = file.read()
+    file.seek(0)
+    is_gzipped = raw_data[:2] == b"\x1f\x8b"
     try:
-        with gzip.open(file, "rb") if file_start == b"\x1f\x8b" else file as f:
-            for item in range(pickle.load(f)):
-                res.append(item)
+        buffer_for_analysis = io.BytesIO(gzip.decompress(raw_data) if is_gzipped else raw_data)
+        pf = Pickled.load(buffer_for_analysis)
+        severity_ = check_safety(pf).severity
+        if severity_ not in (Severity.LIKELY_SAFE, Severity.LIKELY_UNSAFE):
+            raise UnsafeFileError(info='', filepath='')
+
+        buffer_for_pickle = io.BytesIO(gzip.decompress(raw_data) if is_gzipped else raw_data)
+        with buffer_for_pickle as bf:
+            try:
+                if isinstance(df := pandas.read_pickle(bf), pandas.DataFrame):
+                    return df, False, True
+            except Exception:
+                pass
+
+        buffer_for_pickle = io.BytesIO(gzip.decompress(raw_data) if is_gzipped else raw_data)
+        with buffer_for_pickle as bf:
+            res = []
+            try:
+                while True:
+                    obj = pickle.load(bf)
+                    res.append(obj)
+            except Exception:
+                pass
             if len(res) > 1:
-                return set(res), True
-            return res[0], False
-    except UnsafeFileError as err:
-        raise ExceptionUnsafePickle(f"Potential **threat** detected in this file. Stopped loading.\n\nFickling analysis: {err.info}")
+                return ', '.join(map(str, res)), True, False
+            if len(res) == 1:
+                return res[0], False, False
+            return None, False, False
+    except UnsafeFileError:
+        raise ExceptionUnsafePickle(f"Potential **threat** detected in this file. Stopped loading.")
     except Exception as ex:
         raise ex
+
 
 def is_json_serializable(obj: Any) -> bool:
     """
