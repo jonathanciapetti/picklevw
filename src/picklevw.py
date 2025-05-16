@@ -1,11 +1,10 @@
 import os
 import json
 import re
-from pickle import UnpicklingError
 
 import streamlit as st
 
-from utils import PickleLoader, is_json_serializable
+from utils import PickleLoader, is_json_serializable, ExceptionUnsafePickle
 
 
 class PickleViewerApp:
@@ -57,8 +56,8 @@ class PickleViewerApp:
             loader = PickleLoader(uploaded_file)
             obj, were_spared_objs, is_dataframe = loader.load()
             self.display_content(obj, were_spared_objs, is_dataframe)
-        except (UnpicklingError, json.JSONDecodeError) as err:
-            st.error(f"Invalid file content: {str(err)}")
+        except ExceptionUnsafePickle as err:
+            st.error(str(err))
         except Exception as ex:
             st.warning("picklevw could not read the content of this file.")
 
