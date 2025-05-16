@@ -24,7 +24,7 @@ class PickleViewerApp:
         st.html(
             f'''
             <p style="font-size: 20px; display: inline; text-align: bottom;">
-                A simple <a href="{self.PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed. v1.1.1
+                A simple <a href="{self.PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed. v1.2.1
             </p>
             '''
         )
