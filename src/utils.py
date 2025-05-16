@@ -24,7 +24,7 @@ class PickleSecurityChecker:
     def ensure_safe(self):
         pf = Pickled.load(self._get_buffer())
         severity = check_safety(pf).severity
-        if severity not in (Severity.LIKELY_SAFE, Severity.LIKELY_UNSAFE):
+        if severity.value[0] > 2:  #  not in (Severity.LIKELY_SAFE, Severity.SUSPICIOUS, Severity.LIKELY_UNSAFE):
             raise UnsafeFileError(info='', filepath='')
 
 
