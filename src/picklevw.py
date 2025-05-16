@@ -38,7 +38,11 @@ class PickleViewerApp:
 
     def display_content(self, obj, were_spared_objs, is_dataframe):
         st.markdown("**Content**")
+        if not is_dataframe and not obj:
+            st.warning("picklevw could not read the content of this file.")
+            return
         if is_dataframe:
+            st.write(f"Readable: **{len(obj)}** rows and **{len(obj.columns)}** columns")
             st.dataframe(obj)
         elif is_json_serializable(obj):
             formatted = json.dumps(obj, indent=4)
