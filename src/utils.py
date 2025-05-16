@@ -5,7 +5,7 @@ import pickle
 from typing import Any, Tuple
 
 import pandas as pd
-from fickling.analysis import check_safety, Severity
+from fickling.analysis import check_safety
 from fickling.exception import UnsafeFileError
 from fickling.fickle import Pickled
 from streamlit.runtime.uploaded_file_manager import UploadedFile
@@ -85,10 +85,9 @@ class PickleLoader:
             return obj, were_spared, False
 
         except UnsafeFileError:
-            raise ExceptionUnsafePickle("Potential **threat** detected in this file. Stopped loading.")
+            raise ExceptionUnsafePickle("A potential **threat** has been detected in this file. Stopped loading.")
         except Exception as ex:
             raise ex
-
 
 def is_json_serializable(obj: Any) -> bool:
     try:
