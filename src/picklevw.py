@@ -60,7 +60,7 @@ class PickleViewerApp:
         except (UnpicklingError, json.JSONDecodeError) as err:
             st.error(f"Invalid file content: {str(err)}")
         except Exception as ex:
-            st.error(str(ex))
+            st.warning("picklevw could not read the content of this file.")
 
     def run(self):
         self.setup_page()
