@@ -1,63 +1,70 @@
-"""
-Streamlit web application for inspecting and visualizing Python pickle files.
-
-This application provides a user-friendly interface to upload and inspect `.pkl`, `.pickle`, or
-`.gz` (gzip-compressed pickle) files. It safely loads pickle data using the `fickling`-enhanced
-loader and renders the output either as a table (for pandas DataFrames) or as formatted code
-(for other Python objects). It includes support for JSON formatting and object pretty-printing.
-"""
-
 import os
 import json
 import re
-import reprlib
 from pickle import UnpicklingError
 
 import streamlit as st
-from prettyprinter import pformat
 
-from utils import load_pickle, is_json_serializable
+from utils import PickleLoader, is_json_serializable
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-PICKLEVW_LOGO_FILEPATH = os.path.join(BASE_DIR, "..", "media", "picklevw.png")
-PICKLEVW_REPO_URL = "https://github.com/jonathanciapetti/picklevw"
-PICKLE_DOCS_URL = "https://docs.python.org/3/library/pickle.html"
+class PickleViewerApp:
+    def __init__(self):
+        self.BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        self.PICKLEVW_LOGO_FILEPATH = os.path.join(self.BASE_DIR, "..", "media", "picklevw.png")
+        self.PICKLE_DOCS_URL = "https://docs.python.org/3/library/pickle.html"
 
-st.set_page_config(
-    layout="wide",
-    page_title="picklevw",
-    page_icon="🥒",
-)
+    def setup_page(self):
+        st.set_page_config(
+            layout="wide",
+            page_title="picklevw",
+            page_icon="🥒",
+        )
+        st.logo(self.PICKLEVW_LOGO_FILEPATH, size="large")
+        st.html(
+            f'''
+            <p style="font-size: 20px; display: inline; text-align: bottom;">
+                A simple <a href="{self.PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed. v1.1.1
+            </p>
+            '''
+        )
 
-st.logo(PICKLEVW_LOGO_FILEPATH, size="large")
+    def upload_file(self):
+        return st.file_uploader(
+            "Upload a Pickle (.pkl, .pickle) or Gzip-Pickle (.gz) File",
+            type=["pkl", "pickle", "gz"],
+            label_visibility='hidden'
+        )
 
-st.html(
-    f"""
-    <p style="font-size: 20px; display: inline; text-align: bottom;">
-        A simple <a href="{PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed. v1.1.1
-    </p>
-    """
-)
-
-uploaded_file = st.file_uploader(
-    "Upload a Pickle (.pkl, .pickle) or Gzip-Pickle (.gz) File",
-    type=["pkl", "pickle", "gz"],
-    label_visibility='hidden'
-)
-
-if uploaded_file:
-    try:
-        obj, were_spared_objs, is_dataframe = load_pickle(uploaded_file)
-        st.markdown(f"**Content**")
+    def display_content(self, obj, were_spared_objs, is_dataframe):
+        st.markdown("**Content**")
         if is_dataframe:
             st.dataframe(obj)
-        if is_json_serializable(obj):
+        elif is_json_serializable(obj):
             formatted = json.dumps(obj, indent=4)
             if were_spared_objs:
-                formatted = re.sub(r'^\"(.*)\"$', r'\1', formatted)
+                formatted = re.sub(r'^"(.*)"$', r'\1', formatted)
             st.code(formatted, language="json")
-    except (UnpicklingError, json.JSONDecodeError) as err:
-        st.error(f"Invalid file content: {str(err)}")
-    except Exception as ex:
-        st.error(str(ex))
+        else:
+            st.warning("The object is not JSON serializable and is not a DataFrame.")
+
+    def handle_file(self, uploaded_file):
+        try:
+            loader = PickleLoader(uploaded_file)
+            obj, were_spared_objs, is_dataframe = loader.load()
+            self.display_content(obj, were_spared_objs, is_dataframe)
+        except (UnpicklingError, json.JSONDecodeError) as err:
+            st.error(f"Invalid file content: {str(err)}")
+        except Exception as ex:
+            st.error(str(ex))
+
+    def run(self):
+        self.setup_page()
+        uploaded_file = self.upload_file()
+        if uploaded_file:
+            self.handle_file(uploaded_file)
+
+
+if __name__ == "__main__":
+    app = PickleViewerApp()
+    app.run()
