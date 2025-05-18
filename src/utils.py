@@ -24,8 +24,10 @@ class PickleSecurityChecker:
     def ensure_safe(self):
         pf = Pickled.load(self._get_buffer())
         severity = check_safety(pf).severity
-        if severity.value[0] > 2:  #  not in (Severity.LIKELY_SAFE, Severity.SUSPICIOUS, Severity.LIKELY_UNSAFE):
-            raise UnsafeFileError(info='', filepath='')
+        if (
+            severity.value[0] > 2
+        ):  #  not in (Severity.LIKELY_SAFE, Severity.SUSPICIOUS, Severity.LIKELY_UNSAFE):
+            raise UnsafeFileError(info="", filepath="")
 
 
 class PickleReader:
@@ -53,7 +55,7 @@ class PickleReader:
         except Exception:
             pass
         if len(res) > 1:
-            return ', '.join(map(str, res)), True
+            return ", ".join(map(str, res)), True
         elif len(res) == 1:
             return res[0], False
         return None, False
@@ -85,9 +87,12 @@ class PickleLoader:
             return obj, were_spared, False
 
         except UnsafeFileError:
-            raise ExceptionUnsafePickle("A potential **threat** has been detected in this file. Stopped loading.")
+            raise ExceptionUnsafePickle(
+                "A potential **threat** has been detected in this file. Stopped loading."
+            )
         except Exception as ex:
             raise ex
+
 
 def is_json_serializable(obj: Any) -> bool:
     try:

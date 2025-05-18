@@ -79,7 +79,9 @@ def test_pickle_loader_unsafe(mock_ensure_safe):
     from fickling.exception import UnsafeFileError
 
     # Make ensure_safe raise UnsafeFileError
-    mock_ensure_safe.side_effect = UnsafeFileError(info='Test unsafe file', filepath='test.pickle')
+    mock_ensure_safe.side_effect = UnsafeFileError(
+        info="Test unsafe file", filepath="test.pickle"
+    )
 
     # Any data works since we're mocking ensure_safe
     dummy_data = b"not_really_pickle"
@@ -91,7 +93,9 @@ def test_pickle_loader_unsafe(mock_ensure_safe):
         loader.load()
         assert False, "Expected ExceptionUnsafePickle to be raised"
     except Exception as e:
-        assert isinstance(e, ExceptionUnsafePickle), f"Expected ExceptionUnsafePickle but got {type(e)}"
+        assert isinstance(
+            e, ExceptionUnsafePickle
+        ), f"Expected ExceptionUnsafePickle but got {type(e)}"
 
 
 def test_is_json_serializable():
@@ -99,4 +103,3 @@ def test_is_json_serializable():
 
     assert is_json_serializable({"key": "value"})
     assert not is_json_serializable({1, 2, 3})  # set is not JSON serializable
-
