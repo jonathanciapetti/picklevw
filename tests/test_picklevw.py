@@ -1,4 +1,3 @@
-
 from unittest.mock import MagicMock, patch
 import json
 import pandas as pd
@@ -13,7 +12,9 @@ def test_setup_page(mock_html, mock_logo, mock_config):
     app = PickleViewerApp()
     app.setup_page()
 
-    mock_config.assert_called_once_with(layout="wide", page_title="picklevw", page_icon="🥒")
+    mock_config.assert_called_once_with(
+        layout="wide", page_title="picklevw", page_icon="🥒"
+    )
     mock_logo.assert_called_once()
     mock_html.assert_called_once()
 
@@ -28,7 +29,7 @@ def test_upload_file(mock_uploader):
     mock_uploader.assert_called_once_with(
         "Upload a Pickle (.pkl, .pickle) or Gzip-Pickle (.gz) File",
         type=["pkl", "pickle", "gz"],
-        label_visibility='hidden'
+        label_visibility="hidden",
     )
 
 
@@ -69,14 +70,17 @@ def test_display_content_dataframe(mock_markdown, mock_dataframe, mock_warning):
 def test_display_content_not_serializable(mock_markdown, mock_warning):
     from src.picklevw import PickleViewerApp
 
-    class NonSerializable: pass
+    class NonSerializable:
+        pass
 
     app = PickleViewerApp()
     obj = NonSerializable()
     app.display_content(obj, False, False)
 
     mock_markdown.assert_called_once_with("**Content**")
-    mock_warning.assert_called_once_with("The object is not JSON serializable and is not a DataFrame.")
+    mock_warning.assert_called_once_with(
+        "The object is not JSON serializable and is not a DataFrame."
+    )
 
 
 @patch("streamlit.error")
@@ -105,7 +109,9 @@ def test_handle_file_exception(mock_loader_class, mock_warning):
     mock_loader_class.return_value = mock_loader
 
     app.handle_file(MagicMock())
-    mock_warning.assert_called_once_with("picklevw could not read the content of this file.")
+    mock_warning.assert_called_once_with(
+        "picklevw could not read the content of this file."
+    )
 
 
 @patch("streamlit.error")

@@ -10,7 +10,9 @@ from utils import PickleLoader, is_json_serializable, ExceptionUnsafePickle
 class PickleViewerApp:
     def __init__(self):
         self.BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-        self.PICKLEVW_LOGO_FILEPATH = os.path.join(self.BASE_DIR, "..", "media", "picklevw.png")
+        self.PICKLEVW_LOGO_FILEPATH = os.path.join(
+            self.BASE_DIR, "..", "media", "picklevw.png"
+        )
         self.PICKLE_DOCS_URL = "https://docs.python.org/3/library/pickle.html"
 
     def setup_page(self):
@@ -21,18 +23,18 @@ class PickleViewerApp:
         )
         st.logo(self.PICKLEVW_LOGO_FILEPATH, size="large")
         st.html(
-            f'''
+            f"""
             <p style="font-size: 20px; display: inline; text-align: bottom;">
                 A simple <a href="{self.PICKLE_DOCS_URL}" target="_blank">Pickle</a> file viewer. MIT Licensed. v1.2.1
             </p>
-            '''
+            """
         )
 
     def upload_file(self):
         return st.file_uploader(
             "Upload a Pickle (.pkl, .pickle) or Gzip-Pickle (.gz) File",
             type=["pkl", "pickle", "gz"],
-            label_visibility='hidden'
+            label_visibility="hidden",
         )
 
     def display_content(self, obj, were_spared_objs, is_dataframe):
@@ -41,12 +43,14 @@ class PickleViewerApp:
             st.warning("picklevw could not read the content of this file.")
             return
         if is_dataframe:
-            st.write(f"Readable: **{len(obj)}** rows and **{len(obj.columns)}** columns")
+            st.write(
+                f"Readable: **{len(obj)}** rows and **{len(obj.columns)}** columns"
+            )
             st.dataframe(obj)
         elif is_json_serializable(obj):
             formatted = json.dumps(obj, indent=4)
             if were_spared_objs:
-                formatted = re.sub(r'^"(.*)"$', r'\1', formatted)
+                formatted = re.sub(r'^"(.*)"$', r"\1", formatted)
             st.code(formatted, language="json")
         else:
             st.warning("The object is not JSON serializable and is not a DataFrame.")
