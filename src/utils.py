@@ -2,7 +2,7 @@ import io
 import gzip
 import json
 import pickle
-from typing import Any, Tuple
+from typing import Any, Tuple, Optional, Union
 
 import pandas as pd
 from fickling.analysis import check_safety
@@ -10,84 +10,93 @@ from fickling.exception import UnsafeFileError
 from fickling.fickle import Pickled
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
+import config as cfg
 from exceptions import ExceptionUnsafePickle
 
 
 class PickleSecurityChecker:
-    def __init__(self, data: bytes, is_gzipped: bool):
-        self.data = data
-        self.is_gzipped = is_gzipped
+    SEVERITY_THRESHOLD = 1
 
-    def _get_buffer(self) -> io.BytesIO:
-        return io.BytesIO(gzip.decompress(self.data) if self.is_gzipped else self.data)
+    def __init__(self, buffer: io.BytesIO):
+        self.buffer = buffer
 
     def ensure_safe(self):
-        pf = Pickled.load(self._get_buffer())
+        pf = Pickled.load(self.buffer)
         severity = check_safety(pf).severity
-        if severity.value[0] > 2:  #  not in (Severity.LIKELY_SAFE, Severity.SUSPICIOUS, Severity.LIKELY_UNSAFE):
-            raise UnsafeFileError(info='', filepath='')
+        if severity.value[0] > self.SEVERITY_THRESHOLD:
+            raise UnsafeFileError(info="", filepath="")
 
 
 class PickleReader:
-    def __init__(self, data: bytes, is_gzipped: bool):
-        self.data = data
-        self.is_gzipped = is_gzipped
+    def __init__(self, buffer: io.BytesIO):
+        self.buffer = buffer
 
-    def _get_buffer(self) -> io.BytesIO:
-        return io.BytesIO(gzip.decompress(self.data) if self.is_gzipped else self.data)
-
-    def try_read_dataframe(self) -> pd.DataFrame | None:
+    def try_read_dataframe(self) -> Optional[pd.DataFrame]:
         try:
-            df = pd.read_pickle(self._get_buffer())
-            if isinstance(df, pd.DataFrame):
-                return df
-        except Exception:
+            self.buffer.seek(0)
+            obj = pd.read_pickle(self.buffer)
+            return obj if isinstance(obj, (pd.DataFrame, pd.Series)) else None
+        except (pickle.UnpicklingError, EOFError, ValueError):
             return None
 
-    def try_read_objects(self) -> Tuple[Any, bool]:
-        res = []
-        buffer = self._get_buffer()
+    def try_read_objects(self) -> Tuple[Union[str, Any, None], bool]:
+        self.buffer.seek(0)
+        objects = []
         try:
             while True:
-                res.append(pickle.load(buffer))
-        except Exception:
+                objects.append(pickle.load(self.buffer))
+        except (EOFError, pickle.UnpicklingError):
             pass
-        if len(res) > 1:
-            return ', '.join(map(str, res)), True
-        elif len(res) == 1:
-            return res[0], False
+        except Exception as e:
+            pass
+
+        if len(objects) > 1:
+            return ", ".join(map(str, objects)), True
+        elif len(objects) == 1:
+            return objects[0], False
         return None, False
 
 
 class PickleLoader:
-    def __init__(self, file: UploadedFile):
+    def __init__(self, file: UploadedFile, allow_unsafe_file: bool = False):
         self.file = file
+        self.allow_unsafe_file = allow_unsafe_file
         self.raw_data = self._read_file()
-        self.is_gzipped = self.raw_data[:2] == b"\x1f\x8b"
+        self.is_gzipped = self.raw_data.startswith(b"\x1f\x8b")
+        self.buffer = self._get_buffer()
 
     def _read_file(self) -> bytes:
         self.file.seek(0)
         return self.file.read()
 
+    def _get_buffer(self) -> io.BytesIO:
+        data = gzip.decompress(self.raw_data) if self.is_gzipped else self.raw_data
+        return io.BytesIO(data)
+
     def load(self) -> Tuple[Any, bool, bool]:
         try:
-            # Step 1: Validate safety
-            PickleSecurityChecker(self.raw_data, self.is_gzipped).ensure_safe()
-
-            # Step 2: Try pandas
-            reader = PickleReader(self.raw_data, self.is_gzipped)
+            # Always check safety first
+            safety_buffer = io.BytesIO(self.buffer.getvalue())
+            PickleSecurityChecker(safety_buffer).ensure_safe()
+            # Proceed to safe deserialization
+            reader = PickleReader(io.BytesIO(self.buffer.getvalue()))
             df = reader.try_read_dataframe()
             if df is not None:
                 return df, False, True
 
-            # Step 3: Try generic pickle
-            obj, were_spared = reader.try_read_objects()
-            return obj, were_spared, False
+            obj, multiple = reader.try_read_objects()
+            return obj, multiple, False
 
         except UnsafeFileError:
-            raise ExceptionUnsafePickle("A potential **threat** has been detected in this file. Stopped loading.")
-        except Exception as ex:
-            raise ex
+            if self.allow_unsafe_file:
+                # Try to read anyway, but only if it is a DataFrame
+                reader = PickleReader(io.BytesIO(self.buffer.getvalue()))
+                df = reader.try_read_dataframe()
+                if df is not None:
+                    return df, False, True
+
+            raise ExceptionUnsafePickle(cfg.MESSAGES["POTENTIAL_THREAT"])
+
 
 def is_json_serializable(obj: Any) -> bool:
     try:
