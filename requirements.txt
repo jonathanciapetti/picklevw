@@ -19,7 +19,7 @@ numpy==2.2.5
 packaging==24.2
 pandas==2.2.3
 pillow==11.2.1
-protobuf==6.30.2
+protobuf==6.31.1
 pyarrow==20.0.0
 pydeck==0.9.1
 Pygments==2.19.1
