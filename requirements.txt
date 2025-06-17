@@ -16,7 +16,7 @@ jsonschema-specifications==2025.4.1
 MarkupSafe==3.0.2
 narwhals==1.42.1
 numpy==2.2.5
-packaging==24.2
+packaging==25.0
 pandas==2.2.3
 pillow==11.2.1
 protobuf==6.31.1
