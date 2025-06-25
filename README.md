@@ -17,8 +17,6 @@ using `pandas` and `streamlit`.
 
 Try it live on [picklevw.streamlit.app](https://picklevw.streamlit.app)
 
-<br />
-
 ### Getting Started
 
 ---
