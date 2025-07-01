@@ -1,5 +1,5 @@
 -r requirements.txt
-pytest==8.3.5
+pytest==8.4.1
 coverage==7.9.1
 flake8==7.3.0
 black>=23.0.0
