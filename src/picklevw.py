@@ -54,23 +54,16 @@ class PickleViewerApp:
         elif isinstance(obj, np.ndarray):
             st.write(f"NumPy Array: shape {obj.shape}, dtype {obj.dtype}")
 
-            # Detect image-like arrays
-            if obj.ndim == 2:  # Grayscale
-                st.image(obj, caption="Grayscale image", use_column_width=True)
-            elif obj.ndim == 3 and obj.shape[2] in (3, 4):  # RGB or RGBA
-                st.image(obj, caption="Color image", use_column_width=True)
-            else:
-                # Show as table
-                try:
-                    st.dataframe(pd.DataFrame(obj))
-                except Exception:
-                    st.warning("Cannot render array as table.")
+            try:
+                st.dataframe(pd.DataFrame(obj))
+            except Exception:
+                st.warning("Cannot render array as table.")
 
-                # Fallback to matplotlib rendering
-                fig, ax = plt.subplots()
-                ax.imshow(obj, aspect='auto', cmap='viridis')
-                ax.set_title("Matplotlib Visualization")
-                st.pyplot(fig)
+            # Fallback to matplotlib rendering
+            fig, ax = plt.subplots()
+            ax.imshow(obj, aspect='auto', cmap='viridis')
+            ax.set_title("Matplotlib Visualization")
+            st.pyplot(fig)
 
         elif is_json_serializable(obj):
             formatted = json.dumps(obj, indent=4)
