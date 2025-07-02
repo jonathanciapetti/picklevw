@@ -3,7 +3,7 @@ astunparse==1.6.3
 attrs==25.3.0
 blinker==1.9.0
 cachetools==5.5.2
-certifi==2025.4.26
+certifi==2025.6.15
 charset-normalizer==3.4.2
 click==8.2.0
 colorful==0.5.6
@@ -14,11 +14,11 @@ Jinja2==3.1.6
 jsonschema==4.24.0
 jsonschema-specifications==2025.4.1
 MarkupSafe==3.0.2
-narwhals==1.42.1
+narwhals==1.44.0
 numpy==2.2.5
 packaging==24.2
 pandas==2.2.3
-pillow==11.2.1
+pillow==11.3.0
 protobuf==6.31.1
 pyarrow==20.0.0
 pydeck==0.9.1
@@ -30,7 +30,7 @@ requests==2.32.4
 rpds-py==0.24.0
 six==1.17.0
 smmap==5.0.2
-streamlit==1.46.0
+streamlit==1.46.1
 tenacity==9.1.2
 tornado==6.5.1
 typing_extensions==4.13.2
