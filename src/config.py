@@ -3,7 +3,7 @@ UI = {
     "icon": "🥒",
     "layout": "wide",
     "logo_size": "large",
-    "file_extensions": [".pkl", ".pickle", ".gz"],
+    "file_extensions": [".pkl", ".pickle", ".gz", ".pt", ".pth"],
     "PICKLE_DOCS_URL": "https://docs.python.org/3/library/pickle.html",
 }
 
