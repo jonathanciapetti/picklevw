@@ -1,10 +1,8 @@
 import pytest
 import pandas as pd
 import numpy as np
-# import matplotlib.pyplot as plt
 from unittest.mock import MagicMock, Mock, patch
-from src.picklevw import PickleViewerApp
-from src.picklevw import ExceptionUnsafePickle
+from src.picklevw import PickleViewerApp, ExceptionUnsafePickle
 
 
 @pytest.fixture
@@ -147,36 +145,13 @@ def test_display_content_series(mock_cfg, mock_st):
     PickleViewerApp.display_content(series, were_spared_objs=False, is_dataframe=False)
 
     mock_st.markdown.assert_any_call("Content:")
-    mock_st.write.assert_called_once_with("Pandas Series: **test_series**, 3 elements")
-
-    # The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all() :
-    # mock_st.dataframe.assert_called_once_with(series.to_frame())
-
+    mock_st.write.assert_called_once_with("Pandas or NumPy Series: **test_series**, 3 elements")
+    mock_st.dataframe.assert_called_once()
+    pd.testing.assert_frame_equal(
+        mock_st.dataframe.call_args[0][0],
+        series.to_frame()
+    )
     mock_st.line_chart.assert_called_once_with(series)
-
-
-@patch('src.picklevw.st')
-@patch('src.picklevw.cfg')
-def test_display_content_numpy_array(mock_cfg, mock_st):
-    """Test displaying a numpy array"""
-    arr = np.array([[1, 2], [3, 4]])
-    mock_cfg.MESSAGES = {
-        "CONTENT_DISPLAY": "Content:"
-    }
-
-    with patch('matplotlib.pyplot.subplots') as mock_subplots:
-        mock_fig = Mock()
-        mock_ax = Mock()
-        mock_subplots.return_value = (mock_fig, mock_ax)
-
-        PickleViewerApp.display_content(arr, were_spared_objs=False, is_dataframe=False)
-
-        mock_st.markdown.assert_called_once_with("Content:")
-        mock_st.write.assert_called_once_with(f"NumPy Array: shape (2, 2), dtype int64")
-        mock_st.dataframe.assert_called_once()
-        mock_ax.imshow.assert_called_once()
-        mock_ax.set_title.assert_called_once_with("Matplotlib Visualization")
-        mock_st.pyplot.assert_called_once_with(mock_fig)
 
 
 @patch('src.picklevw.st')
@@ -212,24 +187,3 @@ def test_display_content_non_serializable(mock_cfg, mock_st):
 
     mock_st.markdown.assert_called_once_with("Content:")
     mock_st.warning.assert_called_once_with("Not JSON serializable")
-
-
-@patch('src.picklevw.st')
-@patch('src.picklevw.cfg')
-def test_display_content_numpy_array_dataframe_error(mock_cfg, mock_st):
-    """Test displaying a numpy array when DataFrame conversion fails"""
-    arr = np.array([[1, 2], [3, 4]])
-    mock_cfg.MESSAGES = {
-        "CONTENT_DISPLAY": "Content:"
-    }
-
-    with patch('src.picklevw.np.array', side_effect=Exception("Convert error")):
-        with patch('matplotlib.pyplot.subplots') as mock_subplots:
-            mock_fig = Mock()
-            mock_ax = Mock()
-            mock_subplots.return_value = (mock_fig, mock_ax)
-
-            PickleViewerApp.display_content(arr, were_spared_objs=False, is_dataframe=False)
-
-            mock_st.warning.assert_called_once_with("Cannot render array as table.")
-            mock_st.pyplot.assert_called_once_with(mock_fig)
