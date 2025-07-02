@@ -11,7 +11,7 @@
 
 <br />
 
-**picklevw** (pronunced *pickleview*) is a simple Python web application, designed to read and display pickle files
+**picklevw** (pronounced *pickleview*) is a simple Python web application, designed to read and display pickle files
 using `pandas` and `streamlit`.
 
 Try it live on [picklevw.streamlit.app](https://picklevw.streamlit.app)
