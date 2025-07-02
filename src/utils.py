@@ -155,12 +155,9 @@ class PickleLoader:
             # Always check safety first
             safety_buffer = io.BytesIO(self.buffer.getvalue())
             PickleSecurityChecker(safety_buffer).ensure_safe()
+
             # Proceed to safe deserialization
             reader = PickleReader(io.BytesIO(self.buffer.getvalue()))
-            df = reader.try_read_dataframe()
-            if df is not None:
-                return df, False, True
-
             obj, multiple = reader.try_read_objects()
             return obj, multiple, False
 
