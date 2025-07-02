@@ -40,6 +40,7 @@ class PickleViewerApp:
 
         The method interacts with the user interface component to allow users to upload files and
         handles various file types, visibility, and other configurations as defined in the
+
         application settings.
 
         :rtype: UploadedFile | list[UploadedFile] | None
