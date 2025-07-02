@@ -2,9 +2,7 @@ import os
 import json
 import re
 
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import streamlit as st
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
@@ -61,8 +59,8 @@ class PickleViewerApp:
         of the object. The function utilizes Streamlit for rendering output to the user interface
         and provides fallbacks where applicable.
 
-        :param obj: The object to be displayed. It can be a pandas DataFrame, pandas Series, NumPy
-            array, or a JSON-serializable object. Certain unsupported types may emit warnings.
+        :param obj: The object to be displayed. It can be a pandas DataFrame, pandas Series or a
+        JSON-serializable object. Certain unsupported types may emit warnings.
         :type obj: object
         :param were_spared_objs: Boolean flag indicating whether objects formatted as JSON will be
             unquoted for display.
@@ -84,25 +82,11 @@ class PickleViewerApp:
             st.dataframe(obj)
 
         elif isinstance(obj, pd.Series):
-            st.write(f"Pandas Series: **{obj.name or 'unnamed'}**, {len(obj)} elements")
+            st.write(f"Pandas or NumPy Series: **{obj.name or 'unnamed'}**, {len(obj)} elements")
             st.dataframe(obj.to_frame())
             if pd.api.types.is_numeric_dtype(obj):
                 st.markdown(cfg.MESSAGES["CHART"])
                 st.line_chart(obj)
-
-        elif isinstance(obj, np.ndarray):
-            st.write(f"NumPy Array: shape {obj.shape}, dtype {obj.dtype}")
-
-            try:
-                st.dataframe(pd.DataFrame(obj))
-            except Exception:
-                st.warning("Cannot render array as table.")
-
-            # Fallback to matplotlib rendering
-            fig, ax = plt.subplots()
-            ax.imshow(obj, aspect='auto', cmap='viridis')
-            ax.set_title("Matplotlib Visualization")
-            st.pyplot(fig)
 
         elif is_json_serializable(obj):
             formatted = json.dumps(obj, indent=4)
@@ -135,6 +119,13 @@ class PickleViewerApp:
             loader = PickleLoader(uploaded_file, allow_unsafe_file=allow_unsafe_file)
             obj, were_spared_objs, is_dataframe = loader.load()
             self.display_content(obj, were_spared_objs, is_dataframe)
+
+            # loader = PickleLoader(uploaded_file, allow_unsafe_file=allow_unsafe_file)
+            # obj, were_spared_objs, is_dataframe = loader.load()
+            # if not self.data_storage.data:
+            #     self.data_storage.data = obj
+            # self.display_content(self.data_storage.data, were_spared_objs, is_dataframe)
+
         except ExceptionUnsafePickle as err:
             st.error(str(err))
             st.stop()
