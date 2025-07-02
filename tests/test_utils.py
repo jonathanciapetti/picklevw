@@ -55,17 +55,19 @@ def test_pickle_loader_safe(mock_check_safety, mock_pickled_load, raw_pickle_dat
     assert is_df is False
 
 
-@patch("fickling.fickle.Pickled.load")
-@patch("fickling.analysis.check_safety")
-def test_pickle_loader_dataframe(mock_check_safety, mock_pickled_load, raw_pickle_df):
+@patch("src.utils.cfg")
+@patch("src.utils.PickleSecurityChecker.ensure_safe")
+def test_pickle_loader_dataframe(mock_ensure_safe, mock_cfg, raw_pickle_df):
     from src.utils import PickleLoader
-    from fickling.analysis import Severity
+    from fickling.exception import UnsafeFileError
 
-    mock_check_safety.return_value = SimpleNamespace(severity=Severity.SUSPICIOUS)
-    mock_pickled_load.return_value = MagicMock()
+    # simulate unsafe pickle
+    mock_ensure_safe.side_effect = UnsafeFileError(info="test", filepath="file")
+    mock_cfg.MESSAGES = {"POTENTIAL_THREAT": "threat detected"}
 
     uploaded_file = create_mock_uploaded_file(raw_pickle_df)
-    loader = PickleLoader(uploaded_file)
+    loader = PickleLoader(uploaded_file, allow_unsafe_file=True)
+
     obj, multiple, is_df = loader.load()
 
     pd.testing.assert_frame_equal(obj, sample_df)
@@ -73,29 +75,26 @@ def test_pickle_loader_dataframe(mock_check_safety, mock_pickled_load, raw_pickl
     assert is_df is True
 
 
+@patch("src.utils.cfg")
 @patch("src.utils.PickleSecurityChecker.ensure_safe")
-def test_pickle_loader_unsafe(mock_ensure_safe):
+def test_pickle_loader_unsafe(mock_ensure_safe, mock_cfg):
     from src.utils import PickleLoader, ExceptionUnsafePickle
     from fickling.exception import UnsafeFileError
 
-    # Make ensure_safe raise UnsafeFileError
     mock_ensure_safe.side_effect = UnsafeFileError(
         info="Test unsafe file", filepath="test.pickle"
     )
+    mock_cfg.MESSAGES = {"POTENTIAL_THREAT": "threat detected"}
 
-    # Any data works since we're mocking ensure_safe
     dummy_data = b"not_really_pickle"
     uploaded_file = create_mock_uploaded_file(dummy_data)
 
-    loader = PickleLoader(uploaded_file)
+    loader = PickleLoader(uploaded_file, allow_unsafe_file=False)
 
-    try:
+    with pytest.raises(ExceptionUnsafePickle) as e:
         loader.load()
-        assert False, "Expected ExceptionUnsafePickle to be raised"
-    except Exception as e:
-        assert isinstance(
-            e, ExceptionUnsafePickle
-        ), f"Expected ExceptionUnsafePickle but got {type(e)}"
+
+    assert "threat" in str(e.value)
 
 
 def test_is_json_serializable():
