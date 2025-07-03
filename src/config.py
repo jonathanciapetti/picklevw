@@ -21,7 +21,7 @@ MESSAGES = {
     "NOT_JSON_WARNING": "The object is not JSON serializable and is not a DataFrame.",
     "UNSAFE_WARNING": "⚠️ You have enabled unsafe loading for Pandas and NumPy data. Malicious code might be executed.",
     "row_col_summary": "Readable: **{rows}** rows and **{cols}** columns",
-    "TOGGLER_HELP": "WARNING: Enabling this may allow execution of untrusted code if the uploaded file is malicious. To enable this, clone the code for picklevw on your computer, set `CONFIG.always_disallow_unsafe=False` and run it locally.",
+    "TOGGLER_HELP": "WARNING: Enabling this may allow execution of untrusted code if the uploaded file is malicious. To enable this, clone the code for picklevw on your computer, set `CONFIG.always_disallow_unsafe=False` in `src/config.py`, and run it locally.",
     "TOGGLER_TEXT": "Bypass safety check for Pandas and NumPy data (unsafe)",
     "CONTENT_DISPLAY": "**Content**",
     "CHART": "**Chart**",
