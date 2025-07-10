@@ -7,8 +7,7 @@ import streamlit as st
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 import config as cfg
-from utils import PickleLoader, is_json_serializable, ExceptionUnsafePickle, \
-    analyze_object_for_display, render_display_plan
+from utils import PickleLoader, is_json_serializable, ExceptionUnsafePickle
 
 
 class PickleViewerApp:
@@ -72,8 +71,31 @@ class PickleViewerApp:
         :return: None
         :rtype: None
         """
-        plan = analyze_object_for_display(obj, were_spared_objs, is_dataframe)
-        render_display_plan(plan)
+        st.markdown(cfg.MESSAGES["CONTENT_DISPLAY"])
+
+        if not is_dataframe and obj is None:
+            st.warning(cfg.MESSAGES["GENERIC_LOAD_ERROR"])
+            return
+
+        if isinstance(obj, pd.DataFrame):
+            st.write(cfg.MESSAGES["row_col_summary"].format(rows=len(obj), cols=len(obj.columns)))
+            st.dataframe(obj)
+
+        elif isinstance(obj, pd.Series):
+            st.write(f"Pandas or NumPy Series: **{obj.name or 'unnamed'}**, {len(obj)} elements")
+            st.dataframe(obj.to_frame())
+            if pd.api.types.is_numeric_dtype(obj):
+                st.markdown(cfg.MESSAGES["CHART"])
+                st.line_chart(obj)
+
+        elif is_json_serializable(obj):
+            formatted = json.dumps(obj, indent=4)
+            if were_spared_objs:
+                formatted = re.sub(r'^"(.*)"$', r"\1", formatted)
+            st.code(formatted, language="json")
+
+        else:
+            st.warning(cfg.MESSAGES["NOT_JSON_WARNING"])
 
     def handle_file(self, uploaded_file, allow_unsafe_file: bool) -> None:
         """
@@ -97,6 +119,12 @@ class PickleViewerApp:
             loader = PickleLoader(uploaded_file, allow_unsafe_file=allow_unsafe_file)
             obj, were_spared_objs, is_dataframe = loader.load()
             self.display_content(obj, were_spared_objs, is_dataframe)
+
+            # loader = PickleLoader(uploaded_file, allow_unsafe_file=allow_unsafe_file)
+            # obj, were_spared_objs, is_dataframe = loader.load()
+            # if not self.data_storage.data:
+            #     self.data_storage.data = obj
+            # self.display_content(self.data_storage.data, were_spared_objs, is_dataframe)
 
         except ExceptionUnsafePickle as err:
             st.error(str(err))
