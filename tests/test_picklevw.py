@@ -1,6 +1,5 @@
 import pytest
 import pandas as pd
-import numpy as np
 from unittest.mock import MagicMock, Mock, patch
 from src.picklevw import PickleViewerApp, ExceptionUnsafePickle
 
