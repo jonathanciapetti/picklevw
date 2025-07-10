@@ -6,7 +6,6 @@ from io import BytesIO
 from unittest.mock import MagicMock, patch
 from types import SimpleNamespace
 
-
 # Sample test data
 sample_obj = {"key": "value"}
 sample_df = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
