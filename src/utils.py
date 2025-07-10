@@ -2,12 +2,14 @@ import io
 import gzip
 import json
 import pickle
+import re
 from typing import Any, Tuple, Optional, Union
 
 import pandas as pd
 from fickling.analysis import check_safety
 from fickling.exception import UnsafeFileError
 from fickling.fickle import Pickled
+import streamlit as st
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 import config as cfg
@@ -187,3 +189,103 @@ def is_json_serializable(obj: Any) -> bool:
         return True
     except (TypeError, OverflowError):
         return False
+
+def return_load_error():
+    st.warning(cfg.MESSAGES["GENERIC_LOAD_ERROR"])
+    return
+
+def get_pandas_data(obj):
+    return {
+        "type": "series",
+        "name": obj.name or 'unnamed',
+        "length": len(obj),
+        "data": obj.to_frame(),
+        "is_numeric": pd.api.types.is_numeric_dtype(obj),
+    }
+
+def get_pandas_df_data(obj):
+    return {
+        "type": "dataframe",
+        "data": obj,
+        "summary": cfg.MESSAGES["row_col_summary"].format(rows=len(obj), cols=len(obj.columns))
+    }
+
+def get_json_serializable_obj_data(obj, were_spared_objs):
+    formatted = json.dumps(obj, indent=4)
+    if were_spared_objs:
+        formatted = re.sub(r'^"(.*)"$', r"\1", formatted, flags=re.MULTILINE)
+    return {
+        "type": "json",
+        "content": formatted
+    }
+
+def get_pandas_series_data(obj):
+    return {
+        "type": "series",
+        "name": obj.name or 'unnamed',
+        "length": len(obj),
+        "data": obj.to_frame(),
+        "is_numeric": pd.api.types.is_numeric_dtype(obj),
+    }
+
+def analyze_object_for_display(obj, were_spared_objs, is_dataframe):
+    """
+    Analyzes the provided object to determine its type and prepares appropriate data
+    for display based on its characteristics. The function supports analysis for
+    Pandas DataFrames, Series, JSON-serializable objects, and handles cases where
+    the object is None or not JSON-serializable. For DataFrame and Series, respective
+    utility functions are used to extract displayable content.
+
+    :param obj: The object to analyze.
+    :param were_spared_objs: Tracks objects that were spared during the JSON serialization
+        process to avoid redundancy or circular references.
+    :param is_dataframe: Boolean indicating whether the object should be treated as a
+        DataFrame.
+    :return: A dictionary containing details about the analyzed object for display purposes,
+        or a warning message and type if the object is not JSON-serializable.
+    """
+    if not is_dataframe and obj is None:
+        return return_load_error()
+
+    if isinstance(obj, pd.DataFrame):
+        return get_pandas_df_data(obj)
+
+    elif isinstance(obj, pd.Series):
+        return get_pandas_series_data(obj)
+
+    elif is_json_serializable(obj):
+        return get_json_serializable_obj_data(obj, were_spared_objs)
+    else:
+        return {
+            "type": "warning",
+            "message": cfg.MESSAGES["NOT_JSON_WARNING"]
+        }
+
+def render_display_plan(plan):
+    """
+    Render the given display plan in the Streamlit application. The function processes the
+    input plan based on its type and displays the corresponding content in an appropriate
+    format using Streamlit components.
+
+    :param plan: A dictionary that specifies the display type and associated content.
+    :return: None
+    """
+    st.markdown(cfg.MESSAGES["CONTENT_DISPLAY"])
+
+    if plan["type"] == "dataframe":
+        st.write(plan.get("summary"))
+        st.dataframe(plan.get("data"))
+
+    elif plan.get("type") == "series":
+        st.write(f"Pandas or NumPy Series: **{plan['name']}**, {plan['length']} elements")
+        st.dataframe(plan.get("data"))
+        if plan["is_numeric"]:
+            st.markdown(cfg.MESSAGES["CHART"])
+            series = plan["data"].squeeze()
+            st.line_chart(series)
+
+    elif plan["type"] == "json":
+        st.code(plan["content"], language="json")
+
+    elif plan["type"] == "warning":
+        st.warning(plan["message"])
