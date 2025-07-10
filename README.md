@@ -7,6 +7,7 @@
 [![codecov](https://codecov.io/github/jonathanciapetti/picklevw/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
 ![version](https://img.shields.io/badge/version-1.4.1-blue)
 
+
 </div>
 
 <br />
