@@ -3,23 +3,18 @@
 </p>
 <div style="display: flex;">
 
-![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yml/badge.svg)
+![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yaml/badge.svg)
 [![codecov](https://codecov.io/github/jonathanciapetti/picklevw/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
-![version](https://img.shields.io/badge/version-1.1.1-blue)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+![version](https://img.shields.io/badge/version-1.4.1-blue)
 
 </div>
 
 <br />
 
-**picklevw** (pronunced *pickleview*) is a simple Python web application, designed to read and display pickle files
-using Pandas and Streamlit. It's basically a GUI wrapping `pandas.read_pickle()`.
+**picklevw** (pronounced *pickleview*) is a simple Python web application, designed to read and display pickle files
+using `pandas` and `streamlit`.
 
 Try it live on [picklevw.streamlit.app](https://picklevw.streamlit.app)
-
-If yo have found `picklevw` to be a useful tool or a promising project, please consider giving it a star ⭐
-
-<br />
 
 ### Getting Started
 
@@ -45,16 +40,16 @@ To start the application, run:
 streamlit run src/picklevw.py
 ```
 
-Here's a screenshot of the app:
+Here's a screenshot of the app displaying the unpickled content of a legit pickle:
 <p>
-    <img src="./media/screenshot.png" width="100%"/>
+    <img src="./media/screenshot_1.png" width="100%" alt="legit pickle">
 </p>
 
 ---
 
 ### Safetey checks
 
-`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. Fickling depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports. 
+`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. `fickling` depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports. `fickling` considers files from `pandas` as potentially malicious, but since pickles with `DataFrame`s in them are commonly used, `picklevw` considers them safe to display.
 
 ### Contributing
 
