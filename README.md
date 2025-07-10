@@ -1,15 +1,13 @@
-<p>
+<p align="center">
     <img src="./media/picklevw.png" width="200px"/>
 </p>
-<div style="display: flex;">
+<div align="center"
 
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yaml/badge.svg)
 [![codecov](https://codecov.io/github/jonathanciapetti/picklevw/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
-![version](https://img.shields.io/badge/version-1.4.1-blue)
+![version](https://img.shields.io/badge/version-1.4.2-blue)
 
 </div>
-
-<br />
 
 **picklevw** (pronounced *pickleview*) is a simple Python web application, designed to read and display pickle files
 using `pandas` and `streamlit`.
