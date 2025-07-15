@@ -82,7 +82,7 @@ class PickleViewerApp:
             st.dataframe(obj)
 
         elif isinstance(obj, pd.Series):
-            st.write(f"Pandas or NumPy Series: **{obj.name or 'unnamed'}**, {len(obj)} elements")
+            st.write(f"Pandas Series: **{obj.name or 'unnamed'}**, {len(obj)} elements")
             st.dataframe(obj.to_frame())
             if pd.api.types.is_numeric_dtype(obj):
                 st.markdown(cfg.MESSAGES["CHART"])
