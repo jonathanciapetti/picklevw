@@ -24,9 +24,9 @@ jobs:
               exit 1
             fi
           elif [ "${{ github.base_ref }}" = "dev" ]; then
-            # PRs to dev must come from branches matching 1.x.x
+            # PRs to dev must come from branches matching <n>.x.x
             if [[ ! "${{ github.head_ref }}" =~ ^[0-9]\.x\.x$ ]]; then
-              echo "Pull requests to 'dev' must come from branches matching pattern '1.x.x'."
+              echo "Pull requests to 'dev' must come from branches matching pattern '<n>.x.x'."
               exit 1
             fi
           else
