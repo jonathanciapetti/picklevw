@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - dev
 
 permissions: {}
 
@@ -11,10 +12,23 @@ jobs:
   check-branch:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR source branch
+      - name: Check PR source and target branches
         run: |
-          echo "PR is from branch: ${{ github.head_ref }}"
-          if [ "${{ github.head_ref }}" != "dev" ]; then
-            echo "Pull requests to main must come from dev only."
-            exit 1
+          echo "PR target branch: ${{ github.base_ref }}"
+          echo "PR source branch: ${{ github.head_ref }}"
+
+          if [ "${{ github.base_ref }}" = "main" ]; then
+            # PRs to main must come from dev
+            if [ "${{ github.head_ref }}" != "dev" ]; then
+              echo "Pull requests to 'main' must come from 'dev' only."
+              exit 1
+            fi
+          elif [ "${{ github.base_ref }}" = "dev" ]; then
+            # PRs to dev must come from branches matching 1.x.x
+            if [[ ! "${{ github.head_ref }}" =~ ^[0-9]\.[0-9]+\.[0-9]+$ ]]; then
+              echo "Pull requests to 'dev' must come from branches matching pattern '1.x.x'."
+              exit 1
+            fi
+          else
+            echo "No branch restrictions configured for target branch '${{ github.base_ref }}'."
           fi
