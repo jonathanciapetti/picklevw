@@ -29,7 +29,7 @@ MESSAGES = {
 }
 
 CONFIG = {
-    "version": "v1.4.2",
+    "version": "v1.4.3",
     "always_disallow_unsafe": True,
     "allow_unsafe": False,
 }
