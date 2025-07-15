@@ -144,7 +144,7 @@ def test_display_content_series(mock_cfg, mock_st):
     PickleViewerApp.display_content(series, were_spared_objs=False, is_dataframe=False)
 
     mock_st.markdown.assert_any_call("Content:")
-    mock_st.write.assert_called_once_with("Pandas or NumPy Series: **test_series**, 3 elements")
+    mock_st.write.assert_called_once_with("Pandas Series: **test_series**, 3 elements")
     mock_st.dataframe.assert_called_once()
     pd.testing.assert_frame_equal(
         mock_st.dataframe.call_args[0][0],
