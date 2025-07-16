@@ -53,6 +53,30 @@ class PickleViewerApp:
         )
 
     @staticmethod
+    def handle_streamlit_none():
+        st.warning(cfg.MESSAGES["GENERIC_LOAD_ERROR"])
+
+    @staticmethod
+    def handle_streamlit_df(obj):
+        st.write(cfg.MESSAGES["row_col_summary"].format(rows=len(obj), cols=len(obj.columns)))
+        st.dataframe(obj)
+
+    @staticmethod
+    def handle_streamlit_pd_series(obj):
+        st.write(f"Pandas Series: **{obj.name or 'unnamed'}**, {len(obj)} elements")
+        st.dataframe(obj.to_frame())
+        if pd.api.types.is_numeric_dtype(obj):
+            st.markdown(cfg.MESSAGES["CHART"])
+            st.line_chart(obj)
+
+    @staticmethod
+    def handle_streamlit_json(obj, were_spared_objs):
+        formatted = json.dumps(obj, indent=4)
+        if were_spared_objs:
+            formatted = re.sub(r'^"(.*)"$', r"\1", formatted)
+        st.code(formatted, language="json")
+
+    @staticmethod
     def display_content(obj, were_spared_objs, is_dataframe):
         """
         Displays the content of a given object using various rendering methods depending on the type
@@ -74,26 +98,17 @@ class PickleViewerApp:
         st.markdown(cfg.MESSAGES["CONTENT_DISPLAY"])
 
         if not is_dataframe and obj is None:
-            st.warning(cfg.MESSAGES["GENERIC_LOAD_ERROR"])
+            PickleViewerApp.handle_streamlit_none()
             return
 
         if isinstance(obj, pd.DataFrame):
-            st.write(cfg.MESSAGES["row_col_summary"].format(rows=len(obj), cols=len(obj.columns)))
-            st.dataframe(obj)
+            PickleViewerApp.handle_streamlit_df(obj)
 
         elif isinstance(obj, pd.Series):
-            st.write(f"Pandas Series: **{obj.name or 'unnamed'}**, {len(obj)} elements")
-            st.dataframe(obj.to_frame())
-            if pd.api.types.is_numeric_dtype(obj):
-                st.markdown(cfg.MESSAGES["CHART"])
-                st.line_chart(obj)
+            PickleViewerApp.handle_streamlit_pd_series(obj)
 
         elif is_json_serializable(obj):
-            formatted = json.dumps(obj, indent=4)
-            if were_spared_objs:
-                formatted = re.sub(r'^"(.*)"$', r"\1", formatted)
-            st.code(formatted, language="json")
-
+            PickleViewerApp.handle_streamlit_json(obj, were_spared_objs)
         else:
             st.warning(cfg.MESSAGES["NOT_JSON_WARNING"])
 
