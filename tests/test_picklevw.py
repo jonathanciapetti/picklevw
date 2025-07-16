@@ -103,6 +103,60 @@ def test_run_with_file(mock_upload, mock_cfg, mock_st, app):
 
 @patch('src.picklevw.st')
 @patch('src.picklevw.cfg')
+def test_handle_streamlit_none(mock_cfg, mock_st):
+    mock_cfg.MESSAGES = {
+        "GENERIC_LOAD_ERROR": "Error loading"
+    }
+    PickleViewerApp.handle_streamlit_none()
+    mock_st.warning.assert_called_once_with("Error loading")
+
+
+@patch('src.picklevw.st')
+@patch('src.picklevw.cfg')
+def test_handle_streamlit_df(mock_cfg, mock_st):
+    df = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
+    mock_cfg.MESSAGES = {
+        "row_col_summary": "DataFrame with {rows} rows and {cols} columns"
+    }
+    PickleViewerApp.handle_streamlit_df(df)
+    mock_st.write.assert_called_once_with("DataFrame with 2 rows and 2 columns")
+    mock_st.dataframe.assert_called_once_with(df)
+
+
+@patch('src.picklevw.st')
+@patch('src.picklevw.cfg')
+def test_handle_streamlit_pd_series(mock_cfg, mock_st):
+    series = pd.Series([10, 20, 30], name="my_series")
+    mock_cfg.MESSAGES = {
+        "CHART": "Chart:"
+    }
+    PickleViewerApp.handle_streamlit_pd_series(series)
+    mock_st.write.assert_called_once_with("Pandas Series: **my_series**, 3 elements")
+    mock_st.dataframe.assert_called_once()
+    pd.testing.assert_frame_equal(
+        mock_st.dataframe.call_args[0][0],
+        series.to_frame()
+    )
+    mock_st.markdown.assert_called_with("Chart:")
+    mock_st.line_chart.assert_called_once_with(series)
+
+
+@patch('src.picklevw.st')
+@patch('src.picklevw.cfg')
+def test_handle_streamlit_json(mock_cfg, mock_st):
+    mock_cfg.MESSAGES = {}
+    obj = {"x": 123}
+    PickleViewerApp.handle_streamlit_json(obj, were_spared_objs=False)
+    mock_st.code.assert_called_once_with('{\n    "x": 123\n}', language="json")
+
+    # Test also the spared format
+    with patch('src.picklevw.st') as spared_st:
+        PickleViewerApp.handle_streamlit_json({"y": "foo"}, were_spared_objs=True)
+        spared_st.code.assert_called_once()
+
+
+@patch('src.picklevw.st')
+@patch('src.picklevw.cfg')
 def test_display_content_none_object(mock_cfg, mock_st):
     """Test displaying None object when is_dataframe is False"""
     mock_cfg.MESSAGES = {
