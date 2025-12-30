@@ -1,18 +1,16 @@
 from pathlib import Path
 
-import streamlit as st
-from streamlit.runtime.uploaded_file_manager import UploadedFile
 import numpy as np
 import pandas as pd
+
+import streamlit as st
+from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 import config as cfg
 import handlers.builtin_handlers as builtin_handlers
 import handlers.pandas_handlers.pandas_dataframe_handlers as pd_df_handlers
 import handlers.pandas_handlers.pandas_series_handlers as pd_series_handlers
 import handlers.numpy_handlers.numpy_ndarray_handlers as np_ndarray_handlers
-
-# TODO: handle CIFAR10
-# import handlers.numpy_handlers.numpy_image_handlers as np_img_handlers
 
 from utils import PickleLoader, is_json_serializable, ExceptionUnsafePickle
 
@@ -33,7 +31,6 @@ class PickleViewerApp:
     @staticmethod
     def set_gui_html(body):
         st.html(body=body)
-
 
     def setup_page(self) -> None:
         """
