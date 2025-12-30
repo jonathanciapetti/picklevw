@@ -6,29 +6,43 @@ on:
       - main
       - dev
 
-permissions: {}
+permissions:
+  pull-requests: read
 
 jobs:
   check-branch:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR source and target branches
+      - name: Enforce branch and actor rules
         run: |
           echo "PR target branch: ${{ github.base_ref }}"
           echo "PR source branch: ${{ github.head_ref }}"
+          echo "PR author: ${{ github.event.pull_request.user.login }}"
 
-          if [ "${{ github.base_ref }}" = "main" ]; then
-            # PRs to main must come from dev
-            if [ "${{ github.head_ref }}" != "dev" ]; then
-              echo "Pull requests to 'main' must come from 'dev' only."
+          AUTHOR="${{ github.event.pull_request.user.login }}"
+          BASE="${{ github.base_ref }}"
+          HEAD="${{ github.head_ref }}"
+
+          if [ "$BASE" = "main" ]; then
+            # Allow Dependabot to merge directly into main
+            if [ "$AUTHOR" = "dependabot[bot]" ]; then
+              echo "Dependabot PR to main allowed."
+              exit 0
+            fi
+
+            # Everyone else must come from dev
+            if [ "$HEAD" != "dev" ]; then
+              echo "❌ Only Dependabot can merge directly into 'main'."
+              echo "❌ Human PRs to 'main' must come from 'dev'."
               exit 1
             fi
-          elif [ "${{ github.base_ref }}" = "dev" ]; then
-            # PRs to dev must come from branches matching <n>.x.x
-            if [[ ! "${{ github.head_ref }}" =~ ^[0-9]\.x\.x$ ]]; then
-              echo "Pull requests to 'dev' must come from branches matching pattern '<n>.x.x'."
-              exit 1
-            fi
-          else
-            echo "No branch restrictions configured for target branch '${{ github.base_ref }}'."
           fi
+
+          if [ "$BASE" = "dev" ]; then
+            if [[ ! "$HEAD" =~ ^[0-9]+\.x\.x$ ]]; then
+              echo "❌ Pull requests to 'dev' must come from branches matching '<n>.x.x'."
+              exit 1
+            fi
+          fi
+
+          echo "✅ Branch rules satisfied."
