@@ -47,7 +47,7 @@ Here's a screenshot of the app displaying the unpickled content of a legit pickl
 
 ### Safetey checks
 
-`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. `fickling` depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports. `fickling` considers files from `pandas` as potentially malicious, but since pickles with `DataFrame`s in them are commonly used, `picklevw` considers them safe to display.
+`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. `fickling` depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports.
 
 ### Contributing
 
