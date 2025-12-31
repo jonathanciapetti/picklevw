@@ -2,14 +2,13 @@ import io
 import gzip
 import json
 import pickle
-import re
 from typing import Any, Tuple, Optional, Union
 
+import numpy as np
 import pandas as pd
 from fickling.analysis import check_safety
 from fickling.exception import UnsafeFileError
 from fickling.fickle import Pickled
-import streamlit as st
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 import config as cfg
@@ -65,6 +64,33 @@ class PickleReader:
             self.buffer.seek(0)
             obj = pd.read_pickle(self.buffer)
             return obj if isinstance(obj, (pd.DataFrame, pd.Series)) else None
+        except (pickle.UnpicklingError, EOFError, ValueError):
+            return None
+
+    def try_read_array(self) -> Optional[Union[np.ndarray, pd.DataFrame, pd.Series, dict]]:
+        """
+        Attempts to read a supported object (NumPy ndarray, Pandas DataFrame/Series, or a dict containing image data)
+        from a buffer using pickle.
+
+        Resets the buffer position before reading. Supports:
+        - np.ndarray: any shape, including images
+        - pd.DataFrame or pd.Series
+        - dicts with a 'data' key containing a valid ndarray (e.g. CIFAR-style)
+
+        :returns: The unpickled object if it contains a supported structure; None otherwise.
+        :rtype: Optional[Union[np.ndarray, pd.DataFrame, pd.Series, dict]]
+        """
+        try:
+            self.buffer.seek(0)
+            obj = pickle.load(self.buffer)
+
+            if isinstance(obj, dict) and isinstance(obj.get("data"), np.ndarray):
+                return obj  # e.g., CIFAR-style dict with image data
+
+            if isinstance(obj, (pd.DataFrame, pd.Series, np.ndarray)):
+                return obj
+
+            return None
         except (pickle.UnpicklingError, EOFError, ValueError):
             return None
 
@@ -167,9 +193,13 @@ class PickleLoader:
             if self.allow_unsafe_file:
                 # Try to read anyway, but only if it is a DataFrame
                 reader = PickleReader(io.BytesIO(self.buffer.getvalue()))
-                df = reader.try_read_dataframe()
-                if df is not None:
-                    return df, False, True
+                data = reader.try_read_dataframe()
+                if data is None:
+                    data = reader.try_read_array()
+                if data is None:
+                    data = reader.t()
+                if data is not None:
+                    return data, False, True
 
             raise ExceptionUnsafePickle(cfg.MESSAGES["POTENTIAL_THREAT"])
 

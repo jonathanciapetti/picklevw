@@ -1,19 +1,36 @@
-import os
-import json
-import re
+from pathlib import Path
 
+import numpy as np
 import pandas as pd
+
 import streamlit as st
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 import config as cfg
+import handlers.builtin_handlers as builtin_handlers
+import handlers.pandas_handlers.pandas_dataframe_handlers as pd_df_handlers
+import handlers.pandas_handlers.pandas_series_handlers as pd_series_handlers
+import handlers.numpy_handlers.numpy_ndarray_handlers as np_ndarray_handlers
+
 from utils import PickleLoader, is_json_serializable, ExceptionUnsafePickle
 
 
 class PickleViewerApp:
     def __init__(self):
-        self.BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-        self.LOGO_PATH = os.path.join(self.BASE_DIR, "..", "media", "picklevw.png")
+        self.BASE_DIR = Path(__file__).resolve().parent
+        self.LOGO_PATH = (self.BASE_DIR.parent / "media" / "picklevw.png").resolve()
+
+    @staticmethod
+    def set_gui_page_config(layout, page_title, page_icon):
+        st.set_page_config(layout=layout, page_title=page_title, page_icon=page_icon)
+
+    @staticmethod
+    def set_gui_logo(image, size):
+        st.logo(image=image, size=size)
+
+    @staticmethod
+    def set_gui_html(body):
+        st.html(body=body)
 
     def setup_page(self) -> None:
         """
@@ -24,10 +41,18 @@ class PickleViewerApp:
 
         :return: None
         """
-        ui = cfg.UI
-        st.set_page_config(layout=ui["layout"], page_title=ui["title"], page_icon=ui["icon"])
-        st.logo(self.LOGO_PATH, size=ui["logo_size"])
-        st.html(cfg.MESSAGES["setup_page_html"].format(url=cfg.UI["PICKLE_DOCS_URL"], version=cfg.CONFIG["version"]))
+        PickleViewerApp.set_gui_page_config(
+            layout=cfg.UI["layout"],
+            page_title=cfg.UI["title"],
+            page_icon=cfg.UI["icon"]
+        )
+        PickleViewerApp.set_gui_logo(self.LOGO_PATH, size=cfg.UI["logo_size"])
+        PickleViewerApp.set_gui_html(
+            cfg.MESSAGES["setup_page_html"].format(
+                url=cfg.UI["PICKLE_DOCS_URL"],
+                version=cfg.CONFIG["version"]
+            )
+        )
 
     @staticmethod
     def upload_file() -> UploadedFile | list[UploadedFile] | None:
@@ -53,30 +78,6 @@ class PickleViewerApp:
         )
 
     @staticmethod
-    def handle_streamlit_none():
-        st.warning(cfg.MESSAGES["GENERIC_LOAD_ERROR"])
-
-    @staticmethod
-    def handle_streamlit_df(obj):
-        st.write(cfg.MESSAGES["row_col_summary"].format(rows=len(obj), cols=len(obj.columns)))
-        st.dataframe(obj)
-
-    @staticmethod
-    def handle_streamlit_pd_series(obj):
-        st.write(f"Pandas Series: **{obj.name or 'unnamed'}**, {len(obj)} elements")
-        st.dataframe(obj.to_frame())
-        if pd.api.types.is_numeric_dtype(obj):
-            st.markdown(cfg.MESSAGES["CHART"])
-            st.line_chart(obj)
-
-    @staticmethod
-    def handle_streamlit_json(obj, were_spared_objs):
-        formatted = json.dumps(obj, indent=4)
-        if were_spared_objs:
-            formatted = re.sub(r'^"(.*)"$', r"\1", formatted)
-        st.code(formatted, language="json")
-
-    @staticmethod
     def display_content(obj, were_spared_objs, is_dataframe):
         """
         Displays the content of a given object using various rendering methods depending on the type
@@ -95,24 +96,33 @@ class PickleViewerApp:
         :return: None
         :rtype: None
         """
-        st.markdown(cfg.MESSAGES["CONTENT_DISPLAY"])
+        try:
+            st.markdown(cfg.MESSAGES["CONTENT_DISPLAY"])
 
-        if not is_dataframe and obj is None:
-            PickleViewerApp.handle_streamlit_none()
-            return
+            if not is_dataframe and obj is None:
+                builtin_handlers.handle_streamlit_none()
+                return
 
-        if isinstance(obj, pd.DataFrame):
-            PickleViewerApp.handle_streamlit_df(obj)
+            if isinstance(obj, pd.DataFrame):
+                pd_df_handlers.handle_streamlit_df(obj)
 
-        elif isinstance(obj, pd.Series):
-            PickleViewerApp.handle_streamlit_pd_series(obj)
+            elif isinstance(obj, pd.Series):
+                pd_series_handlers.handle_streamlit_pd_series(obj)
 
-        elif is_json_serializable(obj):
-            PickleViewerApp.handle_streamlit_json(obj, were_spared_objs)
-        else:
-            st.warning(cfg.MESSAGES["NOT_JSON_WARNING"])
+            elif isinstance(obj, np.ndarray):
+                np_ndarray_handlers.handle_streamlit_ndarray(obj)
 
-    def handle_file(self, uploaded_file, allow_unsafe_file: bool) -> None:
+            # elif isinstance(obj, np.ndarray):
+            #     np_img_handlers.handle_streamlit_image(obj)
+
+            elif is_json_serializable(obj):
+                builtin_handlers.handle_streamlit_json(obj, were_spared_objs)
+            else:
+                st.warning(cfg.MESSAGES["NOT_JSON_WARNING"])
+        except Exception as ex:
+            print(ex)
+
+    def process_file(self, uploaded_file, allow_unsafe_file: bool) -> None:
         """
         Handles the processing of an uploaded file by initializing a PickleLoader instance with the
         provided file and determining its content. It then displays the content using the
@@ -135,17 +145,12 @@ class PickleViewerApp:
             obj, were_spared_objs, is_dataframe = loader.load()
             self.display_content(obj, were_spared_objs, is_dataframe)
 
-            # loader = PickleLoader(uploaded_file, allow_unsafe_file=allow_unsafe_file)
-            # obj, were_spared_objs, is_dataframe = loader.load()
-            # if not self.data_storage.data:
-            #     self.data_storage.data = obj
-            # self.display_content(self.data_storage.data, were_spared_objs, is_dataframe)
-
         except ExceptionUnsafePickle as err:
             st.error(str(err))
             st.stop()
-        except Exception:
+        except Exception as ex:
             st.warning(cfg.MESSAGES["GENERIC_LOAD_ERROR"])
+            print(ex)
 
     def run(self) -> None:
         """
@@ -173,7 +178,7 @@ class PickleViewerApp:
 
         uploaded_file = self.upload_file()
         if uploaded_file:
-            self.handle_file(uploaded_file, allow_unsafe_file)
+            self.process_file(uploaded_file, allow_unsafe_file)
 
 
 if __name__ == "__main__":
