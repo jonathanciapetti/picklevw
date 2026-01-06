@@ -3,10 +3,10 @@
 </p>
 <div align="center"
     
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/jonathanciapetti/picklevw)
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yaml/badge.svg)
 [![codecov](https://codecov.io/github/jonathanciapetti/picklevw/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
 ![version](https://img.shields.io/badge/version-1.4.5-blue)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/jonathanciapetti/picklevw)
 
 </div>
 
