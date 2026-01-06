@@ -32,4 +32,5 @@ CONFIG = {
     "version": "v1.4.6",
     "always_disallow_unsafe": True,
     "allow_unsafe": False,
+    "SEVERITY_THRESHOLD": 1,
 }
