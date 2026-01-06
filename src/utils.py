@@ -16,7 +16,6 @@ from exceptions import ExceptionUnsafePickle
 
 
 class PickleSecurityChecker:
-    SEVERITY_THRESHOLD = 1
 
     def __init__(self, buffer: io.BytesIO):
         self.buffer = buffer
@@ -40,7 +39,7 @@ class PickleSecurityChecker:
         """
         pf = Pickled.load(self.buffer)
         severity = check_safety(pf).severity
-        if severity.value[0] > self.SEVERITY_THRESHOLD:
+        if severity.value[0] > cfg.CONFIG["SEVERITY_THRESHOLD"]:
             raise UnsafeFileError(info="", filepath="")
 
 

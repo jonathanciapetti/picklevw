@@ -70,10 +70,9 @@ class PickleViewerApp:
         :return: Uploaded file object if a single file is uploaded, a list of UploadedFile objects
             for multiple files, or None if no file is uploaded.
         """
-        ui = cfg.UI
         return st.file_uploader(
             cfg.MESSAGES["UPLOAD_PROMPT"],
-            type=ui["file_extensions"],
+            type=cfg.UI["file_extensions"],
             label_visibility="hidden"
         )
 
@@ -120,7 +119,7 @@ class PickleViewerApp:
             else:
                 st.warning(cfg.MESSAGES["NOT_JSON_WARNING"])
         except Exception as ex:
-            print(ex)
+            st.error(f"Display Error: {ex}")
 
     def process_file(self, uploaded_file, allow_unsafe_file: bool) -> None:
         """
@@ -144,13 +143,14 @@ class PickleViewerApp:
             loader = PickleLoader(uploaded_file, allow_unsafe_file=allow_unsafe_file)
             obj, were_spared_objs, is_dataframe = loader.load()
             self.display_content(obj, were_spared_objs, is_dataframe)
-
         except ExceptionUnsafePickle as err:
             st.error(str(err))
             st.stop()
+        except (IOError, OSError) as io_err:
+            st.error(f"File access error: {io_err}")
         except Exception as ex:
-            st.warning(cfg.MESSAGES["GENERIC_LOAD_ERROR"])
-            print(ex)
+            st.error(cfg.MESSAGES["GENERIC_LOAD_ERROR"])
+            st.exception(ex)
 
     def run(self) -> None:
         """
