@@ -179,18 +179,18 @@ class PickleLoader:
             threats due to unsafe pickle.
         """
         try:
-            # Always check safety first
+            # Always check safety first:
             safety_buffer = io.BytesIO(self.buffer.getvalue())
             PickleSecurityChecker(safety_buffer).ensure_safe()
 
-            # Proceed to safe deserialization
+            # Proceed to safe deserialization:
             reader = PickleReader(io.BytesIO(self.buffer.getvalue()))
             obj, multiple = reader.try_read_objects()
             return obj, multiple, False
 
         except UnsafeFileError:
             if self.allow_unsafe_file:
-                # Try to read anyway, but only if it is a DataFrame
+                # Try to read anyway, but only if it is a DataFrame:
                 reader = PickleReader(io.BytesIO(self.buffer.getvalue()))
                 data = reader.try_read_dataframe()
                 if data is None:
