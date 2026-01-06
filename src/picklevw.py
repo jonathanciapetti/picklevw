@@ -111,9 +111,6 @@ class PickleViewerApp:
             elif isinstance(obj, np.ndarray):
                 np_ndarray_handlers.handle_streamlit_ndarray(obj)
 
-            # elif isinstance(obj, np.ndarray):
-            #     np_img_handlers.handle_streamlit_image(obj)
-
             elif is_json_serializable(obj):
                 builtin_handlers.handle_streamlit_json(obj, were_spared_objs)
             else:
