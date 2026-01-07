@@ -2,10 +2,11 @@
     <img src="./media/picklevw.png" width="200px"/>
 </p>
 <div align="center"
-
+    
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/jonathanciapetti/picklevw)
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yaml/badge.svg)
 [![codecov](https://codecov.io/github/jonathanciapetti/picklevw/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
-![version](https://img.shields.io/badge/version-1.4.6-blue)
+![version](https://img.shields.io/badge/version-1.5.0-blue)
 
 </div>
 
@@ -47,7 +48,7 @@ Here's a screenshot of the app displaying the unpickled content of a legit pickl
 
 ### Safetey checks
 
-`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. `fickling` depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports. `fickling` considers files from `pandas` as potentially malicious, but since pickles with `DataFrame`s in them are commonly used, `picklevw` considers them safe to display.
+`picklevw` relies on [`Fickling`](https://github.com/trailofbits/fickling) to detect potentially malicious pickles. `fickling` depends on [`distutils`](https://docs.python.org/3/library/distutils.html) which is only available up to Python 3.11. Therefore, Python 3.11 is the latest version that `picklevw` supports.
 
 ### Contributing
 

@@ -7,10 +7,13 @@ import streamlit as st
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 import config as cfg
-import handlers.builtin_handlers as builtin_handlers
-import handlers.pandas_handlers.pandas_dataframe_handlers as pd_df_handlers
-import handlers.pandas_handlers.pandas_series_handlers as pd_series_handlers
-import handlers.numpy_handlers.numpy_ndarray_handlers as np_ndarray_handlers
+from handlers import (
+    handle_streamlit_none,
+    handle_streamlit_json,
+    handle_streamlit_ndarray,
+    handle_streamlit_df,
+    handle_streamlit_pd_series,
+)
 
 from utils import PickleLoader, is_json_serializable, ExceptionUnsafePickle
 
@@ -99,24 +102,25 @@ class PickleViewerApp:
             st.markdown(cfg.MESSAGES["CONTENT_DISPLAY"])
 
             if not is_dataframe and obj is None:
-                builtin_handlers.handle_streamlit_none()
+                handle_streamlit_none()
                 return
 
             if isinstance(obj, pd.DataFrame):
-                pd_df_handlers.handle_streamlit_df(obj)
+                handle_streamlit_df(obj)
 
             elif isinstance(obj, pd.Series):
-                pd_series_handlers.handle_streamlit_pd_series(obj)
+                handle_streamlit_pd_series(obj)
 
             elif isinstance(obj, np.ndarray):
-                np_ndarray_handlers.handle_streamlit_ndarray(obj)
+                handle_streamlit_ndarray(obj)
 
             elif is_json_serializable(obj):
-                builtin_handlers.handle_streamlit_json(obj, were_spared_objs)
+                handle_streamlit_json(obj, were_spared_objs)
             else:
                 st.warning(cfg.MESSAGES["NOT_JSON_WARNING"])
         except Exception as ex:
-            st.error(f"Display Error: {ex}")
+            if cfg.CONFIG["DEBUG_MODE"]:
+                st.error(f"Display Error: {ex}")
 
     def process_file(self, uploaded_file, allow_unsafe_file: bool) -> None:
         """
@@ -144,10 +148,12 @@ class PickleViewerApp:
             st.error(str(err))
             st.stop()
         except (IOError, OSError) as io_err:
-            st.error(f"File access error: {io_err}")
+            if cfg.CONFIG["DEBUG_MODE"]:
+                st.error(f"File access error: {io_err}")
         except Exception as ex:
             st.error(cfg.MESSAGES["GENERIC_LOAD_ERROR"])
-            st.exception(ex)
+            if cfg.CONFIG["DEBUG_MODE"]:
+                st.exception(ex)
 
     def run(self) -> None:
         """
