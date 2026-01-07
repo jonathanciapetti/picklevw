@@ -178,27 +178,36 @@ class PickleLoader:
         :raises Exception: When deserialization is deemed unsafe and there are potential security
             threats due to unsafe pickle.
         """
+        buf = self.buffer.getvalue()
+
         try:
             # Always check safety first:
-            safety_buffer = io.BytesIO(self.buffer.getvalue())
-            PickleSecurityChecker(safety_buffer).ensure_safe()
+            PickleSecurityChecker(io.BytesIO(buf)).ensure_safe()
 
-            # Proceed to safe deserialization:
-            reader = PickleReader(io.BytesIO(self.buffer.getvalue()))
+            # Safe deserialization:
+            reader = PickleReader(io.BytesIO(buf))
             obj, multiple = reader.try_read_objects()
             return obj, multiple, False
 
         except UnsafeFileError:
-            if self.allow_unsafe_file:
-                # Try to read anyway, but only if it is a DataFrame:
-                reader = PickleReader(io.BytesIO(self.buffer.getvalue()))
-                data = reader.try_read_dataframe()
-                if data is None:
-                    data = reader.try_read_array()
-                if data is None:
-                    data = reader.t()
-                if data is not None:
-                    return data, False, True
+            if not self.allow_unsafe_file:
+                raise ExceptionUnsafePickle(cfg.MESSAGES["POTENTIAL_THREAT"])
+
+            reader = PickleReader(io.BytesIO(buf))
+
+            df = reader.try_read_dataframe()
+            if df is not None:
+                return df, False, True  # "multiple" concept doesn't really apply here
+
+            arr = reader.try_read_array()
+            if arr is not None:
+                return arr, False, False
+
+            obj, multiple = reader.try_read_objects()
+            # If obj can be None, keep the guard; otherwise remove it.
+            if obj is not None:
+                is_df = isinstance(obj, (pd.DataFrame, pd.Series))
+                return obj, multiple, is_df
 
             raise ExceptionUnsafePickle(cfg.MESSAGES["POTENTIAL_THREAT"])
 
