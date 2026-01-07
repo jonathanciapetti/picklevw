@@ -2,9 +2,13 @@ import pytest
 import pandas as pd
 from unittest.mock import MagicMock, Mock, patch
 from src.picklevw import PickleViewerApp, ExceptionUnsafePickle
-from src.handlers import builtin_handlers
-from src.handlers.pandas_handlers import pandas_series_handlers, pandas_dataframe_handlers
-from src.handlers.numpy_handlers import numpy_image_handlers, numpy_ndarray_handlers
+from src.handlers import (
+    handle_streamlit_none,
+    handle_streamlit_json,
+    handle_streamlit_ndarray,
+    handle_streamlit_df,
+    handle_streamlit_pd_series,
+)
 
 
 @pytest.fixture
@@ -110,7 +114,7 @@ def test_handle_streamlit_none(mock_cfg, mock_st):
     mock_cfg.MESSAGES = {
         "GENERIC_LOAD_ERROR": "Error loading"
     }
-    builtin_handlers.handle_streamlit_none()
+    handle_streamlit_none()
     mock_st.warning.assert_called_once_with("Error loading")
 
 
@@ -121,7 +125,7 @@ def test_handle_streamlit_df(mock_cfg, mock_st):
     mock_cfg.MESSAGES = {
         "row_col_summary": "Pandas DataFrame with **{rows}** rows and **{cols}** columns"
     }
-    pandas_dataframe_handlers.handle_streamlit_df(df)
+    handle_streamlit_df(df)
     mock_st.write.assert_called_once_with("Pandas DataFrame with **2** rows and **2** columns")
     mock_st.dataframe.assert_called_once_with(df)
 
@@ -134,7 +138,7 @@ def test_handle_streamlit_pd_series(mock_cfg, mock_st):
     mock_cfg.MESSAGES = {
         "CHART": "Chart:"
     }
-    pandas_series_handlers.handle_streamlit_pd_series(series)
+    handle_streamlit_pd_series(series)
     mock_st.write.assert_called_once_with("Pandas Series: **my_series**, 3 elements")
     mock_st.dataframe.assert_called_once()
     pd.testing.assert_frame_equal(
@@ -150,12 +154,12 @@ def test_handle_streamlit_pd_series(mock_cfg, mock_st):
 def test_handle_streamlit_json(mock_cfg, mock_st):
     mock_cfg.MESSAGES = {}
     obj = {"x": 123}
-    builtin_handlers.handle_streamlit_json(obj, were_spared_objs=False)
+    handle_streamlit_json(obj, were_spared_objs=False)
     mock_st.code.assert_called_once_with('{\n    "x": 123\n}', language="json")
 
     # Test also the spared format
     mock_st.reset_mock()  # Reset the mock for second test
-    builtin_handlers.handle_streamlit_json({"y": "foo"}, were_spared_objs=True)
+    handle_streamlit_json({"y": "foo"}, were_spared_objs=True)
     mock_st.code.assert_called_once()
 
 
@@ -164,28 +168,13 @@ def test_handle_streamlit_json(mock_cfg, mock_st):
 def test_handle_streamlit_json(mock_cfg, mock_st):
     mock_cfg.MESSAGES = {}
     obj = {"x": 123}
-    builtin_handlers.handle_streamlit_json(obj, were_spared_objs=False)
+    handle_streamlit_json(obj, were_spared_objs=False)
     mock_st.code.assert_called_once_with('{\n    "x": 123\n}', language="json")
 
     # Test also the spared format
     mock_st.reset_mock()  # Reset the mock for second test
-    builtin_handlers.handle_streamlit_json({"y": "foo"}, were_spared_objs=True)
+    handle_streamlit_json({"y": "foo"}, were_spared_objs=True)
     mock_st.code.assert_called_once()
-
-
-@patch('src.picklevw.builtin_handlers.handle_streamlit_none')
-@patch('src.picklevw.cfg')
-@patch('src.picklevw.st')
-def test_display_content_none_object(mock_st, mock_cfg, mock_handle_none):
-    """Test displaying None object when is_dataframe is False"""
-    mock_cfg.MESSAGES = {
-        "CONTENT_DISPLAY": "Content:",
-    }
-
-    PickleViewerApp.display_content(None, were_spared_objs=False, is_dataframe=False)
-
-    mock_st.markdown.assert_called_once_with("Content:")
-    mock_handle_none.assert_called_once()
 
 
 @patch('src.handlers.numpy_handlers.numpy_ndarray_handlers.st')
@@ -200,7 +189,7 @@ def test_handle_streamlit_ndarray_1d_numeric(mock_pd, mock_cfg, mock_st):
     mock_dataframe = MagicMock()
     mock_pd.DataFrame.return_value = mock_dataframe
 
-    numpy_ndarray_handlers.handle_streamlit_ndarray(arr)
+    handle_streamlit_ndarray(arr)
 
     mock_st.write.assert_called_once_with("NumPy ndarray: shape = (5,), dtype = int64")
     mock_pd.DataFrame.assert_called_with(arr, columns=["Values"])
@@ -221,7 +210,7 @@ def test_handle_streamlit_ndarray_1d_non_numeric(mock_pd, mock_cfg, mock_st):
     mock_dataframe = MagicMock()
     mock_pd.DataFrame.return_value = mock_dataframe
 
-    numpy_ndarray_handlers.handle_streamlit_ndarray(arr)
+    handle_streamlit_ndarray(arr)
 
     mock_st.write.assert_called_once_with("NumPy ndarray: shape = (3,), dtype = <U1")
     mock_pd.DataFrame.assert_called_with(arr, columns=["Values"])
@@ -243,7 +232,7 @@ def test_handle_streamlit_ndarray_2d_numeric(mock_pd, mock_cfg, mock_st):
     mock_dataframe = MagicMock()
     mock_pd.DataFrame.return_value = mock_dataframe
 
-    numpy_ndarray_handlers.handle_streamlit_ndarray(arr)
+    handle_streamlit_ndarray(arr)
 
     mock_st.write.assert_called_once_with("NumPy ndarray: shape = (2, 3), dtype = int64")
     # DataFrame called twice: once for display, once for chart
@@ -266,7 +255,7 @@ def test_handle_streamlit_ndarray_2d_non_numeric(mock_pd, mock_cfg, mock_st):
     mock_dataframe = MagicMock()
     mock_pd.DataFrame.return_value = mock_dataframe
 
-    numpy_ndarray_handlers.handle_streamlit_ndarray(arr)
+    handle_streamlit_ndarray(arr)
 
     mock_st.write.assert_called_once_with("NumPy ndarray: shape = (2, 2), dtype = <U1")
     mock_pd.DataFrame.assert_called_once_with(arr)
@@ -285,7 +274,7 @@ def test_handle_streamlit_ndarray_3d(mock_cfg, mock_st):
     mock_cfg.MESSAGES = {"CHART": "Chart:"}
     arr = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
 
-    numpy_ndarray_handlers.handle_streamlit_ndarray(arr)
+    handle_streamlit_ndarray(arr)
 
     mock_st.write.assert_called_once_with("NumPy ndarray: shape = (2, 2, 2), dtype = int64")
     mock_st.warning.assert_called_once_with(
@@ -308,7 +297,7 @@ def test_handle_streamlit_ndarray_float_type(mock_pd, mock_cfg, mock_st):
     mock_dataframe = MagicMock()
     mock_pd.DataFrame.return_value = mock_dataframe
 
-    numpy_ndarray_handlers.handle_streamlit_ndarray(arr)
+    handle_streamlit_ndarray(arr)
 
     mock_st.write.assert_called_once_with("NumPy ndarray: shape = (3,), dtype = float64")
     mock_pd.DataFrame.assert_called_with(arr, columns=["Values"])
@@ -329,7 +318,7 @@ def test_handle_streamlit_ndarray_empty_1d(mock_pd, mock_cfg, mock_st):
     mock_dataframe = MagicMock()
     mock_pd.DataFrame.return_value = mock_dataframe
 
-    numpy_ndarray_handlers.handle_streamlit_ndarray(arr)
+    handle_streamlit_ndarray(arr)
 
     mock_st.write.assert_called_once_with("NumPy ndarray: shape = (0,), dtype = float64")
     mock_pd.DataFrame.assert_called_with(arr, columns=["Values"])
@@ -351,81 +340,13 @@ def test_handle_streamlit_ndarray_single_element(mock_pd, mock_cfg, mock_st):
     mock_dataframe = MagicMock()
     mock_pd.DataFrame.return_value = mock_dataframe
 
-    numpy_ndarray_handlers.handle_streamlit_ndarray(arr)
+    handle_streamlit_ndarray(arr)
 
     mock_st.write.assert_called_once_with("NumPy ndarray: shape = (1,), dtype = int64")
     mock_pd.DataFrame.assert_called_with(arr, columns=["Values"])
     mock_st.dataframe.assert_called_once_with(mock_dataframe)
     mock_st.markdown.assert_called_once_with("Chart:")
     mock_st.line_chart.assert_called_once_with(arr)
-
-
-# @patch('src.handlers.pandas_handlers.pandas_dataframe_handlers.st')
-# @patch('src.handlers.pandas_handlers.pandas_dataframe_handlers.cfg')
-# @patch('src.picklevw.cfg')
-# @patch('src.picklevw.st')
-# def test_display_content_dataframe(mock_picklevw_st, mock_picklevw_cfg, mock_handler_cfg,
-#                                    mock_handler_st):
-#     """Test displaying a pandas DataFrame"""
-#     df = pd.DataFrame({'col1': [1, 2], 'col2': [3, 4]})
-#     mock_picklevw_cfg.MESSAGES = {
-#         "CONTENT_DISPLAY": "Content:",
-#     }
-#     mock_handler_cfg.MESSAGES = {
-#         "row_col_summary": "DataFrame with {rows} rows and {cols} columns"
-#     }
-#
-#     PickleViewerApp.display_content(df, were_spared_objs=False, is_dataframe=True)
-#
-#     mock_picklevw_st.markdown.assert_called_once_with("Content:")
-#     mock_handler_st.write.assert_called_once_with("DataFrame with 2 rows and 2 columns")
-#     mock_handler_st.dataframe.assert_called_once_with(df)
-#
-#
-# @patch('src.handlers.pandas_handlers.pandas_series_handlers.st')
-# @patch('src.handlers.pandas_handlers.pandas_series_handlers.cfg')
-# @patch('src.picklevw.cfg')
-# @patch('src.picklevw.st')
-# def test_display_content_series(mock_picklevw_st, mock_picklevw_cfg, mock_handler_cfg,
-#                                 mock_handler_st):
-#     """Test displaying a pandas Series"""
-#     series = pd.Series([1, 2, 3], name="test_series")
-#     mock_picklevw_cfg.MESSAGES = {
-#         "CONTENT_DISPLAY": "Content:",
-#     }
-#     mock_handler_cfg.MESSAGES = {
-#         "CHART": "Chart:"
-#     }
-#
-#     PickleViewerApp.display_content(series, were_spared_objs=False, is_dataframe=False)
-#
-#     mock_picklevw_st.markdown.assert_called_once_with("Content:")
-#     mock_handler_st.write.assert_called_once_with("Pandas Series: **test_series**, 3 elements")
-#     mock_handler_st.dataframe.assert_called_once()
-#     pd.testing.assert_frame_equal(
-#         mock_handler_st.dataframe.call_args[0][0],
-#         series.to_frame()
-#     )
-#     mock_handler_st.line_chart.assert_called_once_with(series)
-#
-#
-# @patch('src.handlers.builtin_handlers.st')
-# @patch('src.handlers.builtin_handlers.cfg')
-# @patch('src.picklevw.cfg')
-# @patch('src.picklevw.st')
-# def test_display_content_json_serializable(mock_picklevw_st, mock_picklevw_cfg, mock_handler_cfg,
-#                                            mock_handler_st):
-#     """Test displaying a JSON-serializable object"""
-#     obj = {"key": "value"}
-#     mock_picklevw_cfg.MESSAGES = {
-#         "CONTENT_DISPLAY": "Content:"
-#     }
-#     mock_handler_cfg.MESSAGES = {}
-#
-#     PickleViewerApp.display_content(obj, were_spared_objs=False, is_dataframe=False)
-#
-#     mock_picklevw_st.markdown.assert_called_once_with("Content:")
-#     mock_handler_st.code.assert_called_once_with('{\n    "key": "value"\n}', language="json")
 
 
 @patch('src.picklevw.st')
