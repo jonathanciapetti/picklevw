@@ -163,20 +163,6 @@ def test_handle_streamlit_json(mock_cfg, mock_st):
     mock_st.code.assert_called_once()
 
 
-@patch('src.handlers.builtin_handlers.st')  # Fixed: patch in the handler module
-@patch('src.handlers.builtin_handlers.cfg')
-def test_handle_streamlit_json(mock_cfg, mock_st):
-    mock_cfg.MESSAGES = {}
-    obj = {"x": 123}
-    handle_streamlit_json(obj, were_spared_objs=False)
-    mock_st.code.assert_called_once_with('{\n    "x": 123\n}', language="json")
-
-    # Test also the spared format
-    mock_st.reset_mock()  # Reset the mock for second test
-    handle_streamlit_json({"y": "foo"}, were_spared_objs=True)
-    mock_st.code.assert_called_once()
-
-
 @patch('src.handlers.numpy_handlers.numpy_ndarray_handlers.st')
 @patch('src.handlers.numpy_handlers.numpy_ndarray_handlers.cfg')
 @patch('src.handlers.numpy_handlers.numpy_ndarray_handlers.pd')
