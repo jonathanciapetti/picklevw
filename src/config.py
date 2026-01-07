@@ -29,8 +29,9 @@ MESSAGES = {
 }
 
 CONFIG = {
-    "version": "v1.5.0",
+    "version": "v1.5.1",
     "always_disallow_unsafe": True,
     "allow_unsafe": False,
     "SEVERITY_THRESHOLD": 1,
+    "DEBUG_MODE": False,
 }
