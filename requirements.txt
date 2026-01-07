@@ -6,7 +6,7 @@ cachetools==5.5.2
 certifi==2025.7.14
 charset-normalizer==3.4.2
 click==8.2.0
-colorful==0.5.7
+colorful==0.5.8
 gitdb==4.0.12
 GitPython==3.1.44
 idna==3.10
@@ -17,10 +17,10 @@ MarkupSafe==3.0.2
 narwhals==2.9.0
 numpy==2.2.5
 packaging==24.2
-pandas==2.3.1
+pandas==2.3.3
 pillow==11.3.0
 protobuf==6.31.1
-pyarrow==21.0.0
+pyarrow==22.0.0
 pydeck==0.9.1
 Pygments==2.19.2
 python-dateutil==2.9.0.post0
@@ -38,4 +38,4 @@ tzdata==2025.2
 urllib3==2.5.0
 watchdog==6.0.0
 matplotlib==3.10.3
-fickling==0.1.4
+fickling==0.1.6
