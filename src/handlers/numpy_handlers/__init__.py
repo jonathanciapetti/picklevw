@@ -1,0 +1,1 @@
+from .numpy_ndarray_handlers import handle_streamlit_ndarray
