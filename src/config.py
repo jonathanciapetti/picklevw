@@ -33,4 +33,5 @@ CONFIG = {
     "always_disallow_unsafe": True,
     "allow_unsafe": False,
     "SEVERITY_THRESHOLD": 1,
+    "DEBUG_MODE": False,
 }
