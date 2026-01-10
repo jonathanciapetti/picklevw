@@ -49,7 +49,7 @@ If you try to open a pickle with 3rd party packages (like Numpy or Pandas) witho
     <img src="./media/screenshot_2.png" width="100%" alt="legit pickle">
 </p>
 
-Here there is a screenshot of PickleVW displaying the content of a legit pickle storing a Pandas series (notice the toggled "Bypass safety checks" button):
+Here there is a screenshot of PickleVW displaying the content of a legit pickle storing a Numpy `ndrray` (notice the toggled "Bypass safety checks" button):
 <p>
     <img src="./media/screenshot_3.png" width="100%" alt="legit pickle">
 </p>
