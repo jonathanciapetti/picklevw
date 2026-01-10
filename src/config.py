@@ -21,16 +21,16 @@ MESSAGES = {
     "NOT_JSON_WARNING": "The object is not JSON serializable and is not a DataFrame.",
     "UNSAFE_WARNING": "⚠️ You have enabled loading of potentially unsafe content. Malicious code might be executed.",
     "row_col_summary": "Pandas DataFrame with **{rows}** rows and **{cols}** columns",
-    "TOGGLER_HELP": "WARNING: Enabling this may allow execution of untrusted code if the uploaded file is malicious. To enable this, clone the code for picklevw on your computer, then set `CONFIG.always_disallow_unsafe=False` in `src/config.py`, and run it locally.",
+    "TOGGLER_HELP": "WARNING: Enabling this may allow execution of untrusted code if the uploaded file is malicious. To enable this, clone the code for picklevw on your computer, then set `CONFIG.disable_allow_unsafe=False` in `src/config.py`, and run it locally.",
     "TOGGLER_TEXT": "Bypass safety checks (unsafe, but necessary for libraries like NumPy, Pandas, etc.)",
     "CONTENT_DISPLAY": "**Content**",
     "CHART": "**Chart**",
-    "POTENTIAL_THREAT":  "Stopped loading: a file with 3rd party libraries (like NumPy or Pandas) or a potential **threat** have been detected in this file. If you trust this pickle, clone the code for picklevw on your computer, then open the pickle locally by setting `CONFIG.always_disallow_unsafe=False` in `src/config.py`.",
+    "POTENTIAL_THREAT":  "Stopped loading: a file with 3rd party libraries (like NumPy or Pandas) or a potential **threat** have been detected in this file. If you trust this pickle, clone the code for picklevw on your computer, then open the pickle locally by setting `CONFIG.disable_allow_unsafe=False` in `src/config.py`.",
 }
 
 CONFIG = {
     "version": "v1.5.1",
-    "always_disallow_unsafe": True,
+    "disable_allow_unsafe": True,
     "allow_unsafe": False,
     "SEVERITY_THRESHOLD": 1,
     "DEBUG_MODE": False,
