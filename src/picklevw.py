@@ -173,7 +173,7 @@ class PickleViewerApp:
             cfg.MESSAGES["TOGGLER_TEXT"],
             key="allow_unsafe_file",
             help=cfg.MESSAGES["TOGGLER_HELP"],
-            disabled=cfg.CONFIG["always_disallow_unsafe"]
+            disabled=cfg.CONFIG["disable_allow_unsafe"]
         )
 
         if allow_unsafe_file:

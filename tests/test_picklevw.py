@@ -74,7 +74,7 @@ def test_process_file_unsafe_exception(mock_st, app):
 @patch("src.picklevw.cfg")
 @patch.object(PickleViewerApp, "upload_file", return_value=None)
 def test_run_with_no_file(mock_upload, mock_cfg, mock_st, app):
-    mock_cfg.CONFIG = {"allow_unsafe": False, "always_disallow_unsafe": False}
+    mock_cfg.CONFIG = {"allow_unsafe": False, "disable_allow_unsafe": False}
     mock_cfg.MESSAGES = {
         "TOGGLER_TEXT": "Toggle",
         "TOGGLER_HELP": "Help",
@@ -93,7 +93,7 @@ def test_run_with_no_file(mock_upload, mock_cfg, mock_st, app):
 @patch("src.picklevw.cfg")
 @patch.object(PickleViewerApp, "upload_file")
 def test_run_with_file(mock_upload, mock_cfg, mock_st, app):
-    mock_cfg.CONFIG = {"allow_unsafe": False, "always_disallow_unsafe": False}
+    mock_cfg.CONFIG = {"allow_unsafe": False, "disable_allow_unsafe": False}
     mock_cfg.MESSAGES = {
         "TOGGLER_TEXT": "Toggle",
         "TOGGLER_HELP": "Help",
