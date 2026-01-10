@@ -44,6 +44,18 @@ Here's a screenshot of the app displaying the unpickled content of a legit pickl
     <img src="./media/screenshot_1.png" width="100%" alt="legit pickle">
 </p>
 
+If you try to open a pickle with 3rd party packages (like Numpy or Pandas) without toggling the "Bypass safety checks" button, or try to open a malicious pickle, you'll see this:
+<p>
+    <img src="./media/screenshot_2.png" width="100%" alt="legit pickle">
+</p>
+
+Here there is a screenshot of PickleVW displaying the content of a legit pickle storing a Pandas series (notice the toggled "Bypass safety checks" button):
+<p>
+    <img src="./media/screenshot_3.png" width="100%" alt="legit pickle">
+</p>
+
+
+
 ---
 
 ### Safetey checks
