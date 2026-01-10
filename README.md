@@ -6,7 +6,7 @@
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/jonathanciapetti/picklevw)
 ![workflow](https://github.com/jonathanciapetti/picklevw/actions/workflows/python-app.yaml/badge.svg)
 [![codecov](https://codecov.io/github/jonathanciapetti/picklevw/graph/badge.svg?token=UCDTWBNL7A)](https://codecov.io/github/jonathanciapetti/picklevw)
-![version](https://img.shields.io/badge/version-1.5.0-blue)
+![version](https://img.shields.io/badge/version-1.5.1-blue)
 
 </div>
 
@@ -46,12 +46,12 @@ Here's a screenshot of the app displaying the unpickled content of a legit pickl
 
 If you try to open a pickle with 3rd party packages (like Numpy or Pandas) without toggling the "Bypass safety checks" button, or try to open a malicious pickle, you'll see this:
 <p>
-    <img src="./media/screenshot_2.png" width="100%" alt="legit pickle">
+    <img src="./media/screenshot_2.png" width="100%" alt="problematic pickle">
 </p>
 
-Here there is a screenshot of PickleVW displaying the content of a legit pickle storing a Pandas series (notice the toggled "Bypass safety checks" button):
+Here there is a screenshot of PickleVW displaying the content of a legit pickle storing a Numpy `ndrray` (notice the toggled "Bypass safety checks" button):
 <p>
-    <img src="./media/screenshot_3.png" width="100%" alt="legit pickle">
+    <img src="./media/screenshot_3.png" width="100%" alt="disabled bypass safety check">
 </p>
 
 
