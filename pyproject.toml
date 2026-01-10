@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "picklevw"
+version = "1.5.1"
+description = "A Streamlit app to inspect and display pickle files with Fickling-based safety checks."
+readme = "README.md"
+requires-python = ">=3.10,<3.12"
+license = { text = "MIT" }
+authors = [
+  { name = "Jonathan Ciapetti" }
+]
+keywords = [
+  "pickle", "streamlit", "pandas", "security", "visualization", "python", "analysis", "python3", "deserialization",
+  "webapp", "reader", "malware-analysis", "pickle", "webapplication", "data-analysis-python", "threat-detection",
+  "streamlit", "pickle-file"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+dependencies = [
+  "streamlit>=1.31",
+  "pandas>=2.0",
+  "fickling>=0.1.0",
+  "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.4",
+  "pytest-cov>=4.1",
+]
+
+[project.scripts]
+picklevw = "picklevw.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/picklevw"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["picklevw"]
+
+[tool.coverage.report]
+skip_empty = true
+show_missing = true
+fail_under = 60
