@@ -4,7 +4,7 @@ attrs==25.3.0
 blinker==1.9.0
 cachetools==5.5.2
 certifi==2025.7.14
-charset-normalizer==3.4.2
+charset-normalizer==3.4.4
 click==8.2.0
 colorful==0.5.8
 gitdb==4.0.12
