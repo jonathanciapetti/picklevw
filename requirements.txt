@@ -13,7 +13,7 @@ idna==3.10
 Jinja2==3.1.6
 jsonschema==4.25.0
 jsonschema-specifications==2025.4.1
-MarkupSafe==3.0.2
+MarkupSafe==3.0.3
 narwhals==2.9.0
 numpy==2.2.5
 packaging==24.2
