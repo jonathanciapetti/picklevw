@@ -38,4 +38,4 @@ tzdata==2025.3
 urllib3==2.6.3
 watchdog==6.0.0
 matplotlib==3.10.3
-fickling==0.1.6
+fickling==0.1.7
