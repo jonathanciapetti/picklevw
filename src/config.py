@@ -29,7 +29,7 @@ MESSAGES = {
 }
 
 CONFIG = {
-    "version": "v1.5.1",
+    "version": "v1.5.2",
     "disable_allow_unsafe": True,  # Disables/enables the "Bypass safety checks" toggle button
     "allow_unsafe": False, # This is represented by the "Bypass safety checks" toggle button's state
     "SEVERITY_THRESHOLD": 1,
