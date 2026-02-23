@@ -2,7 +2,7 @@ altair==5.5.0
 astunparse==1.6.3
 attrs==25.4.0
 blinker==1.9.0
-cachetools==5.5.2
+cachetools==7.0.1
 certifi==2025.7.14
 charset-normalizer==3.4.4
 click==8.2.0
