@@ -2,6 +2,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import sentry_sdk
 
 import streamlit as st
 from streamlit.runtime.uploaded_file_manager import UploadedFile
@@ -185,5 +186,11 @@ class PickleViewerApp:
 
 
 if __name__ == "__main__":
+
+    sentry_sdk.init(
+        dsn="https://56058342450243edb54846f5e07f2236@errors.hypatialabs.it/6",
+        traces_sample_rate=1.0,
+    )
+
     app = PickleViewerApp()
     app.run()

@@ -25,7 +25,7 @@ jobs:
 
           if [ "$BASE" = "main" ]; then
             # Allow Dependabot to merge directly into main
-            if [ "$AUTHOR" = "dependabot[bot]" ]; then
+            if [[ "$AUTHOR" = "dependabot[bot]" || "$AUTHOR" = "TurboHost/Dev[bot]" ]]; then
               echo "Dependabot PR to main allowed."
               exit 0
             fi
