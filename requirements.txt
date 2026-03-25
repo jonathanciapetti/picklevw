@@ -39,3 +39,4 @@ urllib3==2.5.0
 watchdog==6.0.0
 matplotlib==3.10.3
 fickling==0.1.6
+sentry-sdk==2.56.0
