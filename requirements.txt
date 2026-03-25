@@ -20,7 +20,7 @@ packaging==26.0
 pandas==2.3.3
 pillow==12.1.1
 protobuf==6.31.1
-pyarrow==22.0.0
+pyarrow==23.0.1
 pydeck==0.9.1
 Pygments==2.19.2
 python-dateutil==2.9.0.post0
