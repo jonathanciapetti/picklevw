@@ -70,6 +70,19 @@ def test_process_file_unsafe_exception(mock_st, app):
         mock_st.stop.assert_called_once()
 
 
+
+
+@patch("src.picklevw.st")
+@patch("src.picklevw.cfg")
+@patch("src.picklevw.PickleLoader", side_effect=OSError("bad gzip stream"))
+def test_process_file_oserror_shows_generic_error(mock_loader, mock_cfg, mock_st, app):
+    mock_cfg.CONFIG = {"DEBUG_MODE": False}
+    mock_cfg.MESSAGES = {"GENERIC_LOAD_ERROR": "Could not load file"}
+
+    app.process_file(MagicMock(), allow_unsafe_file=False)
+
+    mock_st.error.assert_called_once_with("Could not load file")
+
 @patch("src.picklevw.st")
 @patch("src.picklevw.cfg")
 @patch.object(PickleViewerApp, "upload_file", return_value=None)

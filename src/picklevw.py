@@ -148,6 +148,7 @@ class PickleViewerApp:
             st.error(str(err))
             st.stop()
         except (IOError, OSError) as io_err:
+            st.error(cfg.MESSAGES["GENERIC_LOAD_ERROR"])
             if cfg.CONFIG["DEBUG_MODE"]:
                 st.error(f"File access error: {io_err}")
         except Exception as ex:
