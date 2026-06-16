@@ -50,7 +50,7 @@ testpaths = ["tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["picklevw"]
+source = ["src"]
 
 [tool.coverage.report]
 skip_empty = true
