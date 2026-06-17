@@ -36,14 +36,11 @@ def gzip_pickle_data(raw_pickle_data):
     return gzip.compress(raw_pickle_data)
 
 
-@patch("fickling.fickle.Pickled.load")
-@patch("fickling.analysis.check_safety")
-def test_pickle_loader_safe(mock_check_safety, mock_pickled_load, raw_pickle_data):
+@patch("src.utils.PickleSecurityChecker.ensure_safe")
+def test_pickle_loader_safe(mock_ensure_safe, raw_pickle_data):
     from src.utils import PickleLoader
-    from fickling.analysis import Severity
 
-    mock_check_safety.return_value = SimpleNamespace(severity=Severity.LIKELY_SAFE)
-    mock_pickled_load.return_value = MagicMock()
+    mock_ensure_safe.return_value = None
 
     uploaded_file = create_mock_uploaded_file(raw_pickle_data)
     loader = PickleLoader(uploaded_file)
