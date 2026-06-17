@@ -24,7 +24,7 @@ pyarrow==23.0.1
 pydeck==0.9.1
 Pygments==2.19.2
 python-dateutil==2.9.0.post0
-pytz==2025.2
+pytz==2026.1.post1
 referencing==0.37.0
 requests==2.32.5
 rpds-py==0.28.0
